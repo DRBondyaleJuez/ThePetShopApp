@@ -1,14 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="viewController.CreateAccountViewController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewController.CreateAccountViewController">
+   <children>
+      <StackPane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="404.0" stroke="BLACK" strokeType="INSIDE" width="601.0">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.46000000834465027" green="0.20975999534130096" blue="0.018400000408291817" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.8700000047683716" green="0.3777250051498413" blue="0.026100000366568565" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Rectangle>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                     <children>
+                        <Label text="New Account Creation Information" textAlignment="CENTER" textFill="WHITE" underline="true" wrapText="true">
+                           <font>
+                              <Font name="Arial" size="32.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="logoImageView" fitHeight="201.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="404.0" prefWidth="332.0" spacing="20.0">
+                     <children>
+                        <VBox prefHeight="46.0" prefWidth="321.0">
+                           <children>
+                              <HBox prefHeight="26.0" prefWidth="287.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Username" textFill="WHITE" />
+                                    <TextField fx:id="usernameTextField" prefHeight="25.0" prefWidth="226.0" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <Label fx:id="usernameHelpLabel" text="Create a unique username">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font></Label>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </VBox>
+                        <VBox prefHeight="94.0" prefWidth="321.0" spacing="10.0">
+                           <children>
+                              <HBox prefHeight="26.0" prefWidth="287.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Password" textFill="WHITE" />
+                                    <StackPane prefHeight="30.0" prefWidth="183.0">
+                                       <children>
+                                          <TextField fx:id="passwordTextField1" prefHeight="25.0" prefWidth="173.0" />
+                                          <PasswordField fx:id="passwordField1" prefHeight="25.0" prefWidth="178.0" />
+                                       </children>
+                                    </StackPane>
+                                    <Button fx:id="viewPasswordButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
+                                       <graphic>
+                                          <ImageView fx:id="viewPasswordImageView" fitHeight="22.0" fitWidth="18.0" pickOnBounds="true" />
+                                       </graphic></Button>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="26.0" prefWidth="287.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Repeat Password" textFill="WHITE" />
+                                    <PasswordField fx:id="passwordField2" prefHeight="25.0" prefWidth="188.0" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </HBox>
+                              <Label fx:id="passwordHelpLabel" text="Create a new password containing at least 8 characters">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font></Label>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </VBox>
+                        <Line endX="290.0" stroke="#0f0f0f">
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </Line>
+                        <VBox prefHeight="20.0" prefWidth="100.0">
+                           <children>
+                              <HBox prefHeight="26.0" prefWidth="287.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Contact E-mail" textFill="WHITE" />
+                                    <TextField fx:id="contactEmailTextField" prefHeight="25.0" prefWidth="200.0" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </HBox>
+                              <Label fx:id="contactEmailHelpLabel" text="Type an email address for confirmation and contact">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font></Label>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </VBox>
+                        <HBox alignment="CENTER" prefHeight="76.0" prefWidth="321.0" spacing="20.0">
+                           <children>
+                              <Button fx:id="backButton" mnemonicParsing="false" text="🔙">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="createNewAccountButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="177.0" textFill="#0f0f0f">
+                                 <graphic>
+                                    <StackPane prefHeight="36.0" prefWidth="166.0">
+                                       <children>
+                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f0f0f" height="31.0" stroke="BLACK" strokeType="INSIDE" width="192.0" />
+                                          <Label text="Create New Account" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </StackPane>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets top="40.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </StackPane>
+   </children>
 </AnchorPane>
