@@ -72,16 +72,9 @@ public class SignInViewController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //SETTING LAYOUT DETAILS
-        //TODO: set assest using persistence through the controller
 
         //Setting the logo image at the top
-        try {
-            Image colouredLogoImage = new Image(Objects.requireNonNull(getClass().getResource("/assets/images/colouredLogo.png")).toURI().toString()); //// MOSTRABA UNA ADVERTENCIA Y LA SOLUCIÓN FUE ESE object.requireNonNUL
-            topLogoImageView.setImage(colouredLogoImage);
-        } catch (URISyntaxException | NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("LogoImage could not be found");
-        }
+        setLogoImage();
 
         //Setting the closed eye image
         setEyeIconOnViewPasswordButton();
@@ -99,6 +92,16 @@ public class SignInViewController implements Initializable {
 
     }
 
+    private void setLogoImage() {
+        //TODO: set assest using persistence through the controller
+        try {
+            Image colouredLogoImage = new Image(Objects.requireNonNull(getClass().getResource("/assets/images/colouredLogo.png")).toURI().toString()); //// MOSTRABA UNA ADVERTENCIA Y LA SOLUCIÓN FUE ESE object.requireNonNUL
+            topLogoImageView.setImage(colouredLogoImage);
+        } catch (URISyntaxException | NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("LogoImage could not be found");
+        }
+    }
 
 
     //Enter button event handler
@@ -109,6 +112,7 @@ public class SignInViewController implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 replicateContentInTexFieldAndPasswordField();
                 //TODO: compare the username with the database and compare the password with the database through the controller's persistence
+                // (REMEBER TO ENCRYPT THE PASSWORD SAME AS DURING THE CREATION OF THE ACOUNT)
                 System.out.println("Username: " + usernameTextField.getText());
                 System.out.println("Password: " + passwordTextField.getText());
             }
@@ -136,7 +140,7 @@ public class SignInViewController implements Initializable {
         };
     }
 
-
+    //Method to assure that the content in both password field and text field are the same
     private void replicateContentInTexFieldAndPasswordField(){
         if(passwordHiddenState){
             passwordTextField.setText(hiddenPasswordField.getText());
@@ -145,6 +149,7 @@ public class SignInViewController implements Initializable {
         }
     }
 
+    //Method handling the changing icon of the viewPassword button
     private void setEyeIconOnViewPasswordButton(){
         //TODO: handle this icon change using the controller's persistence
         try {
@@ -163,7 +168,7 @@ public class SignInViewController implements Initializable {
 
     }
 
-    //Label events
+    //Label events handled when clicked
 
     private EventHandler<? super MouseEvent> browseWithoutAccountEvent() {
         return new EventHandler<MouseEvent>() {
