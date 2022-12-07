@@ -32,18 +32,21 @@
             </Rectangle>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                  <VBox alignment="CENTER" prefHeight="404.0" prefWidth="254.0" spacing="20.0">
                      <children>
                         <Label text="New Account Creation Information" textAlignment="CENTER" textFill="WHITE" underline="true" wrapText="true">
                            <font>
                               <Font name="Arial" size="32.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="logoImageView" fitHeight="201.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="logoImageView" fitHeight="201.0" fitWidth="231.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                      <HBox.margin>
-                        <Insets top="20.0" />
+                        <Insets />
                      </HBox.margin>
+                     <padding>
+                        <Insets left="20.0" right="20.0" top="20.0" />
+                     </padding>
                   </VBox>
                   <VBox prefHeight="404.0" prefWidth="332.0" spacing="20.0">
                      <children>
@@ -83,7 +86,7 @@
                                     </StackPane>
                                     <Button fx:id="viewPasswordButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
                                        <graphic>
-                                          <ImageView fx:id="viewPasswordImageView" fitHeight="22.0" fitWidth="18.0" pickOnBounds="true" />
+                                          <ImageView fx:id="viewPasswordImageView" fitHeight="17.0" fitWidth="18.0" pickOnBounds="true" />
                                        </graphic></Button>
                                  </children>
                                  <opaqueInsets>
