@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public class ThePetShopAppLauncher extends Application {
+public class ThePetShopAppLauncher extends Application implements ViewObserver {
 
     private Stage mainStage;
 
@@ -17,7 +17,7 @@ public class ThePetShopAppLauncher extends Application {
 
     @Override public void start(Stage stage)  throws Exception {
         mainStage = stage;
-        loadingMainScene();
+        loadSignInView();
 
         mainStage.setTitle("The Pet Shop App");
         mainStage.centerOnScreen();
@@ -34,6 +34,55 @@ public class ThePetShopAppLauncher extends Application {
         mainStage.setScene(newScene);
     }
 
+
+    @Override
+    public void changeView(PossibleViews newView) {
+        switch (newView){
+            case SIGNIN:
+                loadSignInView();
+                break;
+            case CREATEACCOUNT:
+                loadCreateAccountView();
+                break;
+            case PROFILE:
+                loadProfileView();
+                break;
+            case PRODUCTS:
+                loadProductsView();
+                break;
+            default:
+                loadSignInView();
+                break;
+        }
+
+        mainStage.centerOnScreen();
+        mainStage.show();
+
+    }
+
+    private void loadSignInView() {
+        loadView("/view/SignInView.fxml");
+    }
+    private void loadCreateAccountView() {
+        loadView("/view/CreateAccountView.fxml");
+    }
+
+    private void loadProfileView() {
+        loadView("/view/ProfilePageView.fxml");
+    }
+    private void loadProductsView() {
+        loadView("/view/ProductsPageView.fxml");
+    }
+
+    private void loadView(String sceneResource){
+        FXMLLoader paneLoader = new FXMLLoader(getClass().getResource(sceneResource));
+        Parent root = loadPaneLoader(paneLoader);
+        ObservableView observableViewController = (ObservableView) paneLoader.getController();
+        observableViewController.addObserver(this);
+        Scene newScene = new Scene(root);
+        mainStage.setScene(newScene);
+    }
+
     private Parent loadPaneLoader(FXMLLoader paneLoader) {
         try {
             return paneLoader.load();
@@ -45,4 +94,6 @@ public class ThePetShopAppLauncher extends Application {
             return null;
         }
     }
+
+
 }

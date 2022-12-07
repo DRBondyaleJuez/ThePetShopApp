@@ -1,6 +1,8 @@
 package viewController;
 
 import controller.SignInController;
+import core.ObservableView;
+import core.ViewObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,12 +18,14 @@ import javafx.scene.input.MouseEvent;
 
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class SignInViewController implements Initializable {
+public class SignInViewController implements Initializable, ObservableView {
 
     private SignInController controller;
+    private ArrayList<ViewObserver> observerList;
     private boolean passwordHiddenState;
 
     //TextFields and PasswordFields
@@ -66,6 +70,7 @@ public class SignInViewController implements Initializable {
 
         controller = new SignInController();
         passwordHiddenState = true;
+        observerList = new ArrayList<>();
     }
 
     @Override
@@ -93,7 +98,7 @@ public class SignInViewController implements Initializable {
     }
 
     private void setLogoImage() {
-        //TODO: set assest using persistence through the controller
+        //TODO: set assets using persistence through the controller
         try {
             Image colouredLogoImage = new Image(Objects.requireNonNull(getClass().getResource("/assets/images/colouredLogo.png")).toURI().toString()); //// MOSTRABA UNA ADVERTENCIA Y LA SOLUCIÓN FUE ESE object.requireNonNUL
             topLogoImageView.setImage(colouredLogoImage);
@@ -115,6 +120,11 @@ public class SignInViewController implements Initializable {
                 // (REMEBER TO ENCRYPT THE PASSWORD SAME AS DURING THE CREATION OF THE ACOUNT)
                 System.out.println("Username: " + usernameTextField.getText());
                 System.out.println("Password: " + passwordTextField.getText());
+                if(true){
+                    for (ViewObserver stalker : observerList) {
+                        stalker.changeView(ViewObserver.PossibleViews.PROFILE);
+                    }
+                }
             }
         };
 
@@ -174,6 +184,9 @@ public class SignInViewController implements Initializable {
         return new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                for (ViewObserver stalker : observerList) {
+                    stalker.changeView(ViewObserver.PossibleViews.PRODUCTS);
+                }
                 System.out.println("Browse without Account CLicked.");
             }
         };
@@ -185,7 +198,9 @@ public class SignInViewController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
 
-                System.out.println("Create new Account CLicked.");
+                for (ViewObserver stalker : observerList) {
+                    stalker.changeView(ViewObserver.PossibleViews.CREATEACCOUNT);
+                }
 
             }
         };
@@ -205,4 +220,8 @@ public class SignInViewController implements Initializable {
     }
 
 
+    @Override
+    public void addObserver(ViewObserver currentViewObserver) {
+        observerList.add(currentViewObserver);
+    }
 }

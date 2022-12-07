@@ -2,6 +2,8 @@ package viewController;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import controller.SignInController;
+import core.ObservableView;
+import core.ViewObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,12 +19,14 @@ import javafx.scene.paint.Color;
 
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class CreateAccountViewController implements Initializable {
+public class CreateAccountViewController implements Initializable, ObservableView {
 
     private SignInController controller;
+    private ArrayList<ViewObserver> observerList;
     private boolean passwordHiddenState;
 
     //TextFields and PasswordFields
@@ -63,6 +67,7 @@ public class CreateAccountViewController implements Initializable {
     public CreateAccountViewController() {
         controller = new SignInController();
         passwordHiddenState = true;
+        observerList = new ArrayList<>();
     }
 
     @Override
@@ -145,6 +150,9 @@ public class CreateAccountViewController implements Initializable {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                for (ViewObserver stalker : observerList) {
+                    stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
+                }
 
             }
         };
@@ -157,13 +165,16 @@ public class CreateAccountViewController implements Initializable {
 
                 boolean validUsername = checkUsername();
                 boolean validPassword = checkPassword();
-                boolean validEmail = checkPassword();
+                boolean validEmail = checkEmail();
 
                 if(validUsername && validPassword && validEmail){
                     System.out.println("Username: " + usernameTextField.getText());
                     System.out.println("Password: " + passwordField1.getText());
                     System.out.println("Password: " + passwordField2.getText());
                     System.out.println("Email: " + contactEmailTextField.getText());
+                    for (ViewObserver stalker : observerList) {
+                        stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
+                    }
                 } else {
                     System.out.println("Something is wrong. Unable to create a new account. Check fields and field help labels");
 
@@ -176,28 +187,47 @@ public class CreateAccountViewController implements Initializable {
 
     private boolean checkUsername(){
         //TODO: use the controller's persistence to compare with other name in database and confirm it is new
+        if(usernameTextField.getText().isEmpty()){
+            usernameHelpLabel.setText("Not a valid Username");
+            usernameHelpLabel.setUnderline(true);
+            Color color = Color.DARKRED;
+            usernameHelpLabel.setTextFill(color);
+            return false;
+        }
         System.out.println("Comparing with database ...");
+
+        usernameHelpLabel.setText("Valid Username");
+        Color color = Color.LIGHTGREEN;
+        usernameHelpLabel.setTextFill(color);
         return true;
     }
 
     private boolean checkPassword(){
 
         String password1 = passwordField1.getText();
-        String password2 = passwordField1.getText();
+        String password2 = passwordField2.getText();
+        System.out.println(password1.length());
 
         if(!Objects.equals(password1, password2)){
             passwordHelpLabel.setText("The passwords don't match");
             Color color = Color.DARKRED;
             passwordHelpLabel.setTextFill(color);
-            return  false;
-        }
-        if(password1.length() > 8) {
-            passwordHelpLabel.setText("The password must be at least 8 characters long");
-            Color color = Color.DARKRED;
+            passwordHelpLabel.setUnderline(true);
             passwordHelpLabel.setTextFill(color);
             return  false;
         }
+        if(password1.length() < 8) {
+            passwordHelpLabel.setText("The password must be at least 8 characters long");
+            Color color = Color.DARKRED;
+            passwordHelpLabel.setUnderline(true);
+            passwordHelpLabel.setTextFill(color);
+
+            return  false;
+        }
         else {
+            passwordHelpLabel.setText("Valid Password");
+            Color color = Color.LIGHTGREEN;
+            passwordHelpLabel.setTextFill(color);
             return  true;
         }
     }
@@ -206,13 +236,21 @@ public class CreateAccountViewController implements Initializable {
         String email = contactEmailTextField.getText();
         String[] splitEmail = email.split("@");
         if(splitEmail.length == 2 && splitEmail[0].length() > 0 && splitEmail[1].length() > 0 ){
+            passwordHelpLabel.setText("Valid Email. Confirmation will be sent.");
+            Color color = Color.LIGHTGREEN;
+            passwordHelpLabel.setTextFill(color);
             return true;
         } else {
             contactEmailHelpLabel.setText("Something might be wrong with the current email.");
+            contactEmailHelpLabel.setUnderline(true);
+            Color color = Color.DARKRED;
+            contactEmailHelpLabel.setTextFill(color);
             return false;
         }
     }
 
-
-
+    @Override
+    public void addObserver(ViewObserver currentViewObserver) {
+        observerList.add(currentViewObserver);
+    }
 }
