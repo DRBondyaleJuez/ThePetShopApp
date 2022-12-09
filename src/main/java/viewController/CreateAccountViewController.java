@@ -16,7 +16,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import persistence.assets.EyeIconType;
+import persistence.assets.LogoType;
 
+import java.io.ByteArrayInputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -91,14 +94,8 @@ public class CreateAccountViewController implements Initializable, ObservableVie
 
 
     private void setLogoImage() {
-        //TODO: set assest using persistence through the controller
-        try {
-            Image blackLogoImage = new Image(Objects.requireNonNull(getClass().getResource("/assets/images/blackLogo.png")).toURI().toString()); //// MOSTRABA UNA ADVERTENCIA Y LA SOLUCIÓN FUE ESE object.requireNonNUL
-            logoImageView.setImage(blackLogoImage);
-        } catch (URISyntaxException | NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("LogoImage could not be found");
-        }
+        Image colouredLogoImage = new Image(new ByteArrayInputStream(controller.getLogoImageData(LogoType.BLACK)));
+        logoImageView.setImage(colouredLogoImage);
     }
     //Password related events
 
@@ -130,19 +127,13 @@ public class CreateAccountViewController implements Initializable, ObservableVie
 
     //Method handling the changing icon of the viewPassword button
     private void setEyeIconOnViewPasswordButton(){
-        //TODO: handle this icon change using the controller's persistence
-        try {
-            Image eyeImage;
-            if(passwordHiddenState){
-                eyeImage = new Image(Objects.requireNonNull(getClass().getResource("/assets/icons/eye/closeEye.png")).toURI().toString()); //// MOSTRABA UNA ADVERTENCIA Y LA SOLUCIÓN FUE ESE object.requireNonNUL
-            } else {
-                eyeImage = new Image(Objects.requireNonNull(getClass().getResource("/assets/icons/eye/openEye.png")).toURI().toString()); //// MOSTRABA UNA ADVERTENCIA Y LA SOLUCIÓN FUE ESE object.requireNonNUL
-            }
-            viewPasswordImageView.setImage(eyeImage);
-        } catch (URISyntaxException | NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("icon eye could not be found");
+        Image eyeImage;
+        if(passwordHiddenState){
+            eyeImage = new Image(new ByteArrayInputStream(controller.getEyeIconImageData(EyeIconType.CLOSED)));
+        } else {
+            eyeImage = new Image(new ByteArrayInputStream(controller.getEyeIconImageData(EyeIconType.OPEN)));
         }
+        viewPasswordImageView.setImage(eyeImage);
     }
 
     //The buttons back and create new account

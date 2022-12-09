@@ -15,7 +15,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import persistence.assets.EyeIconType;
+import persistence.assets.LogoType;
 
+import java.io.ByteArrayInputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -98,14 +101,8 @@ public class SignInViewController implements Initializable, ObservableView {
     }
 
     private void setLogoImage() {
-        //TODO: set assets using persistence through the controller
-        try {
-            Image colouredLogoImage = new Image(Objects.requireNonNull(getClass().getResource("/assets/images/colouredLogo.png")).toURI().toString()); //// MOSTRABA UNA ADVERTENCIA Y LA SOLUCIÓN FUE ESE object.requireNonNUL
-            topLogoImageView.setImage(colouredLogoImage);
-        } catch (URISyntaxException | NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("LogoImage could not be found");
-        }
+        Image colouredLogoImage = new Image(new ByteArrayInputStream(controller.getLogoImageData(LogoType.COLOR)));
+        topLogoImageView.setImage(colouredLogoImage);
     }
 
 
@@ -161,21 +158,13 @@ public class SignInViewController implements Initializable, ObservableView {
 
     //Method handling the changing icon of the viewPassword button
     private void setEyeIconOnViewPasswordButton(){
-        //TODO: handle this icon change using the controller's persistence
-        try {
-            Image eyeImage;
+        Image eyeImage;
         if(passwordHiddenState){
-            eyeImage = new Image(Objects.requireNonNull(getClass().getResource("/assets/icons/eye/closeEye.png")).toURI().toString()); //// MOSTRABA UNA ADVERTENCIA Y LA SOLUCIÓN FUE ESE object.requireNonNUL
+            eyeImage = new Image(new ByteArrayInputStream(controller.getEyeIconImageData(EyeIconType.CLOSED)));
         } else {
-            eyeImage = new Image(Objects.requireNonNull(getClass().getResource("/assets/icons/eye/openEye.png")).toURI().toString()); //// MOSTRABA UNA ADVERTENCIA Y LA SOLUCIÓN FUE ESE object.requireNonNUL
+            eyeImage = new Image(new ByteArrayInputStream(controller.getEyeIconImageData(EyeIconType.OPEN)));
         }
-
         viewPasswordImageView.setImage(eyeImage);
-        } catch (URISyntaxException | NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("icon eye could not be found");
-        }
-
     }
 
     //Label events handled when clicked
