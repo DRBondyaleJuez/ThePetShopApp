@@ -45,7 +45,7 @@
                         <Insets />
                      </HBox.margin>
                      <padding>
-                        <Insets left="20.0" right="20.0" top="20.0" />
+                        <Insets left="20.0" right="20.0" />
                      </padding>
                   </VBox>
                   <VBox prefHeight="404.0" prefWidth="332.0" spacing="20.0">
