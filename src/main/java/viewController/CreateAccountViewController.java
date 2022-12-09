@@ -1,6 +1,7 @@
 package viewController;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import controller.CreateAccountController;
 import controller.SignInController;
 import core.ObservableView;
 import core.ViewObserver;
@@ -28,7 +29,7 @@ import java.util.ResourceBundle;
 
 public class CreateAccountViewController implements Initializable, ObservableView {
 
-    private SignInController controller;
+    private CreateAccountController controller;
     private ArrayList<ViewObserver> observerList;
     private boolean passwordHiddenState;
 
@@ -68,7 +69,7 @@ public class CreateAccountViewController implements Initializable, ObservableVie
     private Label contactEmailHelpLabel;
 
     public CreateAccountViewController() {
-        controller = new SignInController();
+        controller = new CreateAccountController();
         passwordHiddenState = true;
         observerList = new ArrayList<>();
     }
@@ -158,14 +159,24 @@ public class CreateAccountViewController implements Initializable, ObservableVie
                 boolean validPassword = checkPassword();
                 boolean validEmail = checkEmail();
 
+                String newUsername = usernameTextField.getText();
+                String newUserPassword = passwordField1.getText();
+                String newUserEmail = contactEmailTextField.getText();
+
                 if(validUsername && validPassword && validEmail){
-                    System.out.println("Username: " + usernameTextField.getText());
-                    System.out.println("Password: " + passwordField1.getText());
+                    System.out.println("Username: " + newUsername);
+                    System.out.println("Password: " + newUserPassword);
                     System.out.println("Password: " + passwordField2.getText());
-                    System.out.println("Email: " + contactEmailTextField.getText());
+                    System.out.println("Email: " + newUserEmail);
+
+                    //Update SQL Table
+                    boolean newUserHasBeenAdded = addNewUserToDatabase(newUsername,newUserPassword,newUserEmail);
+
+                    /*
                     for (ViewObserver stalker : observerList) {
                         stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
                     }
+                     */
                 } else {
                     System.out.println("Something is wrong. Unable to create a new account. Check fields and field help labels");
 
@@ -174,6 +185,8 @@ public class CreateAccountViewController implements Initializable, ObservableVie
             }
         };
     }
+
+
 
 
     private boolean checkUsername(){
@@ -227,9 +240,9 @@ public class CreateAccountViewController implements Initializable, ObservableVie
         String email = contactEmailTextField.getText();
         String[] splitEmail = email.split("@");
         if(splitEmail.length == 2 && splitEmail[0].length() > 0 && splitEmail[1].length() > 0 ){
-            passwordHelpLabel.setText("Valid Email. Confirmation will be sent.");
+            contactEmailHelpLabel.setText("Valid Email. Confirmation will be sent.");
             Color color = Color.LIGHTGREEN;
-            passwordHelpLabel.setTextFill(color);
+            contactEmailHelpLabel.setTextFill(color);
             return true;
         } else {
             contactEmailHelpLabel.setText("Something might be wrong with the current email.");
@@ -238,6 +251,11 @@ public class CreateAccountViewController implements Initializable, ObservableVie
             contactEmailHelpLabel.setTextFill(color);
             return false;
         }
+    }
+    private boolean addNewUserToDatabase(String newUsername, String newUserPassword, String newUserEmail) {
+
+        return controller.addNewUserToDatabase(newUsername, newUserPassword, newUserEmail);
+
     }
 
     @Override

@@ -1,5 +1,8 @@
 package persistence.database;
 
+import java.sql.Timestamp;
+import java.util.UUID;
+
 public class DatabaseManager {
 
     private final DatabaseTalker databaseTalker;
@@ -17,5 +20,11 @@ public class DatabaseManager {
 
         return instance;
     }
+
+    public boolean addNewUserToDatabase(UUID newUserUUID,String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp) {
+
+        return databaseTalker.addNewUserToDatabase(newUserUUID,newUsername, newUserPassword, newUserEmail,newUserCreationTimeStamp);
+    }
+
 
 }
