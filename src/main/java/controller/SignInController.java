@@ -28,4 +28,6 @@ public class SignInController {
     }
 
 
+    public void addNewUserToDatabase(String newUsername, String newUserPassword, String newUserEmail) {
+    }
 }
