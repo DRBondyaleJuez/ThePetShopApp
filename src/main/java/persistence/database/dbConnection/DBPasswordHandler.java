@@ -1,10 +1,10 @@
 package persistence.database.dbConnection;
 
-public class PasswordHandler {
+public class DBPasswordHandler {
 
     private final String password = "PostgreSQL_drbj22";
 
-    public PasswordHandler() {
+    public DBPasswordHandler() {
     }
 
     public String getPassword() {

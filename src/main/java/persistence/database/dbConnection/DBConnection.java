@@ -15,7 +15,7 @@ public class DBConnection {
 
         database = currentDatabase;
         url = "jdbc:postgresql://localhost/" + database;
-        password = new PasswordHandler().getPassword();
+        password = new DBPasswordHandler().getPassword();
         currentConnection = connect();
 
     }
