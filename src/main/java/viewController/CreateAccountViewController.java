@@ -153,6 +153,8 @@ public class CreateAccountViewController implements Initializable, ObservableVie
             @Override
             public void handle(ActionEvent actionEvent) {
 
+                replicateContentInTexFieldAndPasswordField();
+
                 String newUsername = usernameTextField.getText();
                 String newUserPassword = passwordField1.getText();
                 String newUserPassword2 = passwordField2.getText();
@@ -170,6 +172,9 @@ public class CreateAccountViewController implements Initializable, ObservableVie
                     for (ViewObserver stalker : observerList) {
                         stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
                     }
+
+                    //--------------------------------------------------ERROR AL USAR CONTRASEÑAS NUMERICAS: "Error: los datos restantes del mensaje son insuficientes" ------- https://www.postgresql.org/message-id/BAY139-W17522EA1404D646B6A38B3D0DE0@phx.gbl
+
                      */
                 }
             }
@@ -251,10 +256,10 @@ public class CreateAccountViewController implements Initializable, ObservableVie
         String[] splitEmail = email.split("@");
         if(splitEmail.length == 2 && splitEmail[0].length() > 0 && splitEmail[1].length() > 0 ){
             if(!controller.isEmailUnique(email)){
-                usernameHelpLabel.setText("This email has already been associated to another username.");
-                usernameHelpLabel.setUnderline(true);
+                contactEmailHelpLabel.setText("This email has already been associated to another username.");
+                contactEmailHelpLabel.setUnderline(true);
                 Color color = Color.DARKRED;
-                usernameHelpLabel.setTextFill(color);
+                contactEmailHelpLabel.setTextFill(color);
                 return false;
             }
             contactEmailHelpLabel.setText("Valid Email. Confirmation will be sent.");
