@@ -13,39 +13,58 @@
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#aae3b6" height="387.0" stroke="BLACK" strokeType="INSIDE" width="584.0" />
             <ImageView fx:id="backgroundImageView" fitHeight="401.0" fitWidth="599.0" pickOnBounds="true" preserveRatio="true" />
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
                   <ImageView fx:id="topLogoImageView" fitHeight="150.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true" />
-                  <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="600.0" spacing="2.0">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label text="Username: " />
-                        <TextField fx:id="usernameTextField" prefHeight="25.0" prefWidth="168.0" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets left="150.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefHeight="25.0" prefWidth="600.0" spacing="2.0">
-                     <children>
-                        <Label text="Password: " />
-                        <StackPane prefHeight="26.0" prefWidth="171.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="600.0" spacing="2.0">
                            <children>
-                              <TextField fx:id="passwordTextField" />
-                              <PasswordField fx:id="hiddenPasswordField" />
+                              <Label text="Username: " />
+                              <TextField fx:id="usernameTextField" prefHeight="25.0" prefWidth="168.0" />
                            </children>
-                        </StackPane>
-                        <Button fx:id="viewPasswordButton" mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fx:id="viewPasswordImageView" fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" />
-                           </graphic></Button>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets left="150.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label fx:id="usernameHelpLabel">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
                      </children>
-                     <VBox.margin>
-                        <Insets left="150.0" />
-                     </VBox.margin>
-                  </HBox>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="600.0" spacing="2.0">
+                           <children>
+                              <Label text="Password: " />
+                              <StackPane prefHeight="26.0" prefWidth="171.0">
+                                 <children>
+                                    <TextField fx:id="passwordTextField" />
+                                    <PasswordField fx:id="hiddenPasswordField" />
+                                 </children>
+                              </StackPane>
+                              <Button fx:id="viewPasswordButton" mnemonicParsing="false">
+                                 <graphic>
+                                    <ImageView fx:id="viewPasswordImageView" fitHeight="18.0" fitWidth="17.0" pickOnBounds="true" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="150.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label fx:id="passwordHelpLabel">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                   <HBox alignment="CENTER" prefHeight="27.0" prefWidth="600.0" spacing="40.0">
                      <children>
                         <Button fx:id="enterButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Enter">
@@ -64,8 +83,11 @@
                   <Label fx:id="browseProductsWithoutAccountLabel" text="Browse products without account" />
                </children>
                <StackPane.margin>
-                  <Insets top="20.0" />
+                  <Insets />
                </StackPane.margin>
+               <padding>
+                  <Insets bottom="15.0" top="10.0" />
+               </padding>
             </VBox>
          </children>
       </StackPane>
