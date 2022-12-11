@@ -27,4 +27,12 @@ public class DatabaseManager {
     }
 
 
+    public String getUsernameIfInTable (String newUsername){
+        return databaseTalker.getUsernameIfInTable(newUsername);
+    }
+
+    public String getEmailIfInTable(String newEmail) {
+        return databaseTalker.getEmailIfInTable(newEmail);
+    }
+    
 }

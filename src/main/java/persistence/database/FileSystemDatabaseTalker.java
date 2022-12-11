@@ -24,6 +24,16 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
 
     }
 
+    @Override
+    public String getUsernameIfInTable(String newUsername) {
+        return currentDBConnection.getUsernameIfInTable(newUsername);
+    }
+
+    @Override
+    public String getEmailIfInTable(String newEmail) {
+        return currentDBConnection.getEmailIfInTable(newEmail);
+    }
+
     private boolean checkConnection(){
         return currentDBConnection.getConnection() != null;
     }

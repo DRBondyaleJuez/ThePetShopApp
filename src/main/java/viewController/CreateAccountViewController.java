@@ -1,8 +1,6 @@
 package viewController;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import controller.CreateAccountController;
-import controller.SignInController;
 import core.ObservableView;
 import core.ViewObserver;
 import javafx.event.ActionEvent;
@@ -15,13 +13,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import persistence.assets.EyeIconType;
 import persistence.assets.LogoType;
 
 import java.io.ByteArrayInputStream;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -157,52 +153,60 @@ public class CreateAccountViewController implements Initializable, ObservableVie
             @Override
             public void handle(ActionEvent actionEvent) {
 
-                boolean validUsername = checkUsername();
-                boolean validPassword = checkPassword();
-                boolean validEmail = checkEmail();
-
                 String newUsername = usernameTextField.getText();
                 String newUserPassword = passwordField1.getText();
+                String newUserPassword2 = passwordField2.getText();
                 String newUserEmail = contactEmailTextField.getText();
 
-                if(validUsername && validPassword && validEmail){
+                boolean isDataValid = checkNewUserDataValidity(newUsername,newUserPassword,newUserPassword2,newUserEmail);
+                if(isDataValid){
                     System.out.println("Username: " + newUsername);
                     System.out.println("Password: " + newUserPassword);
-                    System.out.println("Password: " + passwordField2.getText());
+                    System.out.println("Password: " + newUserPassword2);
                     System.out.println("Email: " + newUserEmail);
 
-                    //Update SQL Table
                     boolean newUserHasBeenAdded = addNewUserToDatabase(newUsername,newUserPassword,newUserEmail);
-
-                    /*
+                                       /*
                     for (ViewObserver stalker : observerList) {
                         stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
                     }
                      */
-                } else {
-                    System.out.println("Something is wrong. Unable to create a new account. Check fields and field help labels");
-
                 }
-
             }
         };
     }
 
+    public boolean checkNewUserDataValidity(String newUsername, String newUserPassword, String newUserPassword2, String newUserEmail){
+        boolean validUsername = checkUsername(newUsername);
+        boolean validPassword = checkPassword(newUserPassword,newUserPassword2);
+        boolean validEmail = checkEmail(newUserEmail);
 
+        if(validUsername && validPassword && validEmail){
+            return true;
+        } else {
+            System.out.println("Something is wrong. Unable to create a new account. Check fields and field help labels");
+            return false;
+        }
+    }
 
-
-    private boolean checkUsername(){
+    private boolean checkUsername(String currentUsername){
         //TODO: use the controller's persistence to compare with other name in database and confirm it is new
-        String currentUsername = usernameTextField.getText();
 
-        if(currentUsername.isEmpty() || currentUsername.length() < 2 || usernameContainsNoSymbols(currentUsername)){
-            usernameHelpLabel.setText("Not a valid Username. It must contain at least 2 characters (No punctuation marks or Symbols).");
+        if(currentUsername.length() < 2 || currentUsername.length() > 50 || usernameContainsSymbols(currentUsername)){
+            usernameHelpLabel.setText("Not a valid Username. It must contain between 2 and 50 characters (No punctuation marks or Symbols).");
             usernameHelpLabel.setUnderline(true);
             Color color = Color.DARKRED;
             usernameHelpLabel.setTextFill(color);
             return false;
         }
-        System.out.println("Comparing with database ...");
+
+        if(!controller.isNameUnique(currentUsername)){
+            usernameHelpLabel.setText("This username already exists please try another username.");
+            usernameHelpLabel.setUnderline(true);
+            Color color = Color.DARKRED;
+            usernameHelpLabel.setTextFill(color);
+            return false;
+        }
 
         usernameHelpLabel.setText("Valid Username");
         Color color = Color.LIGHTGREEN;
@@ -210,18 +214,14 @@ public class CreateAccountViewController implements Initializable, ObservableVie
         return true;
     }
 
-    private boolean usernameContainsNoSymbols(String username) {
+    private boolean usernameContainsSymbols(String username) {
         //Source: https://stackoverflow.com/questions/24191040/checking-to-see-if-a-string-is-letters-spaces-only
         Pattern p = Pattern.compile("^[ \\w]+$");
         Matcher m = p.matcher(username);
-        return m.matches();
+        return !m.matches();
     }
 
-    private boolean checkPassword(){
-
-        String password1 = passwordField1.getText();
-        String password2 = passwordField2.getText();
-        System.out.println(password1.length());
+    private boolean checkPassword(String password1,String password2){
 
         if(!Objects.equals(password1, password2)){
             passwordHelpLabel.setText("The passwords don't match");
@@ -247,10 +247,16 @@ public class CreateAccountViewController implements Initializable, ObservableVie
         }
     }
 
-    private boolean checkEmail(){
-        String email = contactEmailTextField.getText();
+    private boolean checkEmail(String email ){
         String[] splitEmail = email.split("@");
         if(splitEmail.length == 2 && splitEmail[0].length() > 0 && splitEmail[1].length() > 0 ){
+            if(!controller.isEmailUnique(email)){
+                usernameHelpLabel.setText("This email has already been associated to another username.");
+                usernameHelpLabel.setUnderline(true);
+                Color color = Color.DARKRED;
+                usernameHelpLabel.setTextFill(color);
+                return false;
+            }
             contactEmailHelpLabel.setText("Valid Email. Confirmation will be sent.");
             Color color = Color.LIGHTGREEN;
             contactEmailHelpLabel.setTextFill(color);
@@ -264,9 +270,7 @@ public class CreateAccountViewController implements Initializable, ObservableVie
         }
     }
     private boolean addNewUserToDatabase(String newUsername, String newUserPassword, String newUserEmail) {
-
         return controller.addNewUserToDatabase(newUsername, newUserPassword, newUserEmail);
-
     }
 
     @Override

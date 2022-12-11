@@ -7,6 +7,7 @@ import persistence.database.DatabaseManager;
 import utils.EncryptionHandler;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.UUID;
 
 public class CreateAccountController {
@@ -58,8 +59,33 @@ public class CreateAccountController {
         return encryptionHandler.encrypt(textToDecrypt);
     }
 
-    private boolean isNameUnique(String newUsername){
-        return false;
+    public boolean isNameUnique(String newUsername){
+
+        String returnedUsername = databaseManager.getUsernameIfInTable(newUsername);
+
+        if (!Objects.equals(newUsername, returnedUsername)) {
+            System.out.println("EVERYTHING WAS CORRECT. The new username is unique");
+            return true;
+        } else {
+            System.out.println("SOMETHING WENT WRONG. The new username is not unique");
+            return false;
+        }
+    }
+
+
+    public boolean isEmailUnique(String newEmail){
+
+        String newEmailEncrypted = encryptText(newEmail);
+        String returnedEmail = databaseManager.getEmailIfInTable(newEmailEncrypted);
+        String returnedEmailDecrypted = decryptText(returnedEmail);
+
+        if (!Objects.equals(newEmail, returnedEmailDecrypted)) {
+            System.out.println("EVERYTHING WAS CORRECT. The new email is unique");
+            return true;
+        } else {
+            System.out.println("SOMETHING WENT WRONG. The new email is not unique");
+            return false;
+        }
     }
 
 }

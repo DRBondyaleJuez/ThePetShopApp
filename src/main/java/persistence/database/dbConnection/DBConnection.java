@@ -1,6 +1,7 @@
 package persistence.database.dbConnection;
 
 import java.sql.*;
+import java.util.Objects;
 import java.util.UUID;
 
 public class DBConnection {
@@ -73,6 +74,57 @@ public class DBConnection {
         return true;
     }
 
+    public String getUsernameIfInTable(String newUsername) {
+
+        String sql = "SELECT * " +
+                "FROM users " +
+                "WHERE username = '" + newUsername + "'";
+        String returnedUsername = "";
+        try (
+                PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            System.out.println("Amount of actors: " + resultSet.getFetchSize());
+
+            System.out.println(resultSet);
+            while(resultSet.next()) {
+                returnedUsername = resultSet.getString("username");
+                System.out.println(returnedUsername);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return returnedUsername;
+    }
+
+    public String getEmailIfInTable(String newEmail) {
+
+        String sql = "SELECT * " +
+                "FROM users " +
+                "WHERE email = '" + newEmail + "'";
+        String returnedEmail = "";
+        try (
+                PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            System.out.println("Amount of actors: " + resultSet.getFetchSize());
+
+            System.out.println(resultSet);
+            while(resultSet.next()) {
+                returnedEmail = resultSet.getString("email");
+                System.out.println(returnedEmail);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return returnedEmail;
+    }
 
     public String properCase(String s) {
         String result = s;
