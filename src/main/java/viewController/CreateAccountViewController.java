@@ -26,6 +26,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CreateAccountViewController implements Initializable, ObservableView {
 
@@ -191,8 +193,10 @@ public class CreateAccountViewController implements Initializable, ObservableVie
 
     private boolean checkUsername(){
         //TODO: use the controller's persistence to compare with other name in database and confirm it is new
-        if(usernameTextField.getText().isEmpty()){
-            usernameHelpLabel.setText("Not a valid Username");
+        String currentUsername = usernameTextField.getText();
+
+        if(currentUsername.isEmpty() || currentUsername.length() < 2 || usernameContainsNoSymbols(currentUsername)){
+            usernameHelpLabel.setText("Not a valid Username. It must contain at least 2 characters (No punctuation marks or Symbols).");
             usernameHelpLabel.setUnderline(true);
             Color color = Color.DARKRED;
             usernameHelpLabel.setTextFill(color);
@@ -204,6 +208,13 @@ public class CreateAccountViewController implements Initializable, ObservableVie
         Color color = Color.LIGHTGREEN;
         usernameHelpLabel.setTextFill(color);
         return true;
+    }
+
+    private boolean usernameContainsNoSymbols(String username) {
+        //Source: https://stackoverflow.com/questions/24191040/checking-to-see-if-a-string-is-letters-spaces-only
+        Pattern p = Pattern.compile("^[ \\w]+$");
+        Matcher m = p.matcher(username);
+        return m.matches();
     }
 
     private boolean checkPassword(){
