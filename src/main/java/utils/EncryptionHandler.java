@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.UUID;
+
 public class EncryptionHandler {
 
     private final String key;
@@ -12,8 +14,8 @@ public class EncryptionHandler {
     public String encrypt(String textToEncrypt){
 
         //Turn string to corresponding byte array
-        byte[] byteArrayToEncrypt = textToEncrypt.getBytes();
         byte[] keyByteArray = key.getBytes();
+        byte[] byteArrayToEncrypt = textToEncrypt.getBytes();
         byte[] encryptedByteArray = new byte[byteArrayToEncrypt.length];
         for (int i = 0; i < byteArrayToEncrypt.length; i++) {
             encryptedByteArray[i] = (byte) (byteArrayToEncrypt[i] ^ keyByteArray[i% keyByteArray.length]);
@@ -28,8 +30,8 @@ public class EncryptionHandler {
     public String decrypt(String textToDecrypt){
 
         //Turn string to corresponding byte array
-        byte[] byteArrayToDecrypt = textToDecrypt.getBytes();
         byte[] keyByteArray = key.getBytes();
+        byte[] byteArrayToDecrypt = textToDecrypt.getBytes();
         byte[] decryptedByteArray = new byte[byteArrayToDecrypt.length];
         for (int i = 0; i < byteArrayToDecrypt.length; i++) {
             decryptedByteArray[i] = (byte) (byteArrayToDecrypt[i] ^ keyByteArray[i% keyByteArray.length]);

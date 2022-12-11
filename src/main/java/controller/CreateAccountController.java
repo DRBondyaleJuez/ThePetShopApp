@@ -56,7 +56,7 @@ public class CreateAccountController {
     }
 
     private String decryptText(String textToDecrypt){
-        return encryptionHandler.encrypt(textToDecrypt);
+        return encryptionHandler.decrypt(textToDecrypt);
     }
 
     public boolean isNameUnique(String newUsername){

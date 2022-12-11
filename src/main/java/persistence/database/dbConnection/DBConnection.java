@@ -56,6 +56,7 @@ public class DBConnection {
 
             System.out.println("Amount of actors: " + resultSet.getFetchSize());
 
+            //This is not working properly. Investigate the returned resultset when inserting----------------------------------
             System.out.println(resultSet);
             while(resultSet.next()) {
                 String returnedUsername = resultSet.getString("username");
