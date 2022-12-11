@@ -4,6 +4,7 @@ import persistence.assets.AssetManager;
 import persistence.assets.EyeIconType;
 import persistence.assets.LogoType;
 import persistence.database.DatabaseManager;
+import utils.EncryptionHandler;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -13,12 +14,14 @@ public class CreateAccountController {
     //PERSISTENCE perhaps assetManager and databaseManager
     private final AssetManager assetManager;
     private final DatabaseManager databaseManager;
+    private final EncryptionHandler encryptionHandler;
 
 
     public CreateAccountController() {
 
         assetManager = AssetManager.getInstance();
         databaseManager = DatabaseManager.getInstance();
+        encryptionHandler = new EncryptionHandler();
 
     }
 
@@ -36,7 +39,7 @@ public class CreateAccountController {
         UUID newUserUUID = generateNewUUID();
         Timestamp newUserCreationTimeStamp = generateCurrentTimeStamp();
 
-        return databaseManager.addNewUserToDatabase(newUserUUID,newUsername, newUserPassword, newUserEmail,newUserCreationTimeStamp);
+        return databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptText(newUserPassword), encryptText(newUserEmail),newUserCreationTimeStamp);
     }
 
     private UUID generateNewUUID(){
@@ -45,6 +48,18 @@ public class CreateAccountController {
 
     private Timestamp generateCurrentTimeStamp() {
         return new Timestamp(System.currentTimeMillis());
+    }
+
+    private String encryptText(String textToEncrypt){
+        return encryptionHandler.encrypt(textToEncrypt);
+    }
+
+    private String decryptText(String textToDecrypt){
+        return encryptionHandler.encrypt(textToDecrypt);
+    }
+
+    private boolean isNameUnique(String newUsername){
+        return false;
     }
 
 }
