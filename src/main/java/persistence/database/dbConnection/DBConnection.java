@@ -46,8 +46,8 @@ public class DBConnection {
 
         //TODO: Explore properly the returning to usethe information of the returned clase from the postgreSQL
 
-        String sql = "INSERT INTO users (user_id,username,password,email,date_created)" +
-                     "VALUES ('" + newUserUUID + "','" + newUsername + "','" + newUserPassword + "','" + newUserEmail + "','" + newUserCreationTimeStamp + "')" +
+        String sql = "INSERT INTO users (user_id,username,password,email,date_created) " +
+                     "VALUES ('" + newUserUUID + "','" + newUsername + "','" + newUserPassword + "','" + newUserEmail + "','" + newUserCreationTimeStamp + "') " +
                      "RETURNING *";
         try (
                 PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
@@ -127,6 +127,29 @@ public class DBConnection {
         return returnedEmail;
     }
 
+    public String getCorrespondingEncryptedPassword(String username) {
+        String sql = "SELECT * " +
+                "FROM users " +
+                "WHERE username = '" + username + "'";
+        String returnedPassword = "";
+        try (
+                PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            System.out.println("Amount of actors: " + resultSet.getFetchSize());
+
+            System.out.println(resultSet);
+            while(resultSet.next()) {
+                returnedPassword = resultSet.getString("password");
+                System.out.println(returnedPassword);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return returnedPassword;
+    }
     public String properCase(String s) {
         String result = s;
         try (

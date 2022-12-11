@@ -9,4 +9,6 @@ public interface DatabaseTalker {
     String getUsernameIfInTable(String newUsername);
 
     String getEmailIfInTable(String newEmail);
+
+    String getCorrespondingEncryptedPassword(String username);
 }

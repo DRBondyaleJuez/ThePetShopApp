@@ -34,6 +34,11 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
         return currentDBConnection.getEmailIfInTable(newEmail);
     }
 
+    @Override
+    public String getCorrespondingEncryptedPassword(String username) {
+        return currentDBConnection.getCorrespondingEncryptedPassword(username);
+    }
+
     private boolean checkConnection(){
         return currentDBConnection.getConnection() != null;
     }

@@ -34,5 +34,8 @@ public class DatabaseManager {
     public String getEmailIfInTable(String newEmail) {
         return databaseTalker.getEmailIfInTable(newEmail);
     }
-    
+
+    public String getCorrespondingEncryptedPassword(String username) {
+        return databaseTalker.getCorrespondingEncryptedPassword(username);
+    }
 }

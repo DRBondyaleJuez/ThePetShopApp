@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import persistence.assets.EyeIconType;
 import persistence.assets.LogoType;
 
@@ -68,6 +69,12 @@ public class SignInViewController implements Initializable, ObservableView {
     @FXML
     private Label browseProductsWithoutAccountLabel;
 
+    @FXML
+    private Label usernameHelpLabel;
+
+    @FXML
+    private Label passwordHelpLabel;
+
 
     public SignInViewController() {
 
@@ -114,17 +121,56 @@ public class SignInViewController implements Initializable, ObservableView {
             public void handle(ActionEvent actionEvent) {
                 replicateContentInTexFieldAndPasswordField();
                 //TODO: compare the username with the database and compare the password with the database through the controller's persistence
-                // (REMEBER TO ENCRYPT THE PASSWORD SAME AS DURING THE CREATION OF THE ACOUNT)
-                System.out.println("Username: " + usernameTextField.getText());
-                System.out.println("Password: " + passwordTextField.getText());
-                if(true){
+                // (REMEMBER TO ENCRYPT THE PASSWORD SAME AS DURING THE CREATION OF THE ACCOUNT)
+                String enteredUsername = usernameTextField.getText();
+                String enteredPassword = passwordTextField.getText();
+                boolean validCredentials = checkCredentials(enteredUsername,enteredPassword);
+                if(validCredentials){
+
+                    System.out.println("Username: " + enteredUsername);
+                    System.out.println("Password: " + enteredPassword);
+
+                    /*
                     for (ViewObserver stalker : observerList) {
                         stalker.changeView(ViewObserver.PossibleViews.PROFILE);
                     }
+                     */
+                }else{
+                    System.out.println("Invalid credentials check page for details in the help sections");
                 }
             }
         };
 
+    }
+
+    boolean checkCredentials(String enteredUsername,String enteredPassword){
+        boolean usernameValidity = controller.verifyUsername(enteredUsername);
+        if(!usernameValidity){
+            usernameHelpLabel.setText("The username is not valid.");
+            usernameHelpLabel.setUnderline(true);
+            Color color = Color.DARKRED;
+            usernameHelpLabel.setTextFill(color);
+            return false;
+        } else {
+            usernameHelpLabel.setText("Valid username.");
+            Color color = Color.LIGHTGREEN;
+            usernameHelpLabel.setTextFill(color);
+        }
+
+        boolean passwordValidity = controller.verifyPassword(enteredUsername,enteredPassword);
+        if(!passwordValidity){
+            passwordHelpLabel.setText("The password is not valid.");
+            passwordHelpLabel.setUnderline(true);
+            Color color = Color.DARKRED;
+            passwordHelpLabel.setTextFill(color);
+            return false;
+        } else {
+            passwordHelpLabel.setText("Valid password.");
+            Color color = Color.LIGHTGREEN;
+            passwordHelpLabel.setTextFill(color);
+        }
+
+        return (usernameValidity && passwordValidity);
     }
 
     //Password related events
