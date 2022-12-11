@@ -22,9 +22,8 @@ public class EncryptionHandler {
         }
 
         //Turn encrypted byte array to corresponding string
-        String encryptedText= new String(encryptedByteArray);
 
-        return encryptedText;
+        return new String(encryptedByteArray);
     }
 
     public String decrypt(String textToDecrypt){
@@ -38,8 +37,7 @@ public class EncryptionHandler {
         }
 
         //Turn decrypted byte array to corresponding string
-        String decryptedText = new String(decryptedByteArray);
-        return decryptedText;
+        return new String(decryptedByteArray);
     }
 
 }
