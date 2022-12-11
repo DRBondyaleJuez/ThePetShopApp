@@ -42,8 +42,12 @@ public class DBConnection {
     }
 
     public boolean addNewUserToDatabase(UUID newUserUUID, String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp){
+
+        //TODO: Explore properly the returning to usethe information of the returned clase from the postgreSQL
+
         String sql = "INSERT INTO users (user_id,username,password,email,date_created)" +
-                     "VALUES ('" + newUserUUID + "','" + newUsername + "','" + newUserPassword + "','" + newUserEmail + "','" + newUserCreationTimeStamp + "')";
+                     "VALUES ('" + newUserUUID + "','" + newUsername + "','" + newUserPassword + "','" + newUserEmail + "','" + newUserCreationTimeStamp + "')" +
+                     "RETURNING *";
         try (
                 PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
 
@@ -52,6 +56,16 @@ public class DBConnection {
             System.out.println("Amount of actors: " + resultSet.getFetchSize());
 
             System.out.println(resultSet);
+            while(resultSet.next()) {
+                String returnedUsername = resultSet.getString("username");
+                System.out.println(returnedUsername);
+
+                if (newUsername == returnedUsername) {
+                    System.out.println("EVERYTHING WAS CORRECT");
+                } else {
+                    System.out.println("SOMETHING WAS WRONG");
+                }
+            }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
