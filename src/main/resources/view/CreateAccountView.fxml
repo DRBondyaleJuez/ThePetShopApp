@@ -55,7 +55,7 @@
                               <HBox prefHeight="26.0" prefWidth="287.0" spacing="10.0">
                                  <children>
                                     <Label text="Username" textFill="WHITE" />
-                                    <TextField fx:id="usernameTextField" prefHeight="25.0" prefWidth="226.0" />
+                                    <TextField fx:id="usernameTextField" prefHeight="25.0" prefWidth="226.0" promptText="Type new username" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
@@ -81,7 +81,7 @@
                                     <StackPane prefHeight="30.0" prefWidth="183.0">
                                        <children>
                                           <TextField fx:id="passwordTextField1" prefHeight="25.0" prefWidth="173.0" />
-                                          <PasswordField fx:id="passwordField1" prefHeight="25.0" prefWidth="178.0" />
+                                          <PasswordField fx:id="passwordField1" prefHeight="25.0" prefWidth="178.0" promptText="Type new password" />
                                        </children>
                                     </StackPane>
                                     <Button fx:id="viewPasswordButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
@@ -99,7 +99,7 @@
                               <HBox prefHeight="26.0" prefWidth="287.0" spacing="10.0">
                                  <children>
                                     <Label text="Repeat Password" textFill="WHITE" />
-                                    <PasswordField fx:id="passwordField2" prefHeight="25.0" prefWidth="188.0" />
+                                    <PasswordField fx:id="passwordField2" prefHeight="25.0" prefWidth="188.0" promptText="Copy the password above" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
@@ -124,7 +124,7 @@
                               <HBox prefHeight="26.0" prefWidth="287.0" spacing="10.0">
                                  <children>
                                     <Label text="Contact E-mail" textFill="WHITE" />
-                                    <TextField fx:id="contactEmailTextField" prefHeight="25.0" prefWidth="200.0" />
+                                    <TextField fx:id="contactEmailTextField" prefHeight="25.0" prefWidth="200.0" promptText="Introduce a email to contact you" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />

@@ -21,7 +21,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="600.0" spacing="2.0">
                            <children>
                               <Label text="Username: " />
-                              <TextField fx:id="usernameTextField" prefHeight="25.0" prefWidth="168.0" />
+                              <TextField fx:id="usernameTextField" prefHeight="25.0" prefWidth="168.0" promptText="Type username or email" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -45,7 +45,7 @@
                               <StackPane prefHeight="26.0" prefWidth="171.0">
                                  <children>
                                     <TextField fx:id="passwordTextField" />
-                                    <PasswordField fx:id="hiddenPasswordField" />
+                                    <PasswordField fx:id="hiddenPasswordField" promptText="Type password" />
                                  </children>
                               </StackPane>
                               <Button fx:id="viewPasswordButton" mnemonicParsing="false">
