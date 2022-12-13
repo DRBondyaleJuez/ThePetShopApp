@@ -124,7 +124,7 @@
                               <HBox prefHeight="26.0" prefWidth="287.0" spacing="10.0">
                                  <children>
                                     <Label text="Contact E-mail" textFill="WHITE" />
-                                    <TextField fx:id="contactEmailTextField" prefHeight="25.0" prefWidth="200.0" promptText="Introduce a email to contact you" />
+                                    <TextField fx:id="contactEmailTextField" prefHeight="25.0" prefWidth="200.0" promptText="Introduce an email to contact you" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
