@@ -1,17 +1,221 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-
-            prefHeight="400.0" prefWidth="600.0">
-    <children>
-        <Label fx:id="testLabel" text="Label" />
-    </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc4b06" height="424.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <VBox prefHeight="424.0" prefWidth="600.0">
+         <children>
+            <StackPane prefHeight="42.0" prefWidth="600.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="60.0" stroke="BLACK" strokeType="INSIDE" width="600.0">
+                     <fill>
+                        <LinearGradient endX="0.861904761904762" endY="0.4380952380952381" startX="0.44285714285714284" startY="0.10952380952380952">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.6675000190734863" green="0.8899999856948853" blue="0.7120000123977661" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.5440613026819922">
+                                 <color>
+                                    <Color red="0.6675000190734863" green="0.8899999856948853" blue="0.7120000123977661" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.7843137383460999" green="0.9372549057006836" blue="0.8196078538894653" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </fill></Rectangle>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="topLogoImageView" fitHeight="51.0" fitWidth="292.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin></ImageView>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="400.0">
+                           <children>
+                              <Label text="Welcome,">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></Label>
+                              <Label fx:id="usernameLabel" text="username" underline="true">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></Label>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </HBox>
+                     </children>
+                     <StackPane.margin>
+                        <Insets bottom="5.0" left="10.0" top="5.0" />
+                     </StackPane.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </StackPane>
+            <HBox prefHeight="366.0" prefWidth="600.0">
+               <children>
+                  <VBox prefHeight="314.0" prefWidth="394.0">
+                     <children>
+                        <HBox prefHeight="32.0" prefWidth="400.0">
+                           <children>
+                              <Label prefHeight="35.0" prefWidth="385.0" text="RECENT PURCHASES" textFill="#0f0f0f">
+                                 <font>
+                                    <Font name="Arial Bold" size="22.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="292.0" spacing="4.0">
+                                 <children>
+                                    <Label fx:id="toFirstPageArrow" text="⪻">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font></Label>
+                                    <Label fx:id="previousPageArrow" text="◀">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font></Label>
+                                    <TextField fx:id="currentPageNumberTextField" alignment="CENTER" prefHeight="25.0" prefWidth="42.0" text="1">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font></TextField>
+                                    <Label fx:id="nextPageArrow" text="▶">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font></Label>
+                                    <Label fx:id="toLastPageArrow" text="⪼">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font></Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </HBox>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </HBox>
+                        <ListView fx:id="recentPurchasesListView" prefHeight="318.0" prefWidth="392.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="333.0" prefWidth="151.0" spacing="20.0">
+                     <children>
+                        <ImageView fx:id="petShopingDecorationImageView" fitHeight="148.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin></ImageView>
+                        <StackPane fx:id="continueBrowsingPseudoButton" prefHeight="168.0" prefWidth="200.0">
+                           <children>
+                              <Circle radius="73.0" strokeType="INSIDE">
+                                 <fill>
+                                    <RadialGradient centerX="0.4388888888888889" centerY="0.40476190476190477" focusAngle="169.99" focusDistance="-0.023255813953488413" radius="0.9186046511627908">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color red="0.4650000035762787" green="0.9300000071525574" blue="0.565750002861023" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color red="0.8677499890327454" green="0.8899999856948853" blue="0.8454999923706055" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </RadialGradient>
+                                 </fill>
+                                 <stroke>
+                                    <LinearGradient endX="0.861904761904762" endY="0.4380952380952381" startX="0.44285714285714284" startY="0.10952380952380952">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color red="0.3815789520740509" green="0.3815789520740509" blue="0.3815789520740509" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="0.5440613026819919">
+                                             <color>
+                                                <Color red="0.3815789520740509" green="0.3815789520740509" blue="0.3815789520740509" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color red="0.9342105388641357" green="0.9342105388641357" blue="0.9342105388641357" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </LinearGradient>
+                                 </stroke>
+                              </Circle>
+                              <Label lineSpacing="5.0" prefHeight="87.0" prefWidth="111.0" text="CONTINUE BROWSING PRODUCTS" textAlignment="CENTER" wrapText="true">
+                                 <font>
+                                    <Font name="Arial Bold" size="19.0" />
+                                 </font>
+                                 <textFill>
+                                    <LinearGradient endX="1.0" endY="1.0" startX="0.3571428571428571" startY="0.19047619047619047">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color red="0.46000000834465027" green="0.20975999534130096" blue="0.018400000408291817" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="0.007662835249042145">
+                                             <color>
+                                                <Color red="0.46000000834465027" green="0.20975999534130096" blue="0.018400000408291817" />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color red="0.6000000238418579" green="0.5659999847412109" blue="0.5400000214576721" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </LinearGradient>
+                                 </textFill>
+                              </Label>
+                           </children>
+                        </StackPane>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="5.0" right="10.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </VBox>
+   </children>
 
 </AnchorPane>
