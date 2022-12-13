@@ -20,6 +20,9 @@ public class FileSystemAssetTalker implements  AssetTalker {
             case BLACK:
                 path = path + "blackLogo.PNG";
                 break;
+            case HORIZONTAL:
+                path = path + "horizontalLogo.PNG";
+                break;
             default:
                 //TODO: log
                 System.out.println("Somehow not available logo type: " + logoType);
@@ -44,6 +47,13 @@ public class FileSystemAssetTalker implements  AssetTalker {
                 System.out.println("Somehow not available eye icon type: " + eyeIconType);
                 break;
         }
+        return loadFileData(path);
+    }
+
+    @Override
+    public byte[] getDecorationImageData() {
+        String path = "/assets/images/aiDecoration.png";
+
         return loadFileData(path);
     }
 

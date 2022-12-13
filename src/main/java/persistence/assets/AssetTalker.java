@@ -9,4 +9,6 @@ public interface AssetTalker {
 
     byte[] getEyeIconImageData(EyeIconType eyeIconType);
 
+    byte[] getDecorationImageData();
+
 }

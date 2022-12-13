@@ -26,4 +26,8 @@ public class AssetManager {
         return assetTalker.getEyeIconImageData(eyeIconType);
     }
 
+    public byte[] getDecorationImageData(){
+        return assetTalker.getDecorationImageData();
+    }
+
 }
