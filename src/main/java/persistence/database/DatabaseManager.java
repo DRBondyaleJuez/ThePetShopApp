@@ -1,5 +1,8 @@
 package persistence.database;
 
+import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
+import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
+
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -27,15 +30,8 @@ public class DatabaseManager {
     }
 
 
-    public String getUsernameIfInTable (String newUsername){
-        return databaseTalker.getUsernameIfInTable(newUsername);
+    public String getRecordFromTable(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnOfInterest) {
+        return databaseTalker.getRecordFromTable(tableName, refColumn, reference,columnOfInterest);
     }
 
-    public String getEmailIfInTable(String newEmail) {
-        return databaseTalker.getEmailIfInTable(newEmail);
-    }
-
-    public String getCorrespondingEncryptedPassword(String username) {
-        return databaseTalker.getCorrespondingEncryptedPassword(username);
-    }
 }

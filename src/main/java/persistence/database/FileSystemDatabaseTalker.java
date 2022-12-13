@@ -1,6 +1,8 @@
 package persistence.database;
 
 import persistence.database.dbConnection.DBConnection;
+import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
+import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -24,19 +26,10 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
 
     }
 
-    @Override
-    public String getUsernameIfInTable(String newUsername) {
-        return currentDBConnection.getUsernameIfInTable(newUsername);
-    }
 
     @Override
-    public String getEmailIfInTable(String newEmail) {
-        return currentDBConnection.getEmailIfInTable(newEmail);
-    }
-
-    @Override
-    public String getCorrespondingEncryptedPassword(String username) {
-        return currentDBConnection.getCorrespondingEncryptedPassword(username);
+    public String getRecordFromTable(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnOfInterest) {
+        return currentDBConnection.getRecordFromTable(tableName, refColumn, reference, columnOfInterest);
     }
 
     private boolean checkConnection(){

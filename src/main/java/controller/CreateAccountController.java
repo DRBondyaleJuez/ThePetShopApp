@@ -4,6 +4,8 @@ import persistence.assets.AssetManager;
 import persistence.assets.EyeIconType;
 import persistence.assets.LogoType;
 import persistence.database.DatabaseManager;
+import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
+import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
 import utils.EncryptionHandler;
 
 import java.sql.Timestamp;
@@ -12,7 +14,6 @@ import java.util.UUID;
 
 public class CreateAccountController {
 
-    //PERSISTENCE perhaps assetManager and databaseManager
     private final AssetManager assetManager;
     private final DatabaseManager databaseManager;
     private final EncryptionHandler encryptionHandler;
@@ -61,7 +62,7 @@ public class CreateAccountController {
 
     public boolean isNameUnique(String newUsername){
 
-        String returnedUsername = databaseManager.getUsernameIfInTable(newUsername);
+        String returnedUsername = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USERNAME, newUsername, UsersTableColumnNameEnums.USERNAME);
 
         if (!Objects.equals(newUsername, returnedUsername)) {
             System.out.println("EVERYTHING WAS CORRECT. The new username is unique");
@@ -76,7 +77,7 @@ public class CreateAccountController {
     public boolean isEmailUnique(String newEmail){
 
         String newEmailEncrypted = encryptText(newEmail);
-        String returnedEmail = databaseManager.getEmailIfInTable(newEmailEncrypted);
+        String returnedEmail = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_EMAIL, newEmailEncrypted, UsersTableColumnNameEnums.USER_EMAIL);
         String returnedEmailDecrypted = decryptText(returnedEmail);
 
         if (!Objects.equals(newEmail, returnedEmailDecrypted)) {
