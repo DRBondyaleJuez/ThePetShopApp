@@ -1,7 +1,9 @@
 package persistence.database.dbConnection;
 
+import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
+import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
+
 import java.sql.*;
-import java.util.Objects;
 import java.util.UUID;
 
 public class DBConnection {
@@ -11,6 +13,7 @@ public class DBConnection {
     private final String user = "postgres";
     private final String password;
     private final Connection currentConnection;
+    private final QueryTranslator queryTranslator;
 
     public DBConnection(String currentDatabase) {
 
@@ -18,6 +21,7 @@ public class DBConnection {
         url = "jdbc:postgresql://localhost/" + database;
         password = new DBPasswordHandler().getPassword();
         currentConnection = connect();
+        queryTranslator = new QueryTranslator();
 
     }
 
@@ -75,81 +79,27 @@ public class DBConnection {
         return true;
     }
 
-    public String getUsernameIfInTable(String newUsername) {
+    public String getRecordFromTable(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnOfInterest){
 
-        String sql = "SELECT * " +
-                "FROM users " +
-                "WHERE username = '" + newUsername + "'";
-        String returnedUsername = "";
+        String sql = queryTranslator.buildSelectQuery(tableName,refColumn,reference);
+
+        String returnedRecord = "";
         try (
-                PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
+            PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            System.out.println("Amount of actors: " + resultSet.getFetchSize());
-
-            System.out.println(resultSet);
             while(resultSet.next()) {
-                returnedUsername = resultSet.getString("username");
-                System.out.println(returnedUsername);
+                returnedRecord = resultSet.getString(queryTranslator.translateEnum(columnOfInterest));
+                System.out.println(returnedRecord);
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return returnedUsername;
+        return returnedRecord;
     }
 
-    public String getEmailIfInTable(String newEmail) {
 
-        String sql = "SELECT * " +
-                "FROM users " +
-                "WHERE email = '" + newEmail + "'";
-        String returnedEmail = "";
-        try (
-                PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            System.out.println("Amount of actors: " + resultSet.getFetchSize());
-
-            System.out.println(resultSet);
-            while(resultSet.next()) {
-                returnedEmail = resultSet.getString("email");
-                System.out.println(returnedEmail);
-
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return returnedEmail;
-    }
-
-    public String getCorrespondingEncryptedPassword(String username) {
-        String sql = "SELECT * " +
-                "FROM users " +
-                "WHERE username = '" + username + "'";
-        String returnedPassword = "";
-        try (
-                PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            System.out.println("Amount of actors: " + resultSet.getFetchSize());
-
-            System.out.println(resultSet);
-            while(resultSet.next()) {
-                returnedPassword = resultSet.getString("password");
-                System.out.println(returnedPassword);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return returnedPassword;
-    }
     public String properCase(String s) {
         String result = s;
         try (
