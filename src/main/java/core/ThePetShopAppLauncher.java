@@ -5,9 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import viewController.ProfilePageViewController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.UUID;
 
 public class ThePetShopAppLauncher extends Application implements ViewObserver {
 
@@ -34,7 +36,6 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
         mainStage.setScene(newScene);
     }
 
-
     @Override
     public void changeView(PossibleViews newView) {
         switch (newView){
@@ -44,8 +45,24 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
             case CREATEACCOUNT:
                 loadCreateAccountView();
                 break;
+            case PRODUCTS:
+                loadProductsView();
+                break;
+            default:
+                loadSignInView();
+                break;
+        }
+
+        mainStage.centerOnScreen();
+        mainStage.show();
+
+    }
+
+    @Override
+    public void changeView(PossibleViews newView,UUID userUUID) {
+        switch (newView){
             case PROFILE:
-                loadProfileView();
+                loadProfileView(userUUID);
                 break;
             case PRODUCTS:
                 loadProductsView();
@@ -67,9 +84,7 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
         loadView("/view/CreateAccountView.fxml");
     }
 
-    private void loadProfileView() {
-        loadView("/view/ProfilePageView.fxml");
-    }
+    private void loadProfileView(UUID userUUID) { profilePageLoadView("/view/ProfilePageView.fxml", userUUID); }
     private void loadProductsView() {
         loadView("/view/ProductsPageView.fxml");
     }
@@ -79,6 +94,22 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
         Parent root = loadPaneLoader(paneLoader);
         ObservableView observableViewController = (ObservableView) paneLoader.getController();
         observableViewController.addObserver(this);
+        Scene newScene = new Scene(root);
+        mainStage.setScene(newScene);
+    }
+
+    private void profilePageLoadView(String sceneResource, UUID userUUID){
+        //Building profile fxml scene
+        FXMLLoader paneLoader = new FXMLLoader(getClass().getResource(sceneResource));
+
+        //Controller needs to be created apart to provide it with the UUID
+        ProfilePageViewController newProfilePageViewController = new ProfilePageViewController(userUUID);
+        paneLoader.setController(newProfilePageViewController);
+        ObservableView observableViewController = (ObservableView) paneLoader.getController();
+        observableViewController.addObserver(this);
+
+        //The loadPaneloader method is called after the view controller has finished setting
+        Parent root = loadPaneLoader(paneLoader);
         Scene newScene = new Scene(root);
         mainStage.setScene(newScene);
     }

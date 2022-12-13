@@ -9,6 +9,7 @@ import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums
 import utils.EncryptionHandler;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class SignInController {
 
@@ -76,6 +77,11 @@ public class SignInController {
             System.out.println("SOMETHING WENT WRONG. The password is not valid");
             return false;
         }
+    }
+
+    public UUID fetchCorrespondingUUID(String username){
+        String stringUUID = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USERNAME, username, UsersTableColumnNameEnums.USER_UUID);
+        return UUID.fromString(stringUUID);
     }
 
     private String encryptText(String textToEncrypt){

@@ -1,5 +1,7 @@
 package core;
 
+import java.util.UUID;
+
 public interface ViewObserver {
 
     enum PossibleViews{
@@ -7,5 +9,7 @@ public interface ViewObserver {
     }
 
     void changeView(PossibleViews newView);
+
+    void changeView(PossibleViews newView, UUID userUUID);
 
 }

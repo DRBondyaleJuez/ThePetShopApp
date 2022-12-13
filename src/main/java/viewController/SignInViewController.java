@@ -25,6 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class SignInViewController implements Initializable, ObservableView {
 
@@ -130,11 +131,14 @@ public class SignInViewController implements Initializable, ObservableView {
                     System.out.println("Username: " + enteredUsername);
                     System.out.println("Password: " + enteredPassword);
 
-                    /*
+                    //Start the steps to open profile page
+                    UUID userUUID = controller.fetchCorrespondingUUID(enteredUsername);
+                    System.out.println(userUUID);
+
                     for (ViewObserver stalker : observerList) {
-                        stalker.changeView(ViewObserver.PossibleViews.PROFILE);
+                        stalker.changeView(ViewObserver.PossibleViews.PROFILE,userUUID);
                     }
-                     */
+
                 }else{
                     System.out.println("Invalid credentials check page for details in the help sections");
                 }
