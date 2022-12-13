@@ -32,6 +32,12 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
         return currentDBConnection.getRecordFromTable(tableName, refColumn, reference, columnOfInterest);
     }
 
+    @Override
+    public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnToUpdate, String updatedContent) {
+        return currentDBConnection.updateRecord(tableName,refColumn,reference,columnToUpdate,updatedContent);
+    }
+
+
     private boolean checkConnection(){
         return currentDBConnection.getConnection() != null;
     }

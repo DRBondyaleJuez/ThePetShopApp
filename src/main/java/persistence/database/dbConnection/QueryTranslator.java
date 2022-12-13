@@ -53,10 +53,27 @@ public class QueryTranslator {
             case USER_EMAIL:
                 translation = "email";
                 break;
+            case USER_LAST_LOGIN:
+                translation = "last_login";
+                break;
             default:
                 break;
         }
         return translation;
     }
 
+    public String buildUpdateQuery(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnToUpdate, String updatedContent) {
+
+        String queryRefColumn = translateEnum(refColumn);
+        String queryColumnToUpdate = translateEnum(columnToUpdate);
+        String queryTableName = translateEnum(tableName);
+
+        String sqlQuery = "UPDATE " + queryTableName + " " +
+                "SET " + queryColumnToUpdate + " = '" + updatedContent + "' " +
+                "WHERE " + queryRefColumn + " = '" + reference + "' " +
+                "RETURNING *";
+
+        return sqlQuery;
+
+    }
 }

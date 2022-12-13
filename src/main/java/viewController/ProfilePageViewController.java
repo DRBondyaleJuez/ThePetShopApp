@@ -32,7 +32,12 @@ public class ProfilePageViewController implements Initializable, ObservableView 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        String testText = "The user profile from: " + controller.getProfileUUID() + " with UUID: " + controller.getProfileUsername() + " with email: " + controller.getProfileEmail();
+        //Update LastLogin of the profile
+        controller.updateLastLogin();
+
+
+        String testText = "The user profile from: " + controller.getProfileUUID() + " with UUID: " + controller.getProfileUsername() + " with email: " + controller.getProfileEmail() +"\n" +
+                "Last login: " + controller.getLastLogin();
         testLabel.setText(testText);
 
         //SETTING LAYOUT DETAILS

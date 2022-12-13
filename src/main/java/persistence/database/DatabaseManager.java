@@ -34,4 +34,8 @@ public class DatabaseManager {
         return databaseTalker.getRecordFromTable(tableName, refColumn, reference,columnOfInterest);
     }
 
+    public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnToUpdate, String updatedContent) {
+        return databaseTalker.updateRecord(tableName,refColumn,reference,columnToUpdate,updatedContent);
+    }
+
 }

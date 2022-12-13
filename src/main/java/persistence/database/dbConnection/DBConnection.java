@@ -99,6 +99,30 @@ public class DBConnection {
         return returnedRecord;
     }
 
+    public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference,UsersTableColumnNameEnums columnToUpdate,String updatedContent){
+        String sql = queryTranslator.buildUpdateQuery(tableName,refColumn,reference,columnToUpdate,updatedContent);
+
+        String returnedRecord = "";
+        try (
+                PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                returnedRecord = resultSet.getString(queryTranslator.translateEnum(columnToUpdate));
+            }
+            System.out.println(returnedRecord);
+            if(returnedRecord == updatedContent){
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
 
     public String properCase(String s) {
         String result = s;

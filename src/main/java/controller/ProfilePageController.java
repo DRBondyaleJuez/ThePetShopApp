@@ -6,6 +6,7 @@ import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
 import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
 import utils.EncryptionHandler;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 public class ProfilePageController {
@@ -13,9 +14,9 @@ public class ProfilePageController {
     private final AssetManager assetManager;
     private final DatabaseManager databaseManager;
     private final EncryptionHandler encryptionHandler;
-    UUID profileUUID;
-    String profileUsername;
-    String profileEmail;
+    private final UUID profileUUID;
+    private String profileUsername;
+    private String profileEmail;
 
     public ProfilePageController(UUID userUUUID) {
 
@@ -39,5 +40,18 @@ public class ProfilePageController {
 
     public String getProfileEmail() {
         return profileEmail;
+    }
+
+    public String getLastLogin(){
+        return databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USER_UUID,profileUUID.toString(),UsersTableColumnNameEnums.USER_LAST_LOGIN);
+    }
+
+    public void updateLastLogin() {
+        databaseManager.updateRecord(
+                TableNameEnums.USERS,UsersTableColumnNameEnums.USER_UUID,profileUUID.toString(),UsersTableColumnNameEnums.USER_LAST_LOGIN,generateCurrentTimeStamp().toString()
+        );
+    }
+    private Timestamp generateCurrentTimeStamp() {
+        return new Timestamp(System.currentTimeMillis());
     }
 }
