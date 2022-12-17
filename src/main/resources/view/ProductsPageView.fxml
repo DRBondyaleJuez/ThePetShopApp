@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.shape.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewController.ProductsPageViewController">
-
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="400.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <VBox prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <StackPane prefHeight="50.0" prefWidth="572.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="55.0" stroke="BLACK" strokeType="INSIDE" width="598.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="53.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label text="PRODUCTS" />
+                        <Label text="Username/Identify yourself" />
+                     </children>
+                  </HBox>
+               </children>
+            </StackPane>
+            <HBox prefHeight="30.0" prefWidth="600.0">
+               <children>
+                  <Label text="Search for product: " />
+                  <TextField prefHeight="25.0" prefWidth="352.0" />
+                  <Button mnemonicParsing="false" text="Button" />
+               </children>
+            </HBox>
+            <ListView prefHeight="275.0" prefWidth="600.0" />
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>
