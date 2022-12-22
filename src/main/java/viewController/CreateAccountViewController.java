@@ -91,11 +91,11 @@ public class CreateAccountViewController implements Initializable, ObservableVie
 
     }
 
-
     private void setLogoImage() {
         Image colouredLogoImage = new Image(new ByteArrayInputStream(controller.getLogoImageData(LogoType.BLACK)));
         logoImageView.setImage(colouredLogoImage);
     }
+
     //Password related events
 
     //View Password Button event handler
