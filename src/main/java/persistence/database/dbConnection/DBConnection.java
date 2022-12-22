@@ -36,7 +36,7 @@ public class DBConnection {
             conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to the PostgreSQL server successfully.");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("SQL ERROR MESSAGE: " + e.getMessage());
         }
 
         return conn;
@@ -74,7 +74,7 @@ public class DBConnection {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("SQL ERROR MESSAGE: " + e.getMessage());
         }
         return true;
     }
@@ -94,7 +94,7 @@ public class DBConnection {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("SQL ERROR MESSAGE: " + e.getMessage());
         }
         return returnedRecord;
     }
