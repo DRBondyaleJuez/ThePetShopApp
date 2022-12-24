@@ -4,6 +4,7 @@ import persistence.assets.AssetManager;
 import persistence.assets.EyeIconType;
 import persistence.assets.LogoType;
 import persistence.database.DatabaseManager;
+import persistence.database.dbConnection.SQLErrorMessageEnums;
 import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
 import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
 import utils.EncryptionHandler;
@@ -36,12 +37,21 @@ public class CreateAccountController {
     }
 
 
-    public boolean addNewUserToDatabase(String newUsername, String newUserPassword, String newUserEmail) {
+    public SQLErrorMessageEnums addNewUserToDatabase(String newUsername, String newUserPassword, String newUserEmail) {
 
         UUID newUserUUID = generateNewUUID();
         Timestamp newUserCreationTimeStamp = generateCurrentTimeStamp();
 
-        return databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptText(newUserPassword), encryptText(newUserEmail),newUserCreationTimeStamp);
+        SQLErrorMessageEnums sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptText(newUserPassword), encryptText(newUserEmail),newUserCreationTimeStamp);
+
+        while(sqlMessage == SQLErrorMessageEnums.UUID){
+            newUserUUID = generateNewUUID();
+            newUserCreationTimeStamp = generateCurrentTimeStamp();
+
+            sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptText(newUserPassword), encryptText(newUserEmail),newUserCreationTimeStamp);
+        }
+
+        return sqlMessage;
     }
 
     private UUID generateNewUUID(){

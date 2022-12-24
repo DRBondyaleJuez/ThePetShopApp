@@ -1,6 +1,7 @@
 package persistence.database;
 
 import persistence.database.dbConnection.DBConnection;
+import persistence.database.dbConnection.SQLErrorMessageEnums;
 import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
 import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
 
@@ -16,10 +17,10 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
     }
 
     @Override
-    public boolean addNewUserToDatabase(UUID newUserUUID, String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp) {
+    public SQLErrorMessageEnums addNewUserToDatabase(UUID newUserUUID, String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp) {
         if(!checkConnection()){
             System.out.println("Unable to connect to the database");
-            return false;
+            return SQLErrorMessageEnums.UNKNOWN_ERROR;
         }
 
         return currentDBConnection.addNewUserToDatabase(newUserUUID,newUsername,newUserPassword,newUserEmail,newUserCreationTimeStamp);

@@ -46,7 +46,7 @@ public class DBConnection {
         return currentConnection;
     }
 
-    public boolean addNewUserToDatabase(UUID newUserUUID, String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp){
+    public SQLErrorMessageEnums addNewUserToDatabase(UUID newUserUUID, String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp){
 
         //TODO: Explore properly the returning to usethe information of the returned clase from the postgreSQL
 
@@ -75,8 +75,24 @@ public class DBConnection {
 
         } catch (SQLException e) {
             System.out.println("SQL ERROR MESSAGE: " + e.getMessage());
+            return interpretSQLErrorMessage(e.getMessage());
         }
-        return true;
+        return SQLErrorMessageEnums.NO_ERROR;
+    }
+
+    public SQLErrorMessageEnums interpretSQLErrorMessage(String sqlErrorMessage){
+
+        if(sqlErrorMessage.contains("users_username_key")){
+            return SQLErrorMessageEnums.USERNAME;
+        }
+        if(sqlErrorMessage.contains("users_email_key")){
+            return SQLErrorMessageEnums.USER_EMAIL;
+        }
+        if(sqlErrorMessage.contains("users_user_id_key")){
+            return SQLErrorMessageEnums.UUID;
+        }
+        return SQLErrorMessageEnums.UNKNOWN_ERROR;
+
     }
 
     public String getRecordFromTable(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnOfInterest){

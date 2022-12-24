@@ -1,5 +1,6 @@
 package persistence.database;
 
+import persistence.database.dbConnection.SQLErrorMessageEnums;
 import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
 import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
 
@@ -24,7 +25,7 @@ public class DatabaseManager {
         return instance;
     }
 
-    public boolean addNewUserToDatabase(UUID newUserUUID,String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp) {
+    public SQLErrorMessageEnums addNewUserToDatabase(UUID newUserUUID, String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp) {
 
         return databaseTalker.addNewUserToDatabase(newUserUUID,newUsername, newUserPassword, newUserEmail,newUserCreationTimeStamp);
     }

@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import persistence.assets.EyeIconType;
 import persistence.assets.LogoType;
+import persistence.database.dbConnection.SQLErrorMessageEnums;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
@@ -167,7 +168,11 @@ public class CreateAccountViewController implements Initializable, ObservableVie
                     System.out.println("Password: " + newUserPassword2);
                     System.out.println("Email: " + newUserEmail);
 
-                    boolean newUserHasBeenAdded = addNewUserToDatabase(newUsername,newUserPassword,newUserEmail);
+                    SQLErrorMessageEnums newUserHasBeenAddedSQLMessage = addNewUserToDatabase(newUsername,newUserPassword,newUserEmail);
+
+                    if(newUserHasBeenAddedSQLMessage != SQLErrorMessageEnums.NO_ERROR){
+                        entryNotUniqueDisplayErrorMessage(newUserHasBeenAddedSQLMessage);
+                    }
                                        /*
                     for (ViewObserver stalker : observerList) {
                         stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
@@ -179,6 +184,28 @@ public class CreateAccountViewController implements Initializable, ObservableVie
                 }
             }
         };
+    }
+
+    private void entryNotUniqueDisplayErrorMessage(SQLErrorMessageEnums sqlErrorMessageEnum){
+        Color color = Color.DARKRED;
+
+        switch(sqlErrorMessageEnum){
+            case UNKNOWN_ERROR:
+            break;
+            case USERNAME:
+                usernameHelpLabel.setText("This username already exists please try another username.");
+                usernameHelpLabel.setUnderline(true);
+                usernameHelpLabel.setTextFill(color);
+            break;
+            case USER_EMAIL:
+                contactEmailHelpLabel.setText("This email has already been associated to another username.");
+                contactEmailHelpLabel.setUnderline(true);
+                contactEmailHelpLabel.setTextFill(color);
+            break;
+
+            default:
+        }
+
     }
 
     public boolean checkNewUserDataValidity(String newUsername, String newUserPassword, String newUserPassword2, String newUserEmail){
@@ -199,14 +226,6 @@ public class CreateAccountViewController implements Initializable, ObservableVie
 
         if(currentUsername.length() < 2 || currentUsername.length() > 50 || usernameContainsSymbols(currentUsername)){
             usernameHelpLabel.setText("Not a valid Username. It must contain between 2 and 50 characters (No punctuation marks or Symbols).");
-            usernameHelpLabel.setUnderline(true);
-            Color color = Color.DARKRED;
-            usernameHelpLabel.setTextFill(color);
-            return false;
-        }
-
-        if(!controller.isNameUnique(currentUsername)){
-            usernameHelpLabel.setText("This username already exists please try another username.");
             usernameHelpLabel.setUnderline(true);
             Color color = Color.DARKRED;
             usernameHelpLabel.setTextFill(color);
@@ -255,13 +274,7 @@ public class CreateAccountViewController implements Initializable, ObservableVie
     private boolean checkEmail(String email ){
         String[] splitEmail = email.split("@");
         if(splitEmail.length == 2 && splitEmail[0].length() > 0 && splitEmail[1].length() > 0 ){
-            if(!controller.isEmailUnique(email)){
-                contactEmailHelpLabel.setText("This email has already been associated to another username.");
-                contactEmailHelpLabel.setUnderline(true);
-                Color color = Color.DARKRED;
-                contactEmailHelpLabel.setTextFill(color);
-                return false;
-            }
+
             contactEmailHelpLabel.setText("Valid Email. Confirmation will be sent.");
             Color color = Color.LIGHTGREEN;
             contactEmailHelpLabel.setTextFill(color);
@@ -274,7 +287,7 @@ public class CreateAccountViewController implements Initializable, ObservableVie
             return false;
         }
     }
-    private boolean addNewUserToDatabase(String newUsername, String newUserPassword, String newUserEmail) {
+    private SQLErrorMessageEnums addNewUserToDatabase(String newUsername, String newUserPassword, String newUserEmail) {
         return controller.addNewUserToDatabase(newUsername, newUserPassword, newUserEmail);
     }
 
