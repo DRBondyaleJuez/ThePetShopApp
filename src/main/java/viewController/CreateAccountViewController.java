@@ -255,8 +255,8 @@ public class CreateAccountViewController implements Initializable, ObservableVie
             passwordHelpLabel.setTextFill(color);
             return  false;
         }
-        if(password1.length() < 8) {
-            passwordHelpLabel.setText("The password must be at least 8 characters long");
+        if(password1.length() < 8 || password1.length() > 499) {
+            passwordHelpLabel.setText("The password must be at least 8 characters long and not excessively long");
             Color color = Color.DARKRED;
             passwordHelpLabel.setUnderline(true);
             passwordHelpLabel.setTextFill(color);

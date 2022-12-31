@@ -42,13 +42,13 @@ public class CreateAccountController {
         UUID newUserUUID = generateNewUUID();
         Timestamp newUserCreationTimeStamp = generateCurrentTimeStamp();
 
-        SQLErrorMessageEnums sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptText(newUserPassword), encryptText(newUserEmail),newUserCreationTimeStamp);
+        SQLErrorMessageEnums sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptText(newUserPassword), newUserEmail,newUserCreationTimeStamp);
 
         while(sqlMessage == SQLErrorMessageEnums.UUID){
             newUserUUID = generateNewUUID();
             newUserCreationTimeStamp = generateCurrentTimeStamp();
 
-            sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptText(newUserPassword), encryptText(newUserEmail),newUserCreationTimeStamp);
+            sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptText(newUserPassword), newUserEmail,newUserCreationTimeStamp);
         }
 
         return sqlMessage;

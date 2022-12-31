@@ -39,9 +39,7 @@ public class SignInController {
         //Verifying the first input (userReference) either email or username
         String returnedUserRef = "";
         if(enteredUserRef.contains("@")){
-            String encryptUserRef = encryptText(enteredUserRef);
-            returnedUserRef = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_EMAIL, encryptUserRef, UsersTableColumnNameEnums.USER_EMAIL);
-            returnedUserRef = decryptText(returnedUserRef);
+            returnedUserRef = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_EMAIL, enteredUserRef, UsersTableColumnNameEnums.USER_EMAIL);
         } else {
             returnedUserRef = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USERNAME, enteredUserRef, UsersTableColumnNameEnums.USERNAME);
         }
@@ -62,8 +60,7 @@ public class SignInController {
         //Retrieving password using the first input (userReference) either email or username
         String returnedPasswordEncrypted = "";
         if(enteredUserRef.contains("@")){
-            String encryptUserRef = encryptText(enteredUserRef);
-            returnedPasswordEncrypted = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USER_EMAIL, encryptUserRef, UsersTableColumnNameEnums.USER_PASSWORD);
+            returnedPasswordEncrypted = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USER_EMAIL, enteredUserRef, UsersTableColumnNameEnums.USER_PASSWORD);
         } else {
             returnedPasswordEncrypted = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USERNAME, enteredUserRef, UsersTableColumnNameEnums.USER_PASSWORD);
         }
@@ -84,14 +81,8 @@ public class SignInController {
         return UUID.fromString(stringUUID);
     }
 
-    private String encryptText(String textToEncrypt){
-        return encryptionHandler.encrypt(textToEncrypt);
-    }
-
     private String decryptText(String textToDecrypt){
         return encryptionHandler.decrypt(textToDecrypt);
     }
 
-    public void addNewUserToDatabase(String newUsername, String newUserPassword, String newUserEmail) {
-    }
 }
