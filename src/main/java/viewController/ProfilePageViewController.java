@@ -8,8 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -51,9 +50,20 @@ public class ProfilePageViewController implements Initializable, ObservableView 
     Label previousPageArrow;
     @FXML
     Label nextPageArrow;
+    @FXML
+    Button optionsButton;
 
     @FXML
     StackPane continueBrowsingPseudoButton;
+
+    @FXML
+    ContextMenu usernameContextMenu;
+
+    @FXML
+    MenuItem settingsMenuItem;
+
+    @FXML
+    MenuItem signOutMenuItem;
 
 
     public ProfilePageViewController(UUID userUUUID) {
@@ -77,6 +87,9 @@ public class ProfilePageViewController implements Initializable, ObservableView 
         setDecorationImage();
 
         //SETTING ON ACTION
+
+        settingsMenuItem.setOnAction(settingsClicked());
+        signOutMenuItem.setOnAction(signOutClicked());
 
         //Back Button
         continueBrowsingPseudoButton.setOnMouseClicked(goToBrowseProducts());
@@ -122,6 +135,25 @@ public class ProfilePageViewController implements Initializable, ObservableView 
 
     }
 
+    private EventHandler<ActionEvent> settingsClicked() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("Settings clicked");
+            }
+        };
+    }
+
+    private EventHandler<ActionEvent> signOutClicked() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("Sign Out clicked");
+            }
+        };
+    }
+
+
     private void setRecentPurchasesListView(int pageNumber){
 
 
@@ -153,6 +185,7 @@ public class ProfilePageViewController implements Initializable, ObservableView 
             @Override
             public void handle(MouseEvent mouseEvent) {
 
+                usernameContextMenu.show(usernameLabel, mouseEvent.getScreenX(), mouseEvent.getScreenY());
                 System.out.println("Username Clicked");
 
 

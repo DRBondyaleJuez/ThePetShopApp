@@ -52,7 +52,16 @@
                               <Label fx:id="usernameLabel" text="username" underline="true">
                                  <font>
                                     <Font size="18.0" />
-                                 </font></Label>
+                                 </font>
+                                 <contextMenu>
+                                    <ContextMenu fx:id="usernameContextMenu">
+                                       <items>
+                                          <MenuItem fx:id="settingsMenuItem" text="Settings" />
+                                          <MenuItem fx:id="signOutMenuItem" text="Sign Out" />
+                                       </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </Label>
                            </children>
                            <opaqueInsets>
                               <Insets />
