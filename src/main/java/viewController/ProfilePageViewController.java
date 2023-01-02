@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import persistence.assets.LogoType;
 
@@ -25,6 +26,7 @@ public class ProfilePageViewController implements Initializable, ObservableView 
 
     private ProfilePageController controller;
     private ArrayList<ViewObserver> observerList;
+    private ListViewFiller listViewfiller;
 
     //TextLabels:
     @FXML
@@ -50,12 +52,11 @@ public class ProfilePageViewController implements Initializable, ObservableView 
     Label previousPageArrow;
     @FXML
     Label nextPageArrow;
-    @FXML
-    Button optionsButton;
 
     @FXML
     StackPane continueBrowsingPseudoButton;
 
+    //ContextMenu and Menu items
     @FXML
     ContextMenu usernameContextMenu;
 
@@ -65,11 +66,15 @@ public class ProfilePageViewController implements Initializable, ObservableView 
     @FXML
     MenuItem signOutMenuItem;
 
+    @FXML
+    ListView purchasesListView;
+
 
     public ProfilePageViewController(UUID userUUUID) {
 
         controller = new ProfilePageController(userUUUID);
         observerList = new ArrayList<>();
+        listViewfiller = new ListViewFiller(controller);
 
     }
 
@@ -85,6 +90,9 @@ public class ProfilePageViewController implements Initializable, ObservableView 
         //SetImages
         setLogoImage();
         setDecorationImage();
+
+        //Set initial listView page 1
+        setPurchasesListView();
 
         //SETTING ON ACTION
 
@@ -119,6 +127,27 @@ public class ProfilePageViewController implements Initializable, ObservableView 
         petShopingDecorationImageView.setImage(decorationImage);
     }
 
+    private void setPurchasesListView(){
+
+        if(purchasesListView.getItems() != null) {
+            purchasesListView.getItems().removeAll();
+        }
+
+
+
+        for (int i = 0; i < controller.getNumberOfEntriesPerPage(); i++) {
+
+            HBox currentHBoxEntry = listViewfiller.getPurchasedProductEntry(i);
+            if(currentHBoxEntry == null) {
+               break;
+            }
+            purchasesListView.getItems().add(currentHBoxEntry);
+        }
+
+
+
+    }
+
     //The recent purchase pseudo button setter section
     private EventHandler<? super MouseEvent> changePurchasesPageNumber(ArrowTypeClicked arrowClicked) {
 
@@ -128,7 +157,7 @@ public class ProfilePageViewController implements Initializable, ObservableView 
 
                 int currentPageNumber = controller.changePageNumber(arrowClicked);
                 currentPageNumberTextField.setText(currentPageNumber+"");
-                setRecentPurchasesListView(currentPageNumber);
+                setPurchasesListView();
 
             }
         };
@@ -154,11 +183,6 @@ public class ProfilePageViewController implements Initializable, ObservableView 
     }
 
 
-    private void setRecentPurchasesListView(int pageNumber){
-
-
-
-    }
 
     private EventHandler<? super MouseEvent> goToBrowseProducts() {
 

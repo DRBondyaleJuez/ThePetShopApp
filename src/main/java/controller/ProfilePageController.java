@@ -20,7 +20,10 @@ public class ProfilePageController {
     private String profileUsername;
     private String profileEmail;
 
+    private int numberOfEntriesPerPage;
     private int currentRecentPurchasePageNumber;
+
+    private int numberOfPurchasesByUser;
 
     public ProfilePageController(UUID userUUUID) {
 
@@ -32,7 +35,9 @@ public class ProfilePageController {
         profileUsername = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUUID.toString(),UsersTableColumnNameEnums.USERNAME);
         profileEmail = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUUID.toString(),UsersTableColumnNameEnums.USER_EMAIL);
 
+        numberOfEntriesPerPage = 10;
         currentRecentPurchasePageNumber = 1;
+        numberOfPurchasesByUser = databaseManager.countPurchasesByUser(userUUUID);
     }
 
     public UUID getProfileUUID() {
@@ -46,6 +51,9 @@ public class ProfilePageController {
     public String getProfileEmail() {
         return profileEmail;
     }
+
+    public int getNumberOfEntriesPerPage() { return numberOfEntriesPerPage; }
+    public int getNumberOfPurchasesByUser() { return numberOfPurchasesByUser; }
 
     public String getLastLogin(){
         return databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USER_UUID,profileUUID.toString(),UsersTableColumnNameEnums.USER_LAST_LOGIN);
@@ -79,11 +87,10 @@ public class ProfilePageController {
                 currentRecentPurchasePageNumber = 1;
                 break;
             case NEXT:
-                currentRecentPurchasePageNumber++;
+                if(currentRecentPurchasePageNumber < numberOfPurchasesByUser /numberOfEntriesPerPage) currentRecentPurchasePageNumber++;
                 break;
             case PREVIOUS:
-                currentRecentPurchasePageNumber--;
-                if(currentRecentPurchasePageNumber < 1) currentRecentPurchasePageNumber = 1;
+                if(currentRecentPurchasePageNumber > 1) currentRecentPurchasePageNumber--;
                 break;
             default:
                 currentRecentPurchasePageNumber = 1;
@@ -92,6 +99,10 @@ public class ProfilePageController {
 
         return currentRecentPurchasePageNumber;
 
+    }
+
+    public String[] getPurchaseRecordInfo( int position) {
+        return databaseManager.getPurchaseRecordInfo(profileUUID,position);
     }
 
 

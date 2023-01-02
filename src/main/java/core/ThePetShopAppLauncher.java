@@ -104,9 +104,8 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
 
         //Controller needs to be created apart to provide it with the UUID
         ProfilePageViewController newProfilePageViewController = new ProfilePageViewController(userUUID);
+        newProfilePageViewController.addObserver(this);
         paneLoader.setController(newProfilePageViewController);
-        ObservableView observableViewController = (ObservableView) paneLoader.getController();
-        observableViewController.addObserver(this);
 
         //The loadPaneloader method is called after the view controller has finished setting
         Parent root = loadPaneLoader(paneLoader);

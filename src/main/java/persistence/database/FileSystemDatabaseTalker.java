@@ -24,9 +24,7 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
         }
 
         return currentDBConnection.addNewUserToDatabase(newUserUUID,newUsername,newUserPassword,newUserEmail,newUserCreationTimeStamp);
-
     }
-
 
     @Override
     public String getRecordFromTable(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnOfInterest) {
@@ -36,6 +34,16 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
     @Override
     public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnToUpdate, String updatedContent) {
         return currentDBConnection.updateRecord(tableName,refColumn,reference,columnToUpdate,updatedContent);
+    }
+
+    @Override
+    public int countPurchasesByUser(UUID currentUserUUID) {
+        return currentDBConnection.countPurchasesByUser(currentUserUUID);
+    }
+
+    @Override
+    public String[] getPurchaseRecordInfo(UUID currentUserUUID, int position) {
+        return currentDBConnection.getPurchaseRecordInfo(currentUserUUID,position);
     }
 
 
