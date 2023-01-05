@@ -76,7 +76,7 @@ public class DBConnection {
         return SQLErrorMessageEnums.NO_ERROR;
     }
 
-    public SQLErrorMessageEnums interpretSQLErrorMessage(String sqlErrorMessage){
+    private SQLErrorMessageEnums interpretSQLErrorMessage(String sqlErrorMessage){
 
         if(sqlErrorMessage.contains("users_username_key")){
             return SQLErrorMessageEnums.USERNAME;
@@ -180,6 +180,7 @@ public class DBConnection {
             while (resultSet.next()) {
                 for (int i = 0; i < purchaseInfo.length; i++) {
                     purchaseInfo[i] = resultSet.getString(i+1);
+                    //String pructType = resultSet.getString("Prce");
                 }
             }
 

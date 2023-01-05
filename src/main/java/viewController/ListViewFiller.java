@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 
 public class ListViewFiller {
 
-    ProfilePageController controller;
+    private ProfilePageController controller;
 
     public ListViewFiller(ProfilePageController controller) {
         this.controller = controller;

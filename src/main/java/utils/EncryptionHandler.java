@@ -26,14 +26,6 @@ public class EncryptionHandler {
         String saltedTextToEncrypt = textToEncrypt + randomSaltString;
         byte[] saltedByteArrayToEncrypt = saltedTextToEncrypt.getBytes();
 
-
-        //Generating salt in the form of a byte tail
-        byte[] randomTail = new byte[saltSize]; // this will be the salt for the encryption
-        Random randomGenerator = new Random();
-        for (int i = 0; i < saltSize; i++) {
-            randomTail[i] = (byte) randomGenerator.nextInt(1);
-        }
-
         //Transposing salted byte array
         byte[] transposedByteArray = transposition(saltedByteArrayToEncrypt);
 
