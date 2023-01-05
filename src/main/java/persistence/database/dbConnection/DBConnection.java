@@ -1,9 +1,11 @@
 package persistence.database.dbConnection;
 
+import model.UserPurchaseRecord;
 import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
 import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class DBConnection {
@@ -160,17 +162,17 @@ public class DBConnection {
         return numberOfPurchasesByUser;
     }
 
-    public String[] getPurchaseRecordInfo(UUID currentUserUUID,int position){
+    public UserPurchaseRecord[] getUserPurchaseRecordInfo(UUID currentUserUUID){
 
-        String [] purchaseInfo = new String[6];
+        ArrayList<UserPurchaseRecord> purchaseInfoList = new ArrayList<>();
+        String[] currentPurchaseInfo = new String[6];
 
         String sql = "SELECT product_type, product_name, subtype, quantity, price, sale_date " +
                 "FROM product_sales " +
                 "INNER JOIN products USING (product_id) " +
                 "WHERE buyer_id = '" + currentUserUUID + "' " +
-                "ORDER BY sale_date " +
-                "LIMIT 1 OFFSET " + position;
-        ;
+                "ORDER BY sale_date ";
+
         try (
             PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
 
@@ -178,18 +180,21 @@ public class DBConnection {
 
             System.out.println("This corresponds to the result set from the purchase info retrieval: "+ resultSet);
             while (resultSet.next()) {
-                for (int i = 0; i < purchaseInfo.length; i++) {
-                    purchaseInfo[i] = resultSet.getString(i+1);
-                    //String pructType = resultSet.getString("Prce");
+                for (int i = 0; i < currentPurchaseInfo.length; i++) {
+                    currentPurchaseInfo[i] = resultSet.getString(i+1);
                 }
+                UserPurchaseRecord currentPurchaseRecord = new UserPurchaseRecord(currentPurchaseInfo);
+                purchaseInfoList.add(currentPurchaseRecord);
             }
-
-
         } catch (SQLException e) {
             System.out.println("SQL ERROR MESSAGE of the purchase info retrieval: " + e.getMessage());
             return null;
         }
-        return purchaseInfo;
+
+        UserPurchaseRecord[] purchaseInfoArray = new UserPurchaseRecord[purchaseInfoList.size()];
+        purchaseInfoArray = purchaseInfoList.toArray(purchaseInfoArray);
+
+        return purchaseInfoArray;
     }
 
     public String properCase(String s) {

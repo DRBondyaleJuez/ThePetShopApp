@@ -1,8 +1,15 @@
 package viewController;
 
 import controller.ProfilePageController;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import model.UserPurchaseRecord;
+
+import java.util.ArrayList;
 
 public class ListViewFiller {
 
@@ -23,50 +30,42 @@ public class ListViewFiller {
 
         //If the position is adequate the Entry is constructed from the information retrieved from the database
 
-        //First retieve and store info temporarily
-        String [] currentPurchasedItemInformation = controller.getPurchaseRecordInfo(positionNumber);
-        PurchasedItem currentPurchaseItem = new PurchasedItem(currentPurchasedItemInformation);
+        //First retrieve and store info temporarily
+        UserPurchaseRecord currentUserSinglePurchaseRecord = controller.getSingleUserPurchaseRecord(positionNumber);
 
-        System.out.println("This should display the purchase item information: " + currentPurchaseItem); // DELETE WHEN FINISHED ---------------------------------------------------------------------------------------------------------
+        System.out.println("This should display the purchase item information: " + currentUserSinglePurchaseRecord); // DELETE WHEN FINISHED ---------------------------------------------------------------------------------------------------------
 
         //Then build the HBox that will display the info inna certain distribution
         HBox purchaseProductEntry = new HBox();
 
-        Label filler = new Label(currentPurchaseItem.productCompleteName + " ");
+        Label filler = new Label(currentUserSinglePurchaseRecord.getProductCompleteName() + " ");
+        filler.setFont(new Font(filler.getFont().getName(),10));
         purchaseProductEntry.getChildren().add(filler);
-        filler = new Label(currentPurchaseItem.purchasedQuantity + " ");
+        filler = new Label(currentUserSinglePurchaseRecord.getPurchasedQuantity() + " ");
+        filler.setFont(new Font(filler.getFont().getName(),10));
         purchaseProductEntry.getChildren().add(filler);
-        filler = new Label(currentPurchaseItem.purchasePrice + " € ");
+        filler = new Label(currentUserSinglePurchaseRecord.getPurchasePrice()+ " € ");
+        filler.setFont(new Font(filler.getFont().getName(),10));
         purchaseProductEntry.getChildren().add(filler);
-        filler = new Label(currentPurchaseItem.purchaseDate + " ");
+        filler = new Label(currentUserSinglePurchaseRecord.getPurchaseDate() + " ");
+        filler.setFont(new Font(filler.getFont().getName(),10));
         purchaseProductEntry.getChildren().add(filler);
+
+        //Format correcting
+        ObservableList<Node> nodeInTheHBox = purchaseProductEntry.getChildren();
+        ArrayList<Label> labelsInTheEntry = new ArrayList<>();
+        for (Node currentNode : nodeInTheHBox) {
+            labelsInTheEntry.add((Label) currentNode);
+        }
+        for (Label currentLabel : labelsInTheEntry) {
+            currentLabel.setFont(new Font(currentLabel.getFont().getName(),10));
+        }
+
+        purchaseProductEntry.setSpacing(25);
 
         return purchaseProductEntry;
     }
 
-    private class PurchasedItem {
 
-        private String productType;
-        private String productCompleteName;
-
-        private int purchasedQuantity;
-        private double purchasePrice;
-        private String purchaseDate;
-
-        private PurchasedItem(String [] currentPurchasedItemInfo) {
-
-            productType = currentPurchasedItemInfo[0];
-            productCompleteName = currentPurchasedItemInfo[1] + " (" + currentPurchasedItemInfo[2] + ")";
-            purchasedQuantity = Integer.parseInt(currentPurchasedItemInfo[3]);
-            String formattedPrice = currentPurchasedItemInfo[4].replace(",",".").replace(" €","");
-            purchasePrice =  purchasedQuantity * Double.parseDouble(formattedPrice);
-            purchaseDate = currentPurchasedItemInfo[5];
-
-        }
-
-        public String toString(){
-            return productCompleteName + " " + purchasedQuantity + purchasePrice + " €" + " " + purchaseDate;
-        }
-    }
 
 }

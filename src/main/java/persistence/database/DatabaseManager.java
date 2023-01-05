@@ -1,5 +1,6 @@
 package persistence.database;
 
+import model.UserPurchaseRecord;
 import persistence.database.dbConnection.SQLErrorMessageEnums;
 import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
 import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
@@ -43,8 +44,8 @@ public class DatabaseManager {
         return databaseTalker.countPurchasesByUser(currentUserUUID);
     }
 
-    public String[] getPurchaseRecordInfo(UUID currentUserUUID, int position) {
-        return databaseTalker.getPurchaseRecordInfo(currentUserUUID,position);
+    public UserPurchaseRecord[] getUserPurchaseRecordInfo (UUID currentUserUUID) {
+        return databaseTalker.getUserPurchaseRecordInfo (currentUserUUID);
     }
 
 }

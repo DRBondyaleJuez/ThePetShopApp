@@ -1,5 +1,6 @@
 package controller;
 
+import model.UserPurchaseRecord;
 import persistence.assets.AssetManager;
 import persistence.assets.LogoType;
 import persistence.database.DatabaseManager;
@@ -19,6 +20,7 @@ public class ProfilePageController {
     private final UUID profileUUID;
     private String profileUsername;
     private String profileEmail;
+    private UserPurchaseRecord[] userPurchaseInfo;
 
     private int numberOfEntriesPerPage;
     private int currentRecentPurchasePageNumber;
@@ -35,9 +37,11 @@ public class ProfilePageController {
         profileUsername = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUUID.toString(),UsersTableColumnNameEnums.USERNAME);
         profileEmail = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUUID.toString(),UsersTableColumnNameEnums.USER_EMAIL);
 
+        getUserPurchaseRecordInfo();
+
         numberOfEntriesPerPage = 10;
         currentRecentPurchasePageNumber = 1;
-        numberOfPurchasesByUser = databaseManager.countPurchasesByUser(userUUUID);
+        numberOfPurchasesByUser = userPurchaseInfo.length;
     }
 
     public UUID getProfileUUID() {
@@ -101,8 +105,12 @@ public class ProfilePageController {
 
     }
 
-    public String[] getPurchaseRecordInfo( int position) {
-        return databaseManager.getPurchaseRecordInfo(profileUUID,position);
+    public void getUserPurchaseRecordInfo () {
+        userPurchaseInfo = databaseManager.getUserPurchaseRecordInfo(profileUUID);
+    }
+
+    public UserPurchaseRecord getSingleUserPurchaseRecord(int position){
+        return userPurchaseInfo[position];
     }
 
 

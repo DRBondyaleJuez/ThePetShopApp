@@ -1,5 +1,6 @@
 package persistence.database;
 
+import model.UserPurchaseRecord;
 import persistence.database.dbConnection.DBConnection;
 import persistence.database.dbConnection.SQLErrorMessageEnums;
 import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
@@ -42,8 +43,8 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
     }
 
     @Override
-    public String[] getPurchaseRecordInfo(UUID currentUserUUID, int position) {
-        return currentDBConnection.getPurchaseRecordInfo(currentUserUUID,position);
+    public UserPurchaseRecord[] getUserPurchaseRecordInfo (UUID currentUserUUID) {
+        return currentDBConnection.getUserPurchaseRecordInfo (currentUserUUID);
     }
 
 
