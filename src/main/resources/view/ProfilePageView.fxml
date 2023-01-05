@@ -129,6 +129,29 @@
                               <Insets />
                            </VBox.margin>
                         </HBox>
+                        <HBox prefHeight="45.0" prefWidth="393.0" spacing="25.0">
+                           <children>
+                              <Label prefHeight="20.0" prefWidth="138.0" text="Purchased Item">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                              <Label layoutX="10.0" layoutY="10.0" text="Nº Item">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                              <Label layoutX="10.0" layoutY="10.0" text="Cost">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                              <Label layoutX="38.0" layoutY="10.0" text="Purchase date">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </HBox>
                         <ListView fx:id="purchasesListView" prefHeight="318.0" prefWidth="392.0" />
                      </children>
                      <HBox.margin>
