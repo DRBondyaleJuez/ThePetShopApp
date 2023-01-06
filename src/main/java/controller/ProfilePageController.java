@@ -37,11 +37,15 @@ public class ProfilePageController {
         profileUsername = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUUID.toString(),UsersTableColumnNameEnums.USERNAME);
         profileEmail = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUUID.toString(),UsersTableColumnNameEnums.USER_EMAIL);
 
-        getUserPurchaseRecordInfo();
+        userPurchaseInfo = getUserPurchaseRecordInfo();
 
         numberOfEntriesPerPage = 10;
         currentRecentPurchasePageNumber = 1;
-        numberOfPurchasesByUser = userPurchaseInfo.length;
+        if(userPurchaseInfo != null) {
+            numberOfPurchasesByUser = userPurchaseInfo.length;
+        } else {
+            numberOfPurchasesByUser = 0;
+        }
     }
 
     public UUID getProfileUUID() {
@@ -105,8 +109,8 @@ public class ProfilePageController {
 
     }
 
-    public void getUserPurchaseRecordInfo () {
-        userPurchaseInfo = databaseManager.getUserPurchaseRecordInfo(profileUUID);
+    public UserPurchaseRecord[] getUserPurchaseRecordInfo () {
+        return databaseManager.getUserPurchaseRecordInfo(profileUUID);
     }
 
     public UserPurchaseRecord getSingleUserPurchaseRecord(int position){
