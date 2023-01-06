@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc4b06" height="424.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc4b06" height="424.0" stroke="BLACK" strokeType="INSIDE" width="602.0" />
       <VBox prefHeight="424.0" prefWidth="600.0">
          <children>
             <StackPane prefHeight="42.0" prefWidth="600.0">
@@ -126,33 +126,42 @@
                               <Insets />
                            </opaqueInsets>
                            <VBox.margin>
-                              <Insets />
+                              <Insets bottom="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox prefHeight="45.0" prefWidth="393.0" spacing="25.0">
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Label prefHeight="20.0" prefWidth="138.0" text="Purchased Item">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                              <Label layoutX="10.0" layoutY="10.0" text="Nº Item">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                              <Label layoutX="10.0" layoutY="10.0" text="Cost">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                              <Label layoutX="38.0" layoutY="10.0" text="Purchase date">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" height="28.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="394.0" />
+                              <HBox alignment="CENTER" prefHeight="21.0" prefWidth="393.0" spacing="25.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="138.0" text="Purchased Item" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="10.0" text="Nº Item" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="10.0" text="Cost" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="38.0" text="Purchase date" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </HBox>
                            </children>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </HBox>
-                        <ListView fx:id="purchasesListView" prefHeight="318.0" prefWidth="392.0" />
+                        </StackPane>
+                        <ListView fx:id="purchasesListView" prefHeight="393.0" prefWidth="393.0" />
                      </children>
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
