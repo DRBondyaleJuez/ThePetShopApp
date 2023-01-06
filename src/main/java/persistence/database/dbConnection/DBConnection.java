@@ -51,7 +51,7 @@ public class DBConnection {
     public SQLErrorMessageEnums addNewUserToDatabase(UUID newUserUUID, String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp){
 
         String sql = "INSERT INTO users (user_id,username,password,email,date_created) " +
-                     "VALUES ('" + newUserUUID + "','" + newUsername + "','" + newUserPassword + "','" + newUserEmail + "','" + newUserCreationTimeStamp + "') " +
+                     "VALUES ('" + newUserUUID + "','" + newUsername + "'," + newUserPassword + ",'" + newUserEmail + "','" + newUserCreationTimeStamp + "') " +
                      "RETURNING *";
         try (
             PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {

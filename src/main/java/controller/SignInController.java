@@ -65,7 +65,7 @@ public class SignInController {
             returnedPasswordEncrypted = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USERNAME, enteredUserRef, UsersTableColumnNameEnums.USER_PASSWORD);
         }
 
-        String returnedPasswordDecrypted = decryptText(returnedPasswordEncrypted);
+        String returnedPasswordDecrypted = decryptText(sqlIntArrayToStringConversion(returnedPasswordEncrypted));
 
         if (Objects.equals(enteredPassword, returnedPasswordDecrypted)) {
             System.out.println("EVERYTHING WAS CORRECT. The password is valid");
@@ -83,6 +83,20 @@ public class SignInController {
 
     private String decryptText(String textToDecrypt){
         return encryptionHandler.decrypt(textToDecrypt);
+    }
+
+    private String sqlIntArrayToStringConversion(String sqlIntArray){
+        String newSqlIntArray = sqlIntArray.replace("{","");
+        newSqlIntArray = newSqlIntArray.replace("}","");
+
+        String [] separateBySplit = newSqlIntArray.split(",");
+        byte[] convertedToInt = new byte[separateBySplit.length];
+        for (int i = 0; i < separateBySplit.length; i++) {
+            convertedToInt[i] = (byte) Integer.parseInt(separateBySplit[i]);
+        }
+
+        return new String(convertedToInt);
+
     }
 
 }

@@ -10,7 +10,6 @@ import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums
 import utils.EncryptionHandler;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 import java.util.UUID;
 
 public class CreateAccountController {
@@ -41,14 +40,16 @@ public class CreateAccountController {
 
         UUID newUserUUID = generateNewUUID();
         Timestamp newUserCreationTimeStamp = generateCurrentTimeStamp();
+        byte [] encryptedPasswordByteArray = encryptText(newUserPassword).getBytes();
+        String passwordByteArrayString = byteArrayToSQLIntArrayConversion(encryptedPasswordByteArray);
 
-        SQLErrorMessageEnums sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptText(newUserPassword), newUserEmail,newUserCreationTimeStamp);
+        SQLErrorMessageEnums sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, passwordByteArrayString, newUserEmail,newUserCreationTimeStamp);
 
         while(sqlMessage == SQLErrorMessageEnums.UUID){
             newUserUUID = generateNewUUID();
             newUserCreationTimeStamp = generateCurrentTimeStamp();
 
-            sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptText(newUserPassword), newUserEmail,newUserCreationTimeStamp);
+            sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, passwordByteArrayString, newUserEmail,newUserCreationTimeStamp);
         }
 
         return sqlMessage;
@@ -62,6 +63,17 @@ public class CreateAccountController {
         return new Timestamp(System.currentTimeMillis());
     }
 
+    private String byteArrayToSQLIntArrayConversion(byte [] passwordByteArray){
+        String bitArrayPasswordString = "ARRAY [";
+        for (byte currentByte:passwordByteArray) {
+            bitArrayPasswordString = bitArrayPasswordString + currentByte + ",";
+        }
+        bitArrayPasswordString = bitArrayPasswordString + "END";
+        bitArrayPasswordString = bitArrayPasswordString.replace(",END","]");
+        return bitArrayPasswordString;
+    }
+
+
     private String encryptText(String textToEncrypt){
         return encryptionHandler.encrypt(textToEncrypt);
     }
@@ -70,6 +82,6 @@ public class CreateAccountController {
         return encryptionHandler.decrypt(textToDecrypt);
     }
 
-    
+
 
 }
