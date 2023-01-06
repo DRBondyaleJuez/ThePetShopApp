@@ -70,33 +70,6 @@ public class CreateAccountController {
         return encryptionHandler.decrypt(textToDecrypt);
     }
 
-    public boolean isNameUnique(String newUsername){
-
-        String returnedUsername = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USERNAME, newUsername, UsersTableColumnNameEnums.USERNAME);
-
-        if (!Objects.equals(newUsername, returnedUsername)) {
-            System.out.println("EVERYTHING WAS CORRECT. The new username is unique");
-            return true;
-        } else {
-            System.out.println("SOMETHING WENT WRONG. The new username is not unique");
-            return false;
-        }
-    }
-
-
-    public boolean isEmailUnique(String newEmail){
-
-        String newEmailEncrypted = encryptText(newEmail);
-        String returnedEmail = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_EMAIL, newEmailEncrypted, UsersTableColumnNameEnums.USER_EMAIL);
-        String returnedEmailDecrypted = decryptText(returnedEmail);
-
-        if (!Objects.equals(newEmail, returnedEmailDecrypted)) {
-            System.out.println("EVERYTHING WAS CORRECT. The new email is unique");
-            return true;
-        } else {
-            System.out.println("SOMETHING WENT WRONG. The new email is not unique");
-            return false;
-        }
-    }
+    
 
 }
