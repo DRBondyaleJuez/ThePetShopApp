@@ -15,8 +15,6 @@ public interface DatabaseTalker {
 
     boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference,UsersTableColumnNameEnums columnToUpdate,String updatedContent);
 
-    int countPurchasesByUser(UUID currentUserUUID);
-
     UserPurchaseRecord[] getUserPurchaseRecordInfo (UUID currentUserUUID);
 
 }

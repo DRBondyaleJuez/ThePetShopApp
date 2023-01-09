@@ -9,15 +9,14 @@ public class UserPurchaseRecord {
     private double purchasePrice;
     private String purchaseDate;
 
-    public UserPurchaseRecord(String [] currentPurchasedItemInfo) {
+    public UserPurchaseRecord(String productType, String productName, String subtype, int quantity, String price, String saleDate) {
 
-        productType = currentPurchasedItemInfo[0];
-        productCompleteName = currentPurchasedItemInfo[1] + " (" + currentPurchasedItemInfo[2] + ")";
-        purchasedQuantity = Integer.parseInt(currentPurchasedItemInfo[3]);
-        String formattedPrice = currentPurchasedItemInfo[4].replace(",",".").replace(" €","");
+        this.productType = productType;
+        productCompleteName = productName + " (" + subtype + ")";
+        purchasedQuantity = quantity;
+        String formattedPrice = price.replace(",",".").replace(" €","");
         purchasePrice =  purchasedQuantity * Double.parseDouble(formattedPrice);
-        purchaseDate = currentPurchasedItemInfo[5];
-
+        purchaseDate = saleDate.substring(0,saleDate.length() - 4);
     }
 
     public String toString(){

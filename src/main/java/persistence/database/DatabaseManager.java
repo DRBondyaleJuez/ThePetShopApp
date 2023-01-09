@@ -40,9 +40,6 @@ public class DatabaseManager {
         return databaseTalker.updateRecord(tableName,refColumn,reference,columnToUpdate,updatedContent);
     }
 
-    public int countPurchasesByUser(UUID currentUserUUID) {
-        return databaseTalker.countPurchasesByUser(currentUserUUID);
-    }
 
     public UserPurchaseRecord[] getUserPurchaseRecordInfo (UUID currentUserUUID) {
         return databaseTalker.getUserPurchaseRecordInfo (currentUserUUID);

@@ -38,11 +38,6 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
     }
 
     @Override
-    public int countPurchasesByUser(UUID currentUserUUID) {
-        return currentDBConnection.countPurchasesByUser(currentUserUUID);
-    }
-
-    @Override
     public UserPurchaseRecord[] getUserPurchaseRecordInfo (UUID currentUserUUID) {
         return currentDBConnection.getUserPurchaseRecordInfo (currentUserUUID);
     }
