@@ -17,18 +17,6 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
         currentDBConnection = new DBConnection("the_pet_shop");
     }
 
-    /*
-    @Override
-    public SQLErrorMessageEnums addNewUserToDatabase(UUID newUserUUID, String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp) {
-        if(!checkConnection()){
-            System.out.println("Unable to connect to the database");
-            return SQLErrorMessageEnums.UNKNOWN_ERROR;
-        }
-
-        return currentDBConnection.addNewUserToDatabase(newUserUUID,newUsername,newUserPassword,newUserEmail,newUserCreationTimeStamp);
-    }
-     */
-
     @Override
     public SQLErrorMessageEnums addNewUserToDatabase(UUID newUserUUID, String newUsername, byte[] newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp) {
         if(!checkConnection()){

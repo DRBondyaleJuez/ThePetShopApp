@@ -53,32 +53,6 @@ public class SignInController {
         }
     }
 
-    /*
-    public boolean verifyPassword(String enteredUserRef, String enteredPassword){
-        if(enteredPassword.length() < 8){
-            return false;
-        }
-
-        //Retrieving password using the first input (userReference) either email or username
-        String returnedPasswordEncrypted = "";
-        if(enteredUserRef.contains("@")){
-            returnedPasswordEncrypted = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USER_EMAIL, enteredUserRef, UsersTableColumnNameEnums.USER_PASSWORD);
-        } else {
-            returnedPasswordEncrypted = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USERNAME, enteredUserRef, UsersTableColumnNameEnums.USER_PASSWORD);
-        }
-
-        String returnedPasswordDecrypted = decryptText(sqlIntArrayToStringConversion(returnedPasswordEncrypted));
-
-        if (Objects.equals(enteredPassword, returnedPasswordDecrypted)) {
-            System.out.println("EVERYTHING WAS CORRECT. The password is valid");
-            return true;
-        } else {
-            System.out.println("SOMETHING WENT WRONG. The password is not valid");
-            return false;
-        }
-    }
-     */
-
     public boolean verifyPassword(String enteredUserRef, String enteredPassword){
         if(enteredPassword.length() < 8){
             return false;
