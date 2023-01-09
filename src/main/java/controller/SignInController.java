@@ -8,6 +8,7 @@ import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
 import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
 import utils.EncryptionHandler;
 
+import java.math.BigInteger;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -52,6 +53,7 @@ public class SignInController {
         }
     }
 
+    /*
     public boolean verifyPassword(String enteredUserRef, String enteredPassword){
         if(enteredPassword.length() < 8){
             return false;
@@ -66,6 +68,34 @@ public class SignInController {
         }
 
         String returnedPasswordDecrypted = decryptText(sqlIntArrayToStringConversion(returnedPasswordEncrypted));
+
+        if (Objects.equals(enteredPassword, returnedPasswordDecrypted)) {
+            System.out.println("EVERYTHING WAS CORRECT. The password is valid");
+            return true;
+        } else {
+            System.out.println("SOMETHING WENT WRONG. The password is not valid");
+            return false;
+        }
+    }
+     */
+
+    public boolean verifyPassword(String enteredUserRef, String enteredPassword){
+        if(enteredPassword.length() < 8){
+            return false;
+        }
+
+        //Retrieving password using the first input (userReference) either email or username
+        String returnedPasswordEncrypted = "";
+        if(enteredUserRef.contains("@")){
+            returnedPasswordEncrypted = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USER_EMAIL, enteredUserRef, UsersTableColumnNameEnums.USER_PASSWORD);
+        } else {
+            returnedPasswordEncrypted = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USERNAME, enteredUserRef, UsersTableColumnNameEnums.USER_PASSWORD);
+        }
+        returnedPasswordEncrypted = returnedPasswordEncrypted.replace("\\x","");
+        byte[] encryptedByteArray = new BigInteger(returnedPasswordEncrypted,16).toByteArray();
+
+        String returnedPasswordDecrypted = decryptText(new String(encryptedByteArray));
+        System.out.println("This is the decrypted password: " + returnedPasswordDecrypted);
 
         if (Objects.equals(enteredPassword, returnedPasswordDecrypted)) {
             System.out.println("EVERYTHING WAS CORRECT. The password is valid");

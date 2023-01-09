@@ -4,6 +4,7 @@ import model.UserPurchaseRecord;
 import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
 import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
 
+import java.io.ByteArrayInputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -44,7 +45,7 @@ public class DBConnection {
     public Connection getConnection() {
         return currentConnection;
     }
-
+/*
     public SQLErrorMessageEnums addNewUserToDatabase(UUID newUserUUID, String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp){
 
         String sql = "INSERT INTO users (user_id,username,password,email,date_created) " +
@@ -57,6 +58,42 @@ public class DBConnection {
             //preparedStatement.setNString(3,newUserPassword);
             preparedStatement.setString(3,newUserEmail);
             preparedStatement.setTimestamp(4,newUserCreationTimeStamp);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            //TODO: This is not working properly. Investigate the returned resultset when inserting----------------------------------
+            System.out.println(resultSet);
+            while(resultSet.next()) {
+                String returnedUsername = resultSet.getString("username");
+                System.out.println(returnedUsername);
+
+                if (newUsername == returnedUsername) {
+                    System.out.println("EVERYTHING WAS CORRECT. New user inserted");
+                } else {
+                    System.out.println("SOMETHING WAS WRONG. Not sure user inserted");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQL ERROR MESSAGE: " + e.getMessage());
+            return interpretSQLErrorMessage(e.getMessage());
+        }
+        return SQLErrorMessageEnums.NO_ERROR;
+    }
+*/
+
+    public SQLErrorMessageEnums addNewUserToDatabase(UUID newUserUUID, String newUsername, byte[] newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp){
+
+        String sql = "INSERT INTO users (user_id,username,password,email,date_created) " +
+                "VALUES (?::uuid , ? , ? , ? , ?) " +
+                "RETURNING *";
+        try {
+            PreparedStatement preparedStatement = currentConnection.prepareStatement(sql);
+            preparedStatement.setString(1,newUserUUID.toString());
+            preparedStatement.setString(2,newUsername);
+            preparedStatement.setBinaryStream(3,new ByteArrayInputStream(newUserPassword));
+            preparedStatement.setString(4,newUserEmail);
+            preparedStatement.setTimestamp(5,newUserCreationTimeStamp);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -134,7 +171,7 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
         PreparedStatement preparedStatement = currentConnection.prepareStatement(sql);
         preparedStatement.setString(1,updatedContent);
         preparedStatement.setString(2,reference);
-        System.out.println(preparedStatement);
+
         ResultSet resultSet = preparedStatement.executeQuery();
         while(resultSet.next()) {
             returnedRecord = resultSet.getString(columnToUpdate.toString());

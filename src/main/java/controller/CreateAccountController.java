@@ -35,7 +35,7 @@ public class CreateAccountController {
         return assetManager.getEyeIconImageData(eyeIconType);
     }
 
-
+/*
     public SQLErrorMessageEnums addNewUserToDatabase(String newUsername, String newUserPassword, String newUserEmail) {
 
         UUID newUserUUID = generateNewUUID();
@@ -50,6 +50,26 @@ public class CreateAccountController {
             newUserCreationTimeStamp = generateCurrentTimeStamp();
 
             sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, passwordByteArrayString, newUserEmail,newUserCreationTimeStamp);
+        }
+
+        return sqlMessage;
+    }
+ */
+
+    public SQLErrorMessageEnums addNewUserToDatabase(String newUsername, String newUserPassword, String newUserEmail) {
+
+        UUID newUserUUID = generateNewUUID();
+        Timestamp newUserCreationTimeStamp = generateCurrentTimeStamp();
+        byte [] encryptedPasswordByteArray = encryptText(newUserPassword).getBytes();
+        //String passwordByteArrayString = byteArrayToSQLIntArrayConversion(encryptedPasswordByteArray);
+
+        SQLErrorMessageEnums sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptedPasswordByteArray, newUserEmail,newUserCreationTimeStamp);
+
+        while(sqlMessage == SQLErrorMessageEnums.UUID){
+            newUserUUID = generateNewUUID();
+            newUserCreationTimeStamp = generateCurrentTimeStamp();
+
+            sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptedPasswordByteArray, newUserEmail,newUserCreationTimeStamp);
         }
 
         return sqlMessage;
