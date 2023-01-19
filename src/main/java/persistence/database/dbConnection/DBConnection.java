@@ -103,7 +103,7 @@ public class DBConnection {
                 String returnedUsername = resultSet.getString("username");
                 System.out.println(returnedUsername);
 
-                if (newUsername == returnedUsername) {
+                if (newUsername.equals(returnedUsername)) {
                     System.out.println("EVERYTHING WAS CORRECT. New user inserted");
                 } else {
                     System.out.println("SOMETHING WAS WRONG. Not sure user inserted");
@@ -176,12 +176,8 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
         while(resultSet.next()) {
             returnedRecord = resultSet.getString(columnToUpdate.toString());
         }
-        //System.out.println(returnedRecord);
-        if(returnedRecord == updatedContent){
-            return true;
-        } else {
-            return false;
-        }
+
+        return returnedRecord.equals(updatedContent);
 
     } catch (SQLException e) {
         System.out.println("SQL ERROR MESSAGE during record update:" + e.getMessage());
