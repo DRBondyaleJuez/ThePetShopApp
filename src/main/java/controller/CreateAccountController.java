@@ -39,7 +39,7 @@ public class CreateAccountController {
 
         UUID newUserUUID = generateNewUUID();
         Timestamp newUserCreationTimeStamp = generateCurrentTimeStamp();
-        byte [] encryptedPasswordByteArray = encryptText(newUserPassword).getBytes();
+        byte [] encryptedPasswordByteArray = encryptText(newUserPassword);
 
         SQLErrorMessageEnums sqlMessage = databaseManager.addNewUserToDatabase(newUserUUID,newUsername, encryptedPasswordByteArray, newUserEmail,newUserCreationTimeStamp);
 
@@ -61,7 +61,7 @@ public class CreateAccountController {
         return new Timestamp(System.currentTimeMillis());
     }
 
-    private String encryptText(String textToEncrypt){
+    private byte[] encryptText(String textToEncrypt){
         return encryptionHandler.encrypt(textToEncrypt);
     }
 
