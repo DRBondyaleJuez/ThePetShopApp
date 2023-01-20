@@ -119,7 +119,6 @@ public class EncryptionHandler {
             finalTransposedByteList.addAll(listMatrix);
         }
 
-
         byte[] transposedByteArray = new byte[byteArrayToTranspose.length];
         for (int i = 0; i < byteArrayToTranspose.length; i++) {
             transposedByteArray[i] = finalTransposedByteList.get(i);
@@ -128,11 +127,10 @@ public class EncryptionHandler {
         return transposedByteArray;
     }
 
-    public String decrypt(String textToDecrypt){
+    public String decrypt(byte[] byteArrayToDecrypt ){
 
         //Turn string to corresponding byte array
         byte[] keyByteArray = key.getBytes();
-        byte[] byteArrayToDecrypt = textToDecrypt.getBytes();
         byte[] decryptedByteArray = new byte[byteArrayToDecrypt.length];
         for (int i = 0; i < byteArrayToDecrypt.length; i++) {
             decryptedByteArray[i] = (byte) (byteArrayToDecrypt[i] ^ keyByteArray[i% keyByteArray.length]);

@@ -68,7 +68,7 @@ public class SignInController {
         returnedPasswordEncrypted = returnedPasswordEncrypted.replace("\\x","");
         byte[] encryptedByteArray = new BigInteger(returnedPasswordEncrypted,16).toByteArray();
 
-        String returnedPasswordDecrypted = decryptText(new String(encryptedByteArray));
+        String returnedPasswordDecrypted = encryptionHandler.decrypt(encryptedByteArray);
         System.out.println("This is the decrypted password: " + returnedPasswordDecrypted);
 
         if (Objects.equals(enteredPassword, returnedPasswordDecrypted)) {
@@ -83,10 +83,6 @@ public class SignInController {
     public UUID fetchCorrespondingUUID(String username){
         String stringUUID = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USERNAME, username, UsersTableColumnNameEnums.USER_UUID);
         return UUID.fromString(stringUUID);
-    }
-
-    private String decryptText(String textToDecrypt){
-        return encryptionHandler.decrypt(textToDecrypt);
     }
 
     private String sqlIntArrayToStringConversion(String sqlIntArray){

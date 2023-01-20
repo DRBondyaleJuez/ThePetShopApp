@@ -65,7 +65,4 @@ public class CreateAccountController {
         return encryptionHandler.encrypt(textToEncrypt);
     }
 
-    private String decryptText(String textToDecrypt){
-        return encryptionHandler.decrypt(textToDecrypt);
-    }
 }
