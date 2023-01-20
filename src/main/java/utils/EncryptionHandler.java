@@ -14,7 +14,8 @@ public class EncryptionHandler {
         saltSize = 50;
         // TODO: Make the transpositionValue smaller (currently is literally XXX in decimal), also make sure that is not 0 nor 1)
         //transpositionValue = Integer.parseInt(key.substring(0,3));
-        transpositionValue = calculateTranspositionValue((key.substring(4,10)));
+        int initialSubstringPosition = 4;
+        transpositionValue = calculateTranspositionValue((key.substring(initialSubstringPosition,initialSubstringPosition+6)));
     }
 
     //Methods to calculate transposition value from key
@@ -25,11 +26,11 @@ public class EncryptionHandler {
             keyString.append(keybit);
         }
 
-        int newNumber = Integer.parseInt(keyString.toString());
+        long newNumber = Long.parseLong(keyString.toString());
         return internalSumNumber(newNumber);
     }
-    private static int internalSumNumber(int number) {
-        int sum = 0;
+    private static int internalSumNumber(long number) {
+        long sum = 0;
         if(number == 0 || number == 1) { number += 22;}
 
         while(number > 10) {
@@ -43,7 +44,7 @@ public class EncryptionHandler {
 
         if(sum == 1) sum = 11;
 
-        return sum;
+        return (int) sum;
     }
 
     //PROBABLY BOTH METHODS DO THE SAME BUT FOR THE SAKE OF COMPREHENSION THEY ARE GOING TO BE SEPARATED IN TWO METHODS
