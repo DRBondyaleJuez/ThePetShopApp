@@ -33,6 +33,11 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
     }
 
     @Override
+    public byte[] getPasswordFromTable(UsersTableColumnNameEnums refColumn, String reference) {
+        return currentDBConnection.getPasswordFromTable(refColumn, reference);
+    }
+
+    @Override
     public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnToUpdate, String updatedContent) {
         return currentDBConnection.updateRecord(tableName,refColumn,reference,columnToUpdate,updatedContent);
     }

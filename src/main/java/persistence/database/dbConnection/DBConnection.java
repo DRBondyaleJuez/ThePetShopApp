@@ -45,42 +45,6 @@ public class DBConnection {
     public Connection getConnection() {
         return currentConnection;
     }
-/*
-    public SQLErrorMessageEnums addNewUserToDatabase(UUID newUserUUID, String newUsername, String newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp){
-
-        String sql = "INSERT INTO users (user_id,username,password,email,date_created) " +
-                "VALUES (?::uuid , ? ," + newUserPassword + ", ? , ?) " +
-                "RETURNING *";
-        try {
-            PreparedStatement preparedStatement = currentConnection.prepareStatement(sql);
-            preparedStatement.setString(1,newUserUUID.toString());
-            preparedStatement.setString(2,newUsername);
-            //preparedStatement.setNString(3,newUserPassword);
-            preparedStatement.setString(3,newUserEmail);
-            preparedStatement.setTimestamp(4,newUserCreationTimeStamp);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            //TODO: This is not working properly. Investigate the returned resultset when inserting----------------------------------
-            System.out.println(resultSet);
-            while(resultSet.next()) {
-                String returnedUsername = resultSet.getString("username");
-                System.out.println(returnedUsername);
-
-                if (newUsername == returnedUsername) {
-                    System.out.println("EVERYTHING WAS CORRECT. New user inserted");
-                } else {
-                    System.out.println("SOMETHING WAS WRONG. Not sure user inserted");
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("SQL ERROR MESSAGE: " + e.getMessage());
-            return interpretSQLErrorMessage(e.getMessage());
-        }
-        return SQLErrorMessageEnums.NO_ERROR;
-    }
-*/
 
     public SQLErrorMessageEnums addNewUserToDatabase(UUID newUserUUID, String newUsername, byte[] newUserPassword, String newUserEmail, Timestamp newUserCreationTimeStamp){
 
@@ -153,6 +117,42 @@ public class DBConnection {
             System.out.println("SQL ERROR MESSAGE during record retrieval: " + e.getMessage());
         }
         return returnedRecord;
+    }
+
+    public byte[] getPasswordFromTable(UsersTableColumnNameEnums refColumn,String reference){
+
+        String sql = "SELECT * " +
+                "FROM " + TableNameEnums.USERS.toString() + " " +
+                "WHERE " + refColumn.toString() + " = ? ";
+
+        ArrayList<Byte> returnedEncryptedByteList = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = currentConnection.prepareStatement(sql);
+            preparedStatement.setString(1,reference);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                byte[] returnedPasswordByteArray = resultSet.getBytes(UsersTableColumnNameEnums.USER_PASSWORD.toString());
+
+                for (int i = 0; i < returnedPasswordByteArray.length; i++) {
+                    returnedEncryptedByteList.add(returnedPasswordByteArray[i]);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQL ERROR MESSAGE during record retrieval: " + e.getMessage());
+        }
+        Byte[] returnedPasswordByteArray = new Byte[returnedEncryptedByteList.size()];
+        returnedEncryptedByteList.toArray(returnedPasswordByteArray);
+        byte[] primitiveReturnedPasswordByteArray = new byte[returnedPasswordByteArray.length];
+
+        for (int i = 0; i < returnedPasswordByteArray.length; i++) {
+            primitiveReturnedPasswordByteArray[i] = returnedPasswordByteArray[i];
+        }
+
+        return primitiveReturnedPasswordByteArray;
     }
 
 public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference,UsersTableColumnNameEnums columnToUpdate,String updatedContent){

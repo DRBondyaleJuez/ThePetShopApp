@@ -17,4 +17,6 @@ public interface DatabaseTalker {
 
     UserPurchaseRecord[] getUserPurchaseRecordInfo (UUID currentUserUUID);
 
+    byte[] getPasswordFromTable(UsersTableColumnNameEnums refColumn, String reference);
+
 }

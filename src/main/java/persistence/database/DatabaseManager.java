@@ -35,6 +35,10 @@ public class DatabaseManager {
         return databaseTalker.getRecordFromTable(tableName, refColumn, reference,columnOfInterest);
     }
 
+    public byte[] getPasswordFromTable(UsersTableColumnNameEnums refColumn,String reference) {
+        return databaseTalker.getPasswordFromTable(refColumn,reference);
+    }
+
     public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnToUpdate, String updatedContent) {
         return databaseTalker.updateRecord(tableName,refColumn,reference,columnToUpdate,updatedContent);
     }

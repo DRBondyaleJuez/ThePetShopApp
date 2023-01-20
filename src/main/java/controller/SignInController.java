@@ -59,16 +59,14 @@ public class SignInController {
         }
 
         //Retrieving password using the first input (userReference) either email or username
-        String returnedPasswordEncrypted = "";
+        byte[] returnedPasswordEncrypted = null;
         if(enteredUserRef.contains("@")){
-            returnedPasswordEncrypted = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USER_EMAIL, enteredUserRef, UsersTableColumnNameEnums.USER_PASSWORD);
+            returnedPasswordEncrypted = databaseManager.getPasswordFromTable(UsersTableColumnNameEnums.USER_EMAIL, enteredUserRef);
         } else {
-            returnedPasswordEncrypted = databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USERNAME, enteredUserRef, UsersTableColumnNameEnums.USER_PASSWORD);
+            returnedPasswordEncrypted = databaseManager.getPasswordFromTable(UsersTableColumnNameEnums.USERNAME, enteredUserRef);
         }
-        returnedPasswordEncrypted = returnedPasswordEncrypted.replace("\\x","");
-        byte[] encryptedByteArray = new BigInteger(returnedPasswordEncrypted,16).toByteArray();
 
-        String returnedPasswordDecrypted = encryptionHandler.decrypt(encryptedByteArray);
+        String returnedPasswordDecrypted = encryptionHandler.decrypt(returnedPasswordEncrypted);
         System.out.println("This is the decrypted password: " + returnedPasswordDecrypted);
 
         if (Objects.equals(enteredPassword, returnedPasswordDecrypted)) {
