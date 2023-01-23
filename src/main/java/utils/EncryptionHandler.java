@@ -48,31 +48,6 @@ public class EncryptionHandler {
     }
 
     //PROBABLY BOTH METHODS DO THE SAME BUT FOR THE SAKE OF COMPREHENSION THEY ARE GOING TO BE SEPARATED IN TWO METHODS
-    /*
-    public String encrypt(String textToEncrypt){
-
-        //Generate salt string
-        String randomSaltString = getSaltString();
-
-        //Turn string to corresponding byte array
-        byte[] keyByteArray = key.getBytes();
-        String saltedTextToEncrypt = textToEncrypt + randomSaltString;
-        byte[] saltedByteArrayToEncrypt = saltedTextToEncrypt.getBytes();
-
-        //Transposing salted byte array
-        byte[] transposedByteArray = transposition(saltedByteArrayToEncrypt);
-
-        //XOR encryption
-        byte[] encryptedByteArray = new byte[transposedByteArray.length];
-        for (int i = 0; i < transposedByteArray.length; i++) {
-            encryptedByteArray[i] = (byte) (transposedByteArray[i] ^ keyByteArray[i% keyByteArray.length]);
-        }
-
-        //Turn encrypted byte array to corresponding string
-
-        return new String(encryptedByteArray);
-    }
-    */
 
     public byte[] encrypt(String textToEncrypt){
 
