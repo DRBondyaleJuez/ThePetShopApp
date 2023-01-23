@@ -39,6 +39,7 @@ public class SignInController {
     public boolean verifyUsername(String enteredUserRef){
         //Verifying the first input (userReference) either email or username
         String returnedUserRef = "";
+        if(Objects.equals(enteredUserRef, returnedUserRef)) return false; //check for empty form/textField
         if(enteredUserRef.contains("@")){
             returnedUserRef = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_EMAIL, enteredUserRef, UsersTableColumnNameEnums.USER_EMAIL);
         } else {

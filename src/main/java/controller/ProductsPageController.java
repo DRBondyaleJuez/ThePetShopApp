@@ -32,6 +32,10 @@ public class ProductsPageController {
         allProductsInfo = getAllProductsFromDatabase();
     }
 
+    public UUID getCurrentUserUUID() {
+        return currentUserUUID;
+    }
+
     private ProductDisplayInfo[] getAllProductsFromDatabase() {
         //TODO: create the method that retrieves all products from the database based on the list retrieval from the profilepagecontroller
         return null;

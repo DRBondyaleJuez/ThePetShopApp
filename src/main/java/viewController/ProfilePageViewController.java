@@ -109,8 +109,6 @@ public class ProfilePageViewController implements Initializable, ObservableView 
 
         usernameLabel.setOnMouseClicked(usernameClicked());
 
-
-
     }
 
     private void setUsername() {
@@ -177,7 +175,9 @@ public class ProfilePageViewController implements Initializable, ObservableView 
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("Sign Out clicked");
+                for (ViewObserver stalker : observerList) {
+                    stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
+                }
             }
         };
     }

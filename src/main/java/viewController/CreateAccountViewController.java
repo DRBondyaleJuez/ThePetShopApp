@@ -144,7 +144,6 @@ public class CreateAccountViewController implements Initializable, ObservableVie
                 for (ViewObserver stalker : observerList) {
                     stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
                 }
-
             }
         };
     }

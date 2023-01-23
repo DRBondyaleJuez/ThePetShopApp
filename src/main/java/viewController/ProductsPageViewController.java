@@ -3,6 +3,7 @@ package viewController;
 import controller.ProductsPageController;
 import core.ObservableView;
 import core.ViewObserver;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,6 +45,8 @@ public class ProductsPageViewController implements Initializable, ObservableView
     Label previousPageArrow;
     @FXML
     Label nextPageArrow;
+    @FXML
+    Label backLabel;
 
     public ProductsPageViewController(UUID userUUUID) {
 
@@ -60,11 +63,14 @@ public class ProductsPageViewController implements Initializable, ObservableView
 
         setLogoImage();
 
+        //Setting buttons
         //Product Grid display controller arrows
         nextPageArrow.setOnMouseClicked(changePurchasesPageNumber(ProfilePageViewController.ArrowTypeClicked.NEXT));
         previousPageArrow.setOnMouseClicked(changePurchasesPageNumber(ProfilePageViewController.ArrowTypeClicked.PREVIOUS));
         toFirstPageArrow.setOnMouseClicked(changePurchasesPageNumber(ProfilePageViewController.ArrowTypeClicked.FIRST));
         toLastPageArrow.setOnMouseClicked(changePurchasesPageNumber(ProfilePageViewController.ArrowTypeClicked.LAST));
+
+        backLabel.setOnMouseClicked(goBackToPreviousPage());
 
 
     }
@@ -88,6 +94,24 @@ public class ProductsPageViewController implements Initializable, ObservableView
             }
         };
 
+    }
+
+    //The buttons back
+    private EventHandler<? super MouseEvent> goBackToPreviousPage() {
+        return new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(controller.getCurrentUserUUID() == null) {
+                    for (ViewObserver stalker : observerList) {
+                        stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
+                    }
+                } else {
+                    for (ViewObserver stalker : observerList) {
+                        stalker.changeView(ViewObserver.PossibleViews.PROFILE,controller.getCurrentUserUUID());
+                    }
+                }
+            }
+        };
     }
 
     private void setProductGridView() {
