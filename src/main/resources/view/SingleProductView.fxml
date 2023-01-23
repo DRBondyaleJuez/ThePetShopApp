@@ -7,13 +7,13 @@
 
 <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="productImageId" fitHeight="132.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="productImageView" fitHeight="132.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" />
       <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
          <children>
-            <Label fx:id="productNameLabelId" text="Product name" />
-            <Label fx:id="productSubnameLabelId" text="Product Subname" />
-            <Label fx:id="priceLabelId" text="Price" />
-            <Label fx:id="inStockLabelId" text="In Stock" />
+            <Label fx:id="productNameLabel" text="Product name" />
+            <Label fx:id="productSubtypeLabel" text="Product Subname" />
+            <Label fx:id="priceLabel" text="Price" />
+            <Label fx:id="inStockLabel" text="In Stock" />
          </children>
          <padding>
             <Insets left="5.0" />

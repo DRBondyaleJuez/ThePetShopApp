@@ -17,7 +17,7 @@
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc480a" height="55.0" stroke="BLACK" strokeType="INSIDE" width="618.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
-                        <Label text="🔙">
+                        <Label fx:id="backLabel" text="🔙">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -25,14 +25,14 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <ImageView fitHeight="53.0" fitWidth="211.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="topLogoImageView" fitHeight="53.0" fitWidth="211.0" pickOnBounds="true" preserveRatio="true" />
                         <HBox alignment="CENTER" prefHeight="55.0" prefWidth="349.0">
                            <children>
                               <Label text="Search for product: ">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
-                              <TextField prefHeight="40.0" prefWidth="169.0" />
+                              <TextField fx:id="searchTextField" prefHeight="40.0" prefWidth="169.0" />
                               <Button mnemonicParsing="false" text="🔍">
                                  <font>
                                     <Font size="18.0" />
