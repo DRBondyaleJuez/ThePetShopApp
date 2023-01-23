@@ -7,17 +7,17 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewController.ProductsPageViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a6edb5" height="400.0" stroke="BLACK" strokeType="INSIDE" width="618.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a6edb5" height="400.0" stroke="BLACK" strokeType="INSIDE" width="621.0" />
       <VBox prefHeight="400.0" prefWidth="618.0" spacing="5.0">
          <children>
             <StackPane prefHeight="50.0" prefWidth="572.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc480a" height="55.0" stroke="BLACK" strokeType="INSIDE" width="618.0" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc480a" height="55.0" stroke="BLACK" strokeType="INSIDE" width="620.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Label fx:id="backLabel" text="🔙">
+                        <Label fx:id="backLabel" prefHeight="53.0" prefWidth="166.0" text="🔙" textFill="#0a0a0a">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -25,13 +25,9 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <ImageView fx:id="topLogoImageView" fitHeight="53.0" fitWidth="211.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="topLogoImageView" fitHeight="53.0" fitWidth="318.0" pickOnBounds="true" preserveRatio="true" />
                         <HBox alignment="CENTER" prefHeight="55.0" prefWidth="349.0">
                            <children>
-                              <Label text="Search for product: ">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
                               <TextField fx:id="searchTextField" prefHeight="40.0" prefWidth="169.0" />
                               <Button mnemonicParsing="false" text="🔍">
                                  <font>
@@ -48,7 +44,7 @@
             </StackPane>
             <VBox alignment="TOP_CENTER" prefHeight="310.0" prefWidth="618.0" spacing="5.0">
                <children>
-                  <Label text="PRODUCTS">
+                  <Label text="PRODUCTS" textFill="#110000">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin>
@@ -82,11 +78,11 @@
             </VBox>
             <HBox alignment="CENTER" prefHeight="61.0" prefWidth="618.0" spacing="4.0">
                <children>
-                  <Label fx:id="toFirstPageArrow" text="⪻">
+                  <Label fx:id="toFirstPageArrow" text="⪻" textFill="#030303">
                      <font>
                         <Font size="24.0" />
                      </font></Label>
-                  <Label fx:id="previousPageArrow" text="◀">
+                  <Label fx:id="previousPageArrow" text="◀" textFill="#030303">
                      <font>
                         <Font size="24.0" />
                      </font></Label>
@@ -94,11 +90,11 @@
                      <font>
                         <Font size="13.0" />
                      </font></TextField>
-                  <Label fx:id="nextPageArrow" text="▶">
+                  <Label fx:id="nextPageArrow" text="▶" textFill="#030303">
                      <font>
                         <Font size="24.0" />
                      </font></Label>
-                  <Label fx:id="toLastPageArrow" text="⪼">
+                  <Label fx:id="toLastPageArrow" text="⪼" textFill="#0a0a0a">
                      <font>
                         <Font size="24.0" />
                      </font></Label>

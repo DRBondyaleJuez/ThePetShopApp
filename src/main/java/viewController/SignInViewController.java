@@ -224,7 +224,7 @@ public class SignInViewController implements Initializable, ObservableView {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 for (ViewObserver stalker : observerList) {
-                    stalker.changeView(ViewObserver.PossibleViews.PRODUCTS);
+                    stalker.changeView(ViewObserver.PossibleViews.PRODUCTS,null);
                 }
                 System.out.println("Browse without Account CLicked.");
             }

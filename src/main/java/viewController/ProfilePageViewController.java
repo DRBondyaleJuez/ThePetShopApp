@@ -192,12 +192,9 @@ public class ProfilePageViewController implements Initializable, ObservableView 
 
                 System.out.println("Go to products page" + controller.getProfileUUID());
 
-
-                /*
                 for (ViewObserver stalker : observerList) {
                     stalker.changeView(ViewObserver.PossibleViews.PRODUCTS,controller.getProfileUUID());
                 }
-                 */
 
             }
         };
@@ -226,7 +223,7 @@ public class ProfilePageViewController implements Initializable, ObservableView 
 
     @Override
     public void addObserver(ViewObserver currentViewObserver) {
-
+        observerList.add(currentViewObserver);
     }
 
     public enum ArrowTypeClicked{

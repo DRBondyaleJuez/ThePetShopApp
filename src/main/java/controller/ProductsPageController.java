@@ -57,9 +57,7 @@ public class ProductsPageController {
                 currentProductsPageNumber = 1;
                 break;
         }
-
         return currentProductsPageNumber;
-
     }
 
 }

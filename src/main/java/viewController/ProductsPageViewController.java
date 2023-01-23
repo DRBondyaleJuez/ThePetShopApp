@@ -55,7 +55,6 @@ public class ProductsPageViewController implements Initializable, ObservableView
 
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -71,7 +70,7 @@ public class ProductsPageViewController implements Initializable, ObservableView
     }
 
     private void setLogoImage() {
-        Image horizontalLogoImage = new Image(new ByteArrayInputStream(controller.getLogoImageData(LogoType.HORIZONTAL)));
+        Image horizontalLogoImage = new Image(new ByteArrayInputStream(controller.getLogoImageData(LogoType.H_TRANSPARENT)));
         topLogoImageView.setImage(horizontalLogoImage);
     }
 

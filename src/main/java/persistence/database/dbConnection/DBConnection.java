@@ -98,9 +98,14 @@ public class DBConnection {
 
     public String getRecordFromTable(TableNameEnums tableName, UsersTableColumnNameEnums refColumn, String reference, UsersTableColumnNameEnums columnOfInterest){
 
+        String uuidCaseModifier = " ";
+        if(refColumn == UsersTableColumnNameEnums.USER_UUID) {
+            uuidCaseModifier = "::uuid ";
+        }
+
         String sql = "SELECT * " +
                 "FROM " + tableName.toString() + " " +
-                "WHERE " + refColumn.toString() + " = ? ";
+                "WHERE " + refColumn.toString() + " = ? " + uuidCaseModifier;
 
         String returnedRecord = "";
 

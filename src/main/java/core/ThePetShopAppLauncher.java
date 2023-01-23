@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import viewController.ProductsPageViewController;
 import viewController.ProfilePageViewController;
 
 import java.io.IOException;
@@ -45,9 +46,6 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
             case CREATEACCOUNT:
                 loadCreateAccountView();
                 break;
-            case PRODUCTS:
-                loadProductsView();
-                break;
             default:
                 loadSignInView();
                 break;
@@ -65,7 +63,7 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
                 loadProfileView(userUUID);
                 break;
             case PRODUCTS:
-                loadProductsView();
+                loadProductsView(userUUID);
                 break;
             default:
                 loadSignInView();
@@ -85,8 +83,8 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
     }
 
     private void loadProfileView(UUID userUUID) { profilePageLoadView("/view/ProfilePageView.fxml", userUUID); }
-    private void loadProductsView() {
-        loadView("/view/ProductsPageView.fxml");
+    private void loadProductsView(UUID userUUID) {
+        productPageLoadView("/view/ProductsPageView.fxml",userUUID);
     }
 
     private void loadView(String sceneResource){
@@ -106,6 +104,21 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
         ProfilePageViewController newProfilePageViewController = new ProfilePageViewController(userUUID);
         newProfilePageViewController.addObserver(this);
         paneLoader.setController(newProfilePageViewController);
+
+        //The loadPaneloader method is called after the view controller has finished setting
+        Parent root = loadPaneLoader(paneLoader);
+        Scene newScene = new Scene(root);
+        mainStage.setScene(newScene);
+    }
+
+    private void productPageLoadView(String sceneResource, UUID userUUID){
+        //Building products fxml scene
+        FXMLLoader paneLoader = new FXMLLoader(getClass().getResource(sceneResource));
+
+        //Controller needs to be created apart to provide it with the UUID
+        ProductsPageViewController newProductsPageViewController = new ProductsPageViewController(userUUID);
+        newProductsPageViewController.addObserver(this);
+        paneLoader.setController(newProductsPageViewController);
 
         //The loadPaneloader method is called after the view controller has finished setting
         Parent root = loadPaneLoader(paneLoader);
