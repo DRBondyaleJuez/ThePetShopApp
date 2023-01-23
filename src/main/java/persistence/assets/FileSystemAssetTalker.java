@@ -12,41 +12,13 @@ public class FileSystemAssetTalker implements  AssetTalker {
 
     @Override
     public byte[] getLogoImageData(LogoType logoType) {
-        String path = "/assets/images/";
-        switch(logoType){
-            case COLOR:
-                path = path + "colouredLogo.PNG";
-                break;
-            case BLACK:
-                path = path + "blackLogo.PNG";
-                break;
-            case HORIZONTAL:
-                path = path + "horizontalLogo.PNG";
-                break;
-            default:
-                //TODO: log
-                System.out.println("Somehow not available logo type: " + logoType);
-                break;
-        }
-
+        String path = "/assets/images/" + logoType.toString();
         return loadFileData(path);
     }
 
     @Override
     public byte[] getEyeIconImageData(EyeIconType eyeIconType) {
-        String path = "/assets/icons/eye/";
-        switch(eyeIconType){
-            case OPEN:
-                path = path + "openEye.PNG";
-                break;
-            case CLOSED:
-                path = path + "closeEye.PNG";
-                break;
-            default:
-                //TODO: log
-                System.out.println("Somehow not available eye icon type: " + eyeIconType);
-                break;
-        }
+        String path = "/assets/icons/eye/" + eyeIconType.toString();
         return loadFileData(path);
     }
 
