@@ -1,5 +1,6 @@
 package persistence.database;
 
+import model.ProductDisplayInfo;
 import model.UserPurchaseRecord;
 import persistence.database.dbConnection.SQLErrorMessageEnums;
 import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
@@ -48,4 +49,7 @@ public class DatabaseManager {
         return databaseTalker.getUserPurchaseRecordInfo (currentUserUUID);
     }
 
+    public ProductDisplayInfo[] getProductsDisplayInfo() {
+        return databaseTalker.getProductsDisplayInfo();
+    }
 }

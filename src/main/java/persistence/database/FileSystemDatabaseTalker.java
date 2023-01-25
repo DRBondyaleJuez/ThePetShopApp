@@ -1,5 +1,6 @@
 package persistence.database;
 
+import model.ProductDisplayInfo;
 import model.UserPurchaseRecord;
 import persistence.database.dbConnection.DBConnection;
 import persistence.database.dbConnection.SQLErrorMessageEnums;
@@ -35,6 +36,11 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
     @Override
     public byte[] getPasswordFromTable(UsersTableColumnNameEnums refColumn, String reference) {
         return currentDBConnection.getPasswordFromTable(refColumn, reference);
+    }
+
+    @Override
+    public ProductDisplayInfo[] getProductsDisplayInfo() {
+        return currentDBConnection.getProductsDisplayInfo();
     }
 
     @Override

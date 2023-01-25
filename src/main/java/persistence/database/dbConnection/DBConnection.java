@@ -1,5 +1,6 @@
 package persistence.database.dbConnection;
 
+import model.ProductDisplayInfo;
 import model.UserPurchaseRecord;
 import persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
 import persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
@@ -193,7 +194,6 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
     public UserPurchaseRecord[] getUserPurchaseRecordInfo(UUID currentUserUUID){
 
         ArrayList<UserPurchaseRecord> purchaseInfoList = new ArrayList<>();
-        String[] currentPurchaseInfo = new String[6];
 
         String sql = "SELECT product_type, product_name, subtype, quantity, price, sale_date " +
                 "FROM product_sales " +
@@ -228,7 +228,37 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
 
         return purchaseInfoArray;
     }
+    public ProductDisplayInfo[] getProductsDisplayInfo() {
 
+        ArrayList<ProductDisplayInfo> productDisplayInfoList = new ArrayList<>();
+
+        String sql = "SELECT product_name, subtype, price " +
+                "FROM products ";
+        //TODO: Finish the retriever properly with image and stock arguments too
+        try {
+            PreparedStatement preparedStatement = currentConnection.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            System.out.println("This corresponds to the result set from the product info retrieval: "+ resultSet);
+            while (resultSet.next()) {
+                String currentName = resultSet.getString("product_name");
+                String currentSubtype = resultSet.getString("subtype");
+                String currentPrice = resultSet.getString("price");
+
+                ProductDisplayInfo currentProductDisplayInfo = new ProductDisplayInfo(currentName,currentSubtype,currentPrice,null,false);
+                productDisplayInfoList.add(currentProductDisplayInfo);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL ERROR MESSAGE of the purchase info retrieval: " + e.getMessage());
+            return null;
+        }
+
+        ProductDisplayInfo[] productDisplayInfoArray = new ProductDisplayInfo[productDisplayInfoList.size()];
+        productDisplayInfoArray= productDisplayInfoList.toArray(productDisplayInfoArray);
+
+        return productDisplayInfoArray;
+    }
     public String properCase(String s) {
         String result = s;
         try (
