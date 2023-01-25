@@ -27,6 +27,9 @@ public class ProductDisplayInfo {
     public String getPrice() {
         return price;
     }
+    public boolean getStockInfo() {
+        return inStock;
+    }
 
     public byte[] getImageBytearray() {
         return imageBytearray;
