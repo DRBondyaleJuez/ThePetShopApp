@@ -9,7 +9,6 @@ import viewController.ProductsPageViewController;
 import viewController.ProfilePageViewController;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.UUID;
 
 public class ThePetShopAppLauncher extends Application implements ViewObserver {
