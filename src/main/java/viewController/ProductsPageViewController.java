@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import persistence.assets.LogoType;
 
@@ -48,6 +50,11 @@ public class ProductsPageViewController implements Initializable, ObservableView
     @FXML
     Label backLabel;
 
+    //GridPane
+    @FXML
+    GridPane productsGridPane;
+
+
     public ProductsPageViewController(UUID userUUUID) {
 
         controller = new ProductsPageController(userUUUID);
@@ -62,6 +69,8 @@ public class ProductsPageViewController implements Initializable, ObservableView
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         setLogoImage();
+
+        setProductGridView();
 
         //Setting buttons
         //Product Grid display controller arrows
@@ -115,7 +124,21 @@ public class ProductsPageViewController implements Initializable, ObservableView
     }
 
     private void setProductGridView() {
-        //TODO: method that calls gridViewfilller and fills the GridView
+
+        System.out.println("Starting to set gridView"); //---------------------------------------------------------------DELETE
+
+        HBox[] productCardsToDisplay = gridViewfiller.getGridViewProductDisplay();
+        int rowIndex = 0;
+        int columnIndex = 0;
+
+        for (HBox hBox : productCardsToDisplay) {
+            productsGridPane.add(hBox, columnIndex, rowIndex);
+            columnIndex++;
+            if (columnIndex > controller.getNumberProductsPerRow() - 1) {
+                columnIndex = 0;
+                rowIndex++;
+            }
+        }
     }
 
     @Override

@@ -1,12 +1,12 @@
 package controller;
 
 import model.ProductDisplayInfo;
-import model.UserPurchaseRecord;
 import persistence.assets.AssetManager;
 import persistence.assets.LogoType;
 import persistence.database.DatabaseManager;
 import viewController.ProfilePageViewController;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class ProductsPageController {
@@ -14,6 +14,8 @@ public class ProductsPageController {
     private UUID currentUserUUID;
     private int currentProductsPageNumber;
     private int numberProductsPerPage;
+
+    private int numberProductsPerRow;
 
     private AssetManager assetManager;
 
@@ -29,6 +31,7 @@ public class ProductsPageController {
         this.currentUserUUID = currentUserUUID;
         currentProductsPageNumber = 1;
         numberProductsPerPage = 6;
+        numberProductsPerRow = 3;
         allProductsInfo = getAllProductsFromDatabase();
     }
 
@@ -38,11 +41,31 @@ public class ProductsPageController {
 
     private ProductDisplayInfo[] getAllProductsFromDatabase() {
         //TODO: create the method that retrieves all products from the database based on the list retrieval from the profilepagecontroller
-        return null;
+
+        return databaseManager.getProductsDisplayInfo();
+    }
+
+    public int getNumberProductsPerPage() {
+        return numberProductsPerPage;
+    }
+
+    public int getNumberProductsPerRow() {
+        return numberProductsPerRow;
     }
 
     public byte[] getLogoImageData(LogoType logoType) {
         return assetManager.getLogoImageData(logoType);
+    }
+
+    public ProductDisplayInfo[] getCurrentProductsDisplayInfo(){
+
+        int startingProductInfoIndex = (currentProductsPageNumber-1)*numberProductsPerPage;
+        int finalProductInfoIndex = startingProductInfoIndex + numberProductsPerPage;
+
+        if(allProductsInfo == null || allProductsInfo.length == 0) return null;
+        if(finalProductInfoIndex > allProductsInfo.length) finalProductInfoIndex = allProductsInfo.length;
+
+        return Arrays.copyOfRange(allProductsInfo, startingProductInfoIndex, finalProductInfoIndex);
     }
 
     public int changePageNumber(ProfilePageViewController.ArrowTypeClicked arrowClicked){
