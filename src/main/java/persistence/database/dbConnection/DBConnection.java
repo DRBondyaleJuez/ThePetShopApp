@@ -246,7 +246,7 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
                 String currentSubtype = resultSet.getString("subtype");
                 String currentPrice = resultSet.getString("price");
 
-                ProductDisplayInfo currentProductDisplayInfo = new ProductDisplayInfo(currentName,currentSubtype,currentPrice,null,false);
+                ProductDisplayInfo currentProductDisplayInfo = new ProductDisplayInfo(currentName,currentSubtype,currentPrice,null,true);
                 productDisplayInfoList.add(currentProductDisplayInfo);
             }
         } catch (SQLException e) {

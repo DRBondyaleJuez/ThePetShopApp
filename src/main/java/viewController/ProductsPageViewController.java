@@ -59,7 +59,7 @@ public class ProductsPageViewController implements Initializable, ObservableView
 
         controller = new ProductsPageController(userUUUID);
         observerList = new ArrayList<>();
-        gridViewfiller = new GridViewFiller(controller);
+        gridViewfiller = new GridViewFiller(controller,observerList);
 
     }
 
@@ -144,6 +144,7 @@ public class ProductsPageViewController implements Initializable, ObservableView
     @Override
     public void addObserver(ViewObserver currentViewObserver) {
         observerList.add(currentViewObserver);
+        gridViewfiller.updateObserverList(observerList);
 
     }
 }
