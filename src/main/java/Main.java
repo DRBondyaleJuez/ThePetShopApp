@@ -1,4 +1,4 @@
-import core.ThePetShopAppLauncher;
+import application.core.ThePetShopAppLauncher;
 import javafx.application.Application;
 
 public class Main {
