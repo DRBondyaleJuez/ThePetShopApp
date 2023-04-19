@@ -129,7 +129,11 @@ public class ProductsPageViewController implements Initializable, ObservableView
         int rowIndex = 0;
         int columnIndex = 0;
 
+        //Make sure the grid is empty before putting new gridded content
+        productsGridPane.getChildren().clear();
+        
         for (HBox hBox : productCardsToDisplay) {
+
             productsGridPane.add(hBox, columnIndex, rowIndex);
             columnIndex++;
             if (columnIndex > controller.getNumberProductsPerRow() - 1) {

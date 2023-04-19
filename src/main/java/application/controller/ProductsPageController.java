@@ -75,10 +75,13 @@ public class ProductsPageController {
                 currentProductsPageNumber = 1;
                 break;
             case NEXT:
-                if(currentProductsPageNumber < allProductsInfo.length /numberProductsPerPage) currentProductsPageNumber++;
+                if(currentProductsPageNumber < (double)allProductsInfo.length /(double) numberProductsPerPage) currentProductsPageNumber++;
                 break;
             case PREVIOUS:
                 if(currentProductsPageNumber > 1) currentProductsPageNumber--;
+                break;
+            case LAST:
+                currentProductsPageNumber = allProductsInfo.length/numberProductsPerPage + 1;
                 break;
             default:
                 currentProductsPageNumber = 1;
