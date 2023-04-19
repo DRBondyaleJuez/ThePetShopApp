@@ -104,7 +104,7 @@ public class GridViewFiller {
 
                 System.out.println("Shopping Procedure Triggered");
                 try {
-                    shoppingWindowLauncher.start(currentProductInfo);
+                    shoppingWindowLauncher.start(currentProductInfo,controller.getCurrentUserUUID());
                 } catch (Exception e) {
                     System.out.println("Exception: " + e + ". When shopping window was going to be launched.");
                     throw new RuntimeException(e);

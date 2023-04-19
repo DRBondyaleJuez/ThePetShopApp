@@ -8,6 +8,7 @@ import application.model.ProductDisplayInfo;
 import application.viewController.ShoppingWindowViewController;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class ShoppingWindowLauncher {
 
@@ -15,20 +16,20 @@ public class ShoppingWindowLauncher {
 
     public ShoppingWindowLauncher() { mainStage = new Stage();}
 
-    public void start(ProductDisplayInfo productDisplayInfo)  throws Exception {
-        loadingShoppingWindow(productDisplayInfo);
+    public void start(ProductDisplayInfo productDisplayInfo, UUID userId)  throws Exception {
+        loadingShoppingWindow(productDisplayInfo, userId);
 
         mainStage.setTitle("The Pet Shop App - Shopping Procedure");
         mainStage.centerOnScreen();
         mainStage.show();
     }
 
-    private void loadingShoppingWindow(ProductDisplayInfo productDisplayInfo) {
+    private void loadingShoppingWindow(ProductDisplayInfo productDisplayInfo, UUID userId) {
         // TO access to the Resource folder, you have to do the following:
         // getClass().getResource("/path/of/the/resource")
         System.out.println(getClass().getResource("/view/ShoppingWindowView.fxml"));
         FXMLLoader paneLoader = new FXMLLoader(getClass().getResource("/view/ShoppingWindowView.fxml"));
-        ShoppingWindowViewController shoppingWindowViewController = new ShoppingWindowViewController(productDisplayInfo);
+        ShoppingWindowViewController shoppingWindowViewController = new ShoppingWindowViewController(productDisplayInfo,userId);
         shoppingWindowViewController.addLauncherObserver(this);
         paneLoader.setController(shoppingWindowViewController);
         Parent root = loadPaneLoader(paneLoader);

@@ -1,5 +1,6 @@
 package application.persistence.database;
 
+import application.controller.ShoppingWindowController;
 import application.model.ProductDisplayInfo;
 import application.model.UserPurchaseRecord;
 import application.persistence.database.dbConnection.DBConnection;
@@ -41,6 +42,11 @@ public class FileSystemDatabaseTalker implements DatabaseTalker{
     @Override
     public ProductDisplayInfo[] getProductsDisplayInfo() {
         return currentDBConnection.getProductsDisplayInfo();
+    }
+
+    @Override
+    public boolean insertNewPurchaseInfo(ShoppingWindowController.NewPurchaseInfo newPurchaseInfo) {
+        return currentDBConnection.insertNewPurchaseInfo(newPurchaseInfo);
     }
 
     @Override

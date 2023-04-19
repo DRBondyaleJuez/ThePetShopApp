@@ -1,5 +1,6 @@
 package application.persistence.database.dbConnection;
 
+import application.controller.ShoppingWindowController;
 import application.model.ProductDisplayInfo;
 import application.model.UserPurchaseRecord;
 import application.persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
@@ -232,7 +233,7 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
 
         ArrayList<ProductDisplayInfo> productDisplayInfoList = new ArrayList<>();
 
-        String sql = "SELECT product_name, subtype, price,image_url " +
+        String sql = "SELECT product_id, product_name, subtype, price,image_url " +
                 "FROM products " +
                 "ORDER BY product_name";
         //TODO: Finish the retriever properly with image and stock arguments too
@@ -243,12 +244,13 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
 
             System.out.println("This corresponds to the result set from the product info retrieval: "+ resultSet);
             while (resultSet.next()) {
+                int currentId = resultSet.getInt("product_id");
                 String currentName = resultSet.getString("product_name");
                 String currentSubtype = resultSet.getString("subtype");
                 String currentPrice = resultSet.getString("price");
                 String imageURL = resultSet.getString("image_url");
 
-                ProductDisplayInfo currentProductDisplayInfo = new ProductDisplayInfo(currentName,currentSubtype,currentPrice,imageURL,true);
+                ProductDisplayInfo currentProductDisplayInfo = new ProductDisplayInfo(currentId,currentName,currentSubtype,currentPrice,imageURL,true);
                 productDisplayInfoList.add(currentProductDisplayInfo);
             }
         } catch (SQLException e) {
@@ -318,6 +320,38 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
         }
     }
 
+    public boolean insertNewPurchaseInfo(ShoppingWindowController.NewPurchaseInfo newPurchaseInfo) {
 
+        String sql = "INSERT INTO product_sales (buyer_id,product_id,quantity,sale_date) " +
+                "VALUES (?::uuid , ? , ? , ?) " +
+                "RETURNING *";
+        try {
+            PreparedStatement preparedStatement = currentConnection.prepareStatement(sql);
+            preparedStatement.setString(1,newPurchaseInfo.getUserId().toString());
+            preparedStatement.setInt(2,newPurchaseInfo.getProductId());
+            preparedStatement.setInt(3,newPurchaseInfo.getQuantity());
+            preparedStatement.setTimestamp(4,newPurchaseInfo.getCurrentTime());
 
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                Timestamp returnedTimestamp = resultSet.getTimestamp("sale_date");
+                System.out.println(returnedTimestamp); /////////////////////////////////////////////////////////////////////////////// Delete
+
+                if (returnedTimestamp.equals(newPurchaseInfo.getCurrentTime())) {
+                    System.out.println("EVERYTHING WAS CORRECT. New purchase info inserted");
+                    return true;
+                } else {
+                    System.out.println("SOMETHING WAS WRONG. Not sure purchase info inserted");
+                    return false;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQL ERROR MESSAGE: " + e.getMessage());
+            return false;
+        }
+        return false;
+
+    }
 }

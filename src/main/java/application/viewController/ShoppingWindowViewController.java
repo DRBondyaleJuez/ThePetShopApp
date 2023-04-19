@@ -18,11 +18,13 @@ import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class ShoppingWindowViewController implements Initializable {
 
     ShoppingWindowController controller;
     ProductDisplayInfo currentProductInfo;
+    UUID userId;
     ShoppingWindowLauncher launcher;
 
     @FXML
@@ -39,8 +41,9 @@ public class ShoppingWindowViewController implements Initializable {
     Button confirmButton;
     @FXML
     Button rejectButton;
-    public ShoppingWindowViewController(ProductDisplayInfo currentProductInfo) {
+    public ShoppingWindowViewController(ProductDisplayInfo currentProductInfo, UUID userId) {
         this.currentProductInfo = currentProductInfo;
+        this.userId = userId;
         controller = new ShoppingWindowController();
     }
 
@@ -93,11 +96,24 @@ public class ShoppingWindowViewController implements Initializable {
 
                 //TODO: create methods to update database information in purchase table
                 System.out.println("Confirm purchase");
+                String quantityString = unitsTextField.getText();
+                if(checkIfItIsANumber(quantityString)) {
+                    boolean confirmShopping = controller.insertNewPurchaseInfo(currentProductInfo.getProductId(),userId,Integer.parseInt(quantityString));
 
-                launcher.closeShoppingWindow();
+                    launcher.closeShoppingWindow();
+                }
 
             }
         };
+    }
+
+    private boolean checkIfItIsANumber(String possibleNumber){
+        try{
+            int intValue = Integer.parseInt(possibleNumber);
+            return true;
+        } catch (NumberFormatException e){
+            return false;
+        }
     }
 
     private EventHandler<? super MouseEvent> setUnitButton() {

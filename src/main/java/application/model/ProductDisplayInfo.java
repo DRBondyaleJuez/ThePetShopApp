@@ -7,8 +7,10 @@ public class ProductDisplayInfo {
     private String price;
     private String imageURL;
     private boolean inStock;
+    private int productId;
 
-    public ProductDisplayInfo(String productName, String subtype, String price, String imageURL,boolean inStock) {
+    public ProductDisplayInfo(int productId, String productName, String subtype, String price, String imageURL,boolean inStock) {
+        this.productId = productId;
         this.productName = productName;
         this.subtype = subtype;
         this.price = price;
@@ -33,5 +35,13 @@ public class ProductDisplayInfo {
 
     public String getImageURL() {
         return imageURL;
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public int getProductId() {
+        return productId;
     }
 }

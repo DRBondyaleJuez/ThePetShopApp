@@ -1,5 +1,6 @@
 package application.persistence.database;
 
+import application.controller.ShoppingWindowController;
 import application.model.ProductDisplayInfo;
 import application.model.UserPurchaseRecord;
 import application.persistence.database.dbConnection.SQLErrorMessageEnums;
@@ -51,5 +52,9 @@ public class DatabaseManager {
 
     public ProductDisplayInfo[] getProductsDisplayInfo() {
         return databaseTalker.getProductsDisplayInfo();
+    }
+
+    public boolean insertNewPurchaseInfo(ShoppingWindowController.NewPurchaseInfo newPurchaseInfo) {
+        return databaseTalker.insertNewPurchaseInfo(newPurchaseInfo);
     }
 }

@@ -1,5 +1,6 @@
 package application.persistence.database;
 
+import application.controller.ShoppingWindowController;
 import application.model.ProductDisplayInfo;
 import application.model.UserPurchaseRecord;
 import application.persistence.database.dbConnection.SQLErrorMessageEnums;
@@ -21,4 +22,6 @@ public interface DatabaseTalker {
     byte[] getPasswordFromTable(UsersTableColumnNameEnums refColumn, String reference);
 
     ProductDisplayInfo[] getProductsDisplayInfo();
+
+    boolean insertNewPurchaseInfo(ShoppingWindowController.NewPurchaseInfo newPurchaseInfo);
 }
