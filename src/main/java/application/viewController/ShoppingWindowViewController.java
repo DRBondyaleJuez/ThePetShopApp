@@ -1,17 +1,20 @@
 package application.viewController;
 
 import application.controller.ShoppingWindowController;
+import application.persistence.assets.LogoType;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import application.model.ProductDisplayInfo;
 import application.utils.ShoppingWindowLauncher;
 
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
@@ -38,13 +41,14 @@ public class ShoppingWindowViewController implements Initializable {
     Button rejectButton;
     public ShoppingWindowViewController(ProductDisplayInfo currentProductInfo) {
         this.currentProductInfo = currentProductInfo;
-        controller = null;
+        controller = new ShoppingWindowController();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setName();
         setPrice();
+        setProductImageView(currentProductInfo.getImageURL());
 
         unitButton.setOnMouseClicked(setUnitButton());
 
@@ -62,6 +66,13 @@ public class ShoppingWindowViewController implements Initializable {
 
     private void setName() {
         productNameLabel.setText(currentProductInfo.getProductName() + " " + currentProductInfo.getSubtype());
+    }
+
+    public void setProductImageView(String imageURL){
+        byte[] imageByteArray = controller.getOnlineImageToSetProductImageView(imageURL);
+        Image productImage = new Image(new ByteArrayInputStream(imageByteArray));
+        //productImageView.setPreserveRatio(true);
+        productImageView.setImage(productImage);
     }
 
     private EventHandler<? super MouseEvent> setRejectButton() {

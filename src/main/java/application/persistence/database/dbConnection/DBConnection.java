@@ -232,8 +232,9 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
 
         ArrayList<ProductDisplayInfo> productDisplayInfoList = new ArrayList<>();
 
-        String sql = "SELECT product_name, subtype, price " +
-                "FROM products ";
+        String sql = "SELECT product_name, subtype, price,image_url " +
+                "FROM products " +
+                "ORDER BY product_name";
         //TODO: Finish the retriever properly with image and stock arguments too
         try {
             PreparedStatement preparedStatement = currentConnection.prepareStatement(sql);
@@ -245,8 +246,9 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
                 String currentName = resultSet.getString("product_name");
                 String currentSubtype = resultSet.getString("subtype");
                 String currentPrice = resultSet.getString("price");
+                String imageURL = resultSet.getString("image_url");
 
-                ProductDisplayInfo currentProductDisplayInfo = new ProductDisplayInfo(currentName,currentSubtype,currentPrice,null,true);
+                ProductDisplayInfo currentProductDisplayInfo = new ProductDisplayInfo(currentName,currentSubtype,currentPrice,imageURL,true);
                 productDisplayInfoList.add(currentProductDisplayInfo);
             }
         } catch (SQLException e) {

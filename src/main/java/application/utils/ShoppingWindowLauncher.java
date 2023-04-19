@@ -52,5 +52,6 @@ public class ShoppingWindowLauncher {
         mainStage.close();
     }
 
+    //Make a nested class implements runnable with the downloading of the image and the sitting of the image in its overidden method maybe called run I don't remember
 
 }

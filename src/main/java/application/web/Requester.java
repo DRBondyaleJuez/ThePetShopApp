@@ -17,13 +17,11 @@ public class Requester {
 
     /**
      * This method build the URI and request for a GET method in the provided API
-     * @param protocolAndHost the protocol and host of the API "https://exampleHost.com"
-     * @param path the path of the API "/examplePath"
-     * @param queryParams the query parameters required by the API
+     * @param imageURL the path  of the image online "https://exampleHost.com"
      * @return HttpResponse with the corresponding content base on the request
      */
-    public HttpResponse getMethod (String protocolAndHost, String path, Map<String, String> queryParams) {
-        URI finalEndpoint = createUri(protocolAndHost, path, queryParams);
+    public HttpResponse getMethod (String imageURL) {
+        URI finalEndpoint = createUri(imageURL);
 
         String finalEndpointString = finalEndpoint.toString().replaceAll("%2C", ",");
         System.out.println(finalEndpointString);
@@ -45,13 +43,9 @@ public class Requester {
 
     }
 
-    private URI createUri(String protocolAndHost, String path, Map<String, String> queryParams) {
+    private URI createUri(String imageURL) {
         try {
-            URIBuilder uriBuilder = new URIBuilder(protocolAndHost);
-            uriBuilder.setPath(path);
-            for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-                uriBuilder.setParameter(entry.getKey(), entry.getValue());
-            }
+            URIBuilder uriBuilder = new URIBuilder(imageURL);
 
             return uriBuilder.build();
         } catch (URISyntaxException e) {

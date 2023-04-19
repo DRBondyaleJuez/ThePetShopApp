@@ -5,14 +5,14 @@ public class ProductDisplayInfo {
     private String productName;
     private String subtype;
     private String price;
-    private byte[] imageBytearray;
+    private String imageURL;
     private boolean inStock;
 
-    public ProductDisplayInfo(String productName, String subtype, String price, byte[] imageBytearray,boolean inStock) {
+    public ProductDisplayInfo(String productName, String subtype, String price, String imageURL,boolean inStock) {
         this.productName = productName;
         this.subtype = subtype;
         this.price = price;
-        this.imageBytearray = imageBytearray;
+        this.imageURL = imageURL;
         this.inStock = inStock;
     }
 
@@ -31,7 +31,7 @@ public class ProductDisplayInfo {
         return inStock;
     }
 
-    public byte[] getImageBytearray() {
-        return imageBytearray;
+    public String getImageURL() {
+        return imageURL;
     }
 }

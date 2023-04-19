@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="210.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
@@ -12,7 +13,12 @@
          <children>
             <HBox prefHeight="151.0" prefWidth="290.0">
                <children>
-                  <ImageView fx:id="productImageView" fitHeight="157.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true" />
+                  <StackPane prefHeight="200.0" prefWidth="151.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="200.0" stroke="TRANSPARENT" strokeType="INSIDE" width="142.0" />
+                        <ImageView fx:id="productImageView" fitHeight="157.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER" />
+                     </children>
+                  </StackPane>
                   <VBox prefHeight="157.0" prefWidth="145.0" spacing="5.0">
                      <children>
                         <Label prefHeight="31.0" prefWidth="137.0" text="BUY:">
