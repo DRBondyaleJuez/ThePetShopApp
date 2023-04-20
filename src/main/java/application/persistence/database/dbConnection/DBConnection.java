@@ -5,6 +5,7 @@ import application.model.ProductDisplayInfo;
 import application.model.UserPurchaseRecord;
 import application.persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
 import application.persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
+import application.utils.PropertiesReader;
 
 import java.io.ByteArrayInputStream;
 import java.sql.*;
@@ -15,15 +16,16 @@ public class DBConnection {
 
     private String database;
     private final String url;
-    private final String user = "postgres";
+    private final String user;
     private final String password;
     private final Connection currentConnection;
 
     public DBConnection(String currentDatabase) {
 
+        user = PropertiesReader.getDBUser();
         database = currentDatabase;
         url = "jdbc:postgresql://localhost/" + database;
-        password = new DBPasswordHandler().getPassword();
+        password = PropertiesReader.getDBPassword();
         currentConnection = connect();
     }
 
