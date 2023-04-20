@@ -10,11 +10,9 @@ public class EncryptionHandler {
     private final int transpositionValue;
 
     public EncryptionHandler() {
-        key = ""+1010110011+0110001011+0111111001;
-        saltSize = 50;
-        // TODO: Make the transpositionValue smaller (currently is literally XXX in decimal), also make sure that is not 0 nor 1)
-        //transpositionValue = Integer.parseInt(key.substring(0,3));
-        int initialSubstringPosition = 4;
+        key = PropertiesReader.getEncryptionKey();
+        saltSize = PropertiesReader.getSaltSize();
+        int initialSubstringPosition = PropertiesReader.getInitialSubstringPositionForTransposition();
         transpositionValue = calculateTranspositionValue((key.substring(initialSubstringPosition,initialSubstringPosition+6)));
     }
 
