@@ -6,7 +6,11 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+/**
+ * Provides object of the class in charged of the interaction with the resource folder. In particular interactions with the assets folder. This
+ * class implements FileSystemAssetTalker the interface providing the template for the abstract methods that require implementation
+ * to fulfill this application's requirements.
+ */
 public class FileSystemAssetTalker implements  AssetTalker {
 
 

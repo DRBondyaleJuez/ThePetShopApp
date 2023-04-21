@@ -1,5 +1,9 @@
 package application.persistence.assets;
 
+/**
+ * Provides the abstract methods necessary for a proper use by calls from the AssetManager Class basically for performing
+ * the appropriate operations in the resources/assets folder. The class which implements this interface will need to implement the methods.
+ */
 public interface AssetTalker {
 
     /**
