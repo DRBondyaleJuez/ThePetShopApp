@@ -1,10 +1,10 @@
-package application.persistence.database.dbConnection;
+package application.persistence.database;
 
 import application.controller.ShoppingWindowController;
 import application.model.ProductDisplayInfo;
 import application.model.UserPurchaseRecord;
-import application.persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
-import application.persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
+import application.persistence.database.dbTablesEnums.TableNameEnums;
+import application.persistence.database.dbTablesEnums.UsersTableColumnNameEnums;
 import application.utils.PropertiesReader;
 
 import java.io.ByteArrayInputStream;
@@ -12,7 +12,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class DBConnection {
+/**
+ * Provides object of the class in charged of the interaction with the database. In this case a PostgreSQL database. This
+ * class implements DatabaseTalker the interface providing the template for the abstract methods that require implementation
+ * to fulfill this application's requirements.
+ */
+public class DBConnection implements DatabaseTalker {
 
     private String database;
     private final String url;
@@ -20,6 +25,10 @@ public class DBConnection {
     private final String password;
     private final Connection currentConnection;
 
+    /**
+     * This is the constructor which requires the name of the database to be instantiated
+     * @param currentDatabase String name of the database
+     */
     public DBConnection(String currentDatabase) {
 
         user = PropertiesReader.getDBUser();
@@ -31,7 +40,6 @@ public class DBConnection {
 
     /**
      * Connect to the PostgreSQL database
-     *
      * @return a Connection object
      */
     public Connection connect() {
@@ -46,6 +54,7 @@ public class DBConnection {
         return conn;
     }
 
+    //GETTER
     public Connection getConnection() {
         return currentConnection;
     }
@@ -265,62 +274,6 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
 
         return productDisplayInfoArray;
     }
-    public String properCase(String s) {
-        String result = s;
-        try (
-             CallableStatement properCase = currentConnection.prepareCall("{ ? = call initcap( ? ) }")) {
-            properCase.registerOutParameter(1, Types.VARCHAR);
-            properCase.setString(2, s);
-            properCase.execute();
-            result = properCase.getString(1);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return result;
-    }
-
-    public void getAllColumnFormActorsTable(){
-        String sql = "SELECT * FROM actor";
-        try (
-            PreparedStatement preparedStatement = currentConnection.prepareStatement(sql)) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            System.out.println("Amount of actors: " + resultSet.getFetchSize());
-
-            while (resultSet.next()) {
-                int actorId = resultSet.getInt("actor_id");
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                Date lastUpdate = resultSet.getDate("last_update");
-
-                System.out.println(actorId + " " + firstName + " " + lastName + " " + lastUpdate);
-
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void getFilms(String pattern, int releaseYear) {
-        String SQL = "SELECT * FROM get_film (?, ?)";
-        try (
-            PreparedStatement pstmt = currentConnection.prepareStatement(SQL)) {
-
-            pstmt.setString(1,pattern);
-            pstmt.setInt(2,releaseYear);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                System.out.println(String.format("%s %d",
-                        rs.getString("film_title"),
-                        rs.getInt("film_release_year")));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     public boolean insertNewPurchaseInfo(ShoppingWindowController.NewPurchaseInfo newPurchaseInfo) {
 
@@ -354,6 +307,5 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
             return false;
         }
         return false;
-
     }
 }

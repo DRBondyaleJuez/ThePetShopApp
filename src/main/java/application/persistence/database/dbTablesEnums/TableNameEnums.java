@@ -1,4 +1,4 @@
-package application.persistence.database.dbConnection.dbTablesEnums;
+package application.persistence.database.dbTablesEnums;
 
 public enum TableNameEnums {
     USERS("users"),PRODUCTS("products"),PRODUCT_SALES("product_sales");

@@ -4,7 +4,7 @@ import application.persistence.assets.AssetManager;
 import application.persistence.assets.EyeIconType;
 import application.persistence.assets.LogoType;
 import application.persistence.database.DatabaseManager;
-import application.persistence.database.dbConnection.SQLErrorMessageEnums;
+import application.persistence.database.SQLErrorMessageEnums;
 import application.utils.EncryptionHandler;
 
 import java.sql.Timestamp;

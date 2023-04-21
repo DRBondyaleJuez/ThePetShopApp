@@ -3,12 +3,19 @@ package application.utils;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Provides a series of tools to encrypt and decrypt Strings following a series of particular encryption parameters
+ */
 public class EncryptionHandler {
 
     private final String key;
     private final int saltSize;
     private final int transpositionValue;
 
+    /**
+     * This is the constructor where the encryption parameters are established. In this case these are retrieved from the
+     * secrets.properties file in resources employing a PropertiesReader class for this purpose.
+     */
     public EncryptionHandler() {
         key = PropertiesReader.getEncryptionKey();
         saltSize = PropertiesReader.getSaltSize();

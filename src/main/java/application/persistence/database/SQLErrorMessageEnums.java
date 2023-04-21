@@ -1,4 +1,4 @@
-package application.persistence.database.dbConnection;
+package application.persistence.database;
 
 public enum SQLErrorMessageEnums {
 

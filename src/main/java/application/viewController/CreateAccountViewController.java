@@ -16,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import application.persistence.assets.EyeIconType;
 import application.persistence.assets.LogoType;
-import application.persistence.database.dbConnection.SQLErrorMessageEnums;
+import application.persistence.database.SQLErrorMessageEnums;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;

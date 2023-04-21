@@ -4,8 +4,8 @@ import application.model.UserPurchaseRecord;
 import application.persistence.assets.AssetManager;
 import application.persistence.assets.LogoType;
 import application.persistence.database.DatabaseManager;
-import application.persistence.database.dbConnection.dbTablesEnums.TableNameEnums;
-import application.persistence.database.dbConnection.dbTablesEnums.UsersTableColumnNameEnums;
+import application.persistence.database.dbTablesEnums.TableNameEnums;
+import application.persistence.database.dbTablesEnums.UsersTableColumnNameEnums;
 import application.utils.EncryptionHandler;
 import application.viewController.ProfilePageViewController;
 
