@@ -20,11 +20,11 @@ public class ImageCollectorClient {
     }
 
     /**
-     * This method is called to request beer data to the API filtering using the beer name.
+     * This method is called to request an image provided the imageURL.
      * The requester will format the request properly with the parameters and arguments provided. The response is processed
-     * using an objectMapper to manage the JSON provided by the API.
+     * extracting the body in the form of byte array.
      * @param imageURL the path of the image online
-     * @return ArrayList of Beer with the provided name. It can be empty.
+     * @return byte array corresponding to the image of the provided url
      */
     public byte[] requestImageData(String imageURL){
 
@@ -33,8 +33,6 @@ public class ImageCollectorClient {
 
     private byte[] processResponse(HttpResponse response) {
 
-        //ObjectMapper objectMapper = new ObjectMapper();
-        //objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); //This is necessary son non-defined attributes don't trigger an UnrecognizedPropertyException
         byte[] jsonBody;
         try {
             jsonBody = EntityUtils.toByteArray(response.getEntity());
@@ -43,31 +41,8 @@ public class ImageCollectorClient {
             // TODO: As always handle this better
         }
 
-        /*
-        try {
-            listPunkBeers = objectMapper.readValue(jsonBody, new TypeReference<List<AuxiliaryPunkBeer>>(){});
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        ArrayList<Beer> beerSearched = new ArrayList<>();
-
-        Manufacturer auxiliaryManufacturer = new Manufacturer("PunkApi","External Manufacturer");
-
-        for (AuxiliaryPunkBeer apBeer : listPunkBeers) {
-            String tempName = apBeer.getName();
-            double tempGraduation = apBeer.getAbv();
-            String tempType = apBeer.getTagline();
-            String tempDescription = apBeer.getDescription();
-
-            Beer tempBeer = new Beer(tempName,tempGraduation,tempType,tempDescription,auxiliaryManufacturer);
-            beerSearched.add(tempBeer);
-        }
-        */
-
         return jsonBody;
     }
-
 }
 
 

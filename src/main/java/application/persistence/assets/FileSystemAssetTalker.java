@@ -2,15 +2,10 @@ package application.persistence.assets;
 
 import org.apache.commons.io.IOUtils;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 
 public class FileSystemAssetTalker implements  AssetTalker {
 
@@ -34,24 +29,13 @@ public class FileSystemAssetTalker implements  AssetTalker {
         return loadFileData(path);
     }
 
+    // Process to collect assets from resource folder
     private byte[] loadFileData(String path) {
         try {
-            //URI fileUri = getClass().getResource(path).toURI();
-            //Path completePath = Paths.get(fileUri);
-            //byte[] fileContent = Files.readAllBytes(completePath);
-
             InputStream currentInputStream = FileSystemAssetTalker.class.getResourceAsStream(path);
             byte[] fileContent = IOUtils.toByteArray(currentInputStream);
 
             return fileContent;
-            /*
-        } catch (URISyntaxException e) {
-            // TODO log
-            System.out.println("Unable to get resource URI");
-            e.printStackTrace();
-            return new byte[0];
-
-             */
         } catch (IOException e) {
             // TODO: log
             System.out.println("Could not find " + path);
@@ -64,5 +48,4 @@ public class FileSystemAssetTalker implements  AssetTalker {
             return new byte[0];
         }
     }
-
 }

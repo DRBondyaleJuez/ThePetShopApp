@@ -19,7 +19,6 @@ public class DatabaseManager {
     private static DatabaseManager instance;
 
     //This is the private constructor where the databaseTalker implementation is initialized for a particular table
-
     private DatabaseManager(){
         databaseTalker = new DBConnection("the_pet_shop");;
         instance = null;
