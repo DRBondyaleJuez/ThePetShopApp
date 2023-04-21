@@ -20,6 +20,10 @@ import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
+/**
+ * Provides the controller of the ShoppingWindowView.fxml view therefore controlling the effects of interactions
+ * with the view. It implements initializable so the methods initialize is overridden.
+ */
 public class ShoppingWindowViewController implements Initializable {
 
     ShoppingWindowController controller;
@@ -41,12 +45,31 @@ public class ShoppingWindowViewController implements Initializable {
     Button confirmButton;
     @FXML
     Button rejectButton;
+
+    /**
+     * This is the constructor. It initializes a controller of the Class ShoppingWindowController and assigns it to
+     * the controller attribute. It also assigns its attributes for possible future actions.
+     * @param userId UUID the id of the user so in the case of a buying process this user is identified
+     * @param currentProductInfo ProductDisplayInfo object encapsulating the information of the product selected to buy to make it
+     *                           easily searchable in the database
+     */
     public ShoppingWindowViewController(ProductDisplayInfo currentProductInfo, UUID userId) {
         this.currentProductInfo = currentProductInfo;
         this.userId = userId;
         controller = new ShoppingWindowController();
     }
 
+    /**
+     * This is the implementation of initialize abstract method.
+     * <p>
+     *     When this is called during the construction of the view a series of methods are called to assign
+     *     events to the different elements of the view that can be interacted with.
+     *     This includes all the clickable sections of the board.
+     *     Also setting the initial visual state of the elements in the view.
+     * </p>
+     * @param url the URL type argument required by the Initializable interface
+     * @param resourceBundle the ResourceBundle type argument required by the Initializable interface
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setName();

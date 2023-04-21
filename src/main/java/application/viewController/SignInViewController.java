@@ -24,6 +24,11 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
+/**
+ * Provides the controller of the SignInView.fxml view therefore controlling the effects of interactions
+ * with the view. It implements initializable so the the methods initialize is overridden. It also implements ObservableView
+ * to follow an observer-observable design pattern with ThePetShopAppLauncher class.
+ */
 public class SignInViewController implements Initializable, ObservableView {
 
     private SignInController controller;
@@ -74,6 +79,12 @@ public class SignInViewController implements Initializable, ObservableView {
     private Label passwordHelpLabel;
 
 
+    /**
+     * This is the constructor. It initializes a controller of the Class SignInController and assigns it to
+     * the controller attribute. It initializes the observerList which will contain ViewObserver implementations that are
+     * triggered by particular actions or events following the observer and observable design pattern. It also sets the
+     * passwordHiddenState initially as true.
+     */
     public SignInViewController() {
 
         controller = new SignInController();
@@ -81,6 +92,17 @@ public class SignInViewController implements Initializable, ObservableView {
         observerList = new ArrayList<>();
     }
 
+    /**
+     * This is the implementation of initialize abstract method.
+     * <p>
+     *     When this is called during the construction of the view a series of methods are called to assign
+     *     events to the different elements of the view that can be interacted with.
+     *     This includes all the clickable sections of the board.
+     *     Also setting the initial visual state of the elements in the view.
+     * </p>
+     * @param url the URL type argument required by the Initializable interface
+     * @param resourceBundle the ResourceBundle type argument required by the Initializable interface
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
