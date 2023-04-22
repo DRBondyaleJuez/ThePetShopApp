@@ -16,23 +16,48 @@ import application.utils.ShoppingWindowLauncher;
 
 import java.util.ArrayList;
 
-
+/**
+ * Provides an encapsulation of the responsibilities to build the grid of products that will be displayed in the ProductPageView.fxml view.
+ * This class partially follows the observer observable design pattern. In this case a particular action triggers a change in the view
+ * that requires interacting with the observer
+ */
 public class GridViewFiller {
 
     private ProductsPageController controller;
     private ArrayList<ViewObserver> productsPageObserverList;
     private ShoppingWindowLauncher shoppingWindowLauncher;
 
+    /**
+     * This is the constructor.
+     * The controller is assigned.
+     * @param controller ProductPageController object which corresponds to the controller of the ProductPageViewController which instantiated this object
+     * @param productsPageObserverList List of ViewObservers following the partial observable-observer design pattern
+     */
     public GridViewFiller(ProductsPageController controller, ArrayList<ViewObserver> productsPageObserverList) {
         this.controller = controller;
         this.productsPageObserverList = productsPageObserverList;
         shoppingWindowLauncher = new ShoppingWindowLauncher();
     }
 
+    /**
+     * This method adds or eliminates ViewObservers from the observer list based on the list provided
+     * @param newProductsPageObserverList list of ViewObserver to update the current observer list
+     */
     public void updateObserverList(ArrayList<ViewObserver> newProductsPageObserverList){
         productsPageObserverList = newProductsPageObserverList;
     }
 
+    /**
+     * Builds an array of HBoxes which correspond to the product info display for each product and that will be assigned to the
+     * Grid sections
+     * <p>
+     *     To do this it collects from the controller all the objects of the class ProductDisplayInfo which encapsulate the information necessary
+     *     represent the product and uses this information to build each product's display info.
+     *     During the display info of each product a buy button is added to them with an event where pressing the buy button
+     *     triggers the display of another window to confirm the number of units to buy and showing an image.
+     * </p>
+     * @return Array of HBox
+     */
     public HBox[] getGridViewProductDisplay(){
 
         ProductDisplayInfo[] currentProductsDisplayInfo = controller.getCurrentProductsDisplayInfo();
