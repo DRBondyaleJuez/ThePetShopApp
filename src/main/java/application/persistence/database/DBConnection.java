@@ -211,7 +211,7 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
                 "FROM product_sales " +
                 "INNER JOIN products USING (product_id) " +
                 "WHERE buyer_id = ?::uuid " +
-                "ORDER BY sale_date";
+                "ORDER BY sale_date DESC";
         try {
             PreparedStatement preparedStatement = currentConnection.prepareStatement(sql);
             preparedStatement.setString(1, currentUserUUID.toString());
