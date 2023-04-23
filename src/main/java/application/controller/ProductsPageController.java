@@ -9,6 +9,10 @@ import application.viewController.ProfilePageViewController;
 import java.util.Arrays;
 import java.util.UUID;
 
+/**
+ * Provides an object that acts as an intermediary between the ProductPageView and the persistence. It performs the
+ * actions necessary to fulfill the requests of view interactions
+ */
 public class ProductsPageController {
 
     private UUID currentUserUUID;
@@ -23,6 +27,12 @@ public class ProductsPageController {
 
     private ProductDisplayInfo[] allProductsInfo;
 
+    /**
+     * This is the constructor. Here  an instance of the DatabaseManager class and of the AssetManager are assigned to
+     * the databaseManager and assetManager attribute respectively. As well as a series of parameters of the products display
+     * and the retrieval of all product display info from the database.
+     * @param currentUserUUID UUID corresponding to the user that called for the productsPageView
+     */
     public ProductsPageController(UUID currentUserUUID) {
 
         assetManager = AssetManager.getInstance();
@@ -39,12 +49,6 @@ public class ProductsPageController {
         return currentUserUUID;
     }
 
-    private ProductDisplayInfo[] getAllProductsFromDatabase() {
-        //TODO: create the method that retrieves all products from the database based on the list retrieval from the profilepagecontroller
-
-        return databaseManager.getProductsDisplayInfo();
-    }
-
     public int getNumberProductsPerPage() {
         return numberProductsPerPage;
     }
@@ -53,6 +57,11 @@ public class ProductsPageController {
         return numberProductsPerRow;
     }
 
+    /**
+     * Retrieve particular logo image from asset folder in resources using the assetManager
+     * @param logoType LogoType enum of a particular logo type
+     * @return byte array of the logo image requested
+     */
     public byte[] getLogoImageData(LogoType logoType) {
         return assetManager.getLogoImageData(logoType);
     }
@@ -68,6 +77,13 @@ public class ProductsPageController {
         return Arrays.copyOfRange(allProductsInfo, startingProductInfoIndex, finalProductInfoIndex);
     }
 
+    /**
+     * Update base on the type of arrow clicked the current page the ProductPageView product display info grid is on to
+     * display the correct purchase records following a ascending order based on the product name
+     * @param arrowClicked ArrowTypeClicked enum nested in the ProfilePageViewController which informs the change the page number
+     *                     is going to undergo
+     * @return int the new updated page number based on the arrow clicked
+     */
     public int changePageNumber(ProfilePageViewController.ArrowTypeClicked arrowClicked){
 
         switch(arrowClicked){
@@ -88,6 +104,12 @@ public class ProductsPageController {
                 break;
         }
         return currentProductsPageNumber;
+    }
+
+    private ProductDisplayInfo[] getAllProductsFromDatabase() {
+        //TODO: create the method that retrieves all products from the database based on the list retrieval from the profilepagecontroller
+
+        return databaseManager.getProductsDisplayInfo();
     }
 
 }

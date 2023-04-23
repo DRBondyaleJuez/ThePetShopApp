@@ -12,6 +12,10 @@ import application.viewController.ProfilePageViewController;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+/**
+ * Provides an object that acts as an intermediary between the ProfilePageView and the persistence. It performs the
+ * actions necessary to fulfill the events of view interactions
+ */
 public class ProfilePageController {
 
     private final AssetManager assetManager;
@@ -27,15 +31,21 @@ public class ProfilePageController {
 
     private int numberOfPurchasesByUser;
 
-    public ProfilePageController(UUID userUUUID) {
+    /**
+     * This is the constructor. Here  an instance of the DatabaseManager class and of the AssetManager are assigned to
+     * the databaseManager and assetManager attribute respectively. As well as a series of parameters of the purchases and user display
+     * and the retrieval of all necessary purchases and user info from the database.
+     * @param userUUID UUID corresponding to the user that called for the productsPageView
+     */
+    public ProfilePageController(UUID userUUID) {
 
         assetManager = AssetManager.getInstance();
         databaseManager = DatabaseManager.getInstance();
         encryptionHandler = new EncryptionHandler();
 
-        profileUUID = userUUUID;
-        profileUsername = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUUID.toString(),UsersTableColumnNameEnums.USERNAME);
-        profileEmail = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUUID.toString(),UsersTableColumnNameEnums.USER_EMAIL);
+        profileUUID = userUUID;
+        profileUsername = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUID.toString(),UsersTableColumnNameEnums.USERNAME);
+        profileEmail = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUID.toString(),UsersTableColumnNameEnums.USER_EMAIL);
 
         userPurchaseInfo = getUserPurchaseRecordInfo();
 
@@ -48,6 +58,7 @@ public class ProfilePageController {
         }
     }
 
+    //GETTERS
     public UUID getProfileUUID() {
         return profileUUID;
     }
@@ -62,32 +73,57 @@ public class ProfilePageController {
 
     public int getNumberOfEntriesPerPage() { return numberOfEntriesPerPage; }
     public int getNumberOfPurchasesByUser() { return numberOfPurchasesByUser; }
-
+    public int getCurrentRecentPurchasePageNumber() { return currentRecentPurchasePageNumber; }
+    public UserPurchaseRecord getSingleUserPurchaseRecord(int position){
+        return userPurchaseInfo[position];
+    }
+    /**
+     * Retrieve from the database the last login information of the user of the profile
+     * @return String containing the date and time of the last log in
+     */
     public String getLastLogin(){
         return databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USER_UUID,profileUUID.toString(),UsersTableColumnNameEnums.USER_LAST_LOGIN);
     }
 
+
+    /**
+     * Update the last login information of the user of the profile. Change it to the current last login
+     */
     public void updateLastLogin() {
         databaseManager.updateRecord(
                 TableNameEnums.USERS,UsersTableColumnNameEnums.USER_UUID,profileUUID.toString(),UsersTableColumnNameEnums.USER_LAST_LOGIN,generateCurrentTimeStamp().toString()
         );
     }
+
     private Timestamp generateCurrentTimeStamp() {
         return new Timestamp(System.currentTimeMillis());
     }
 
+    /**
+     * Retrieve particular logo image from asset folder in resources using the assetManager
+     * @param logoType LogoType enum of a particular logo type
+     * @return byte array of the logo image requested
+     */
     public byte[] getLogoImageData(LogoType logoType) {
         return assetManager.getLogoImageData(logoType);
     }
 
+    /**
+     * Retrieve the decoration image from asset folder in resources using the assetManager
+     * @return byte array of the decoration image requested
+     */
     public byte[] getDecorationImageData() {
         return assetManager.getDecorationImageData();
     }
 
-    public int getCurrentRecentPurchasePageNumber() {
-        return currentRecentPurchasePageNumber;
-    }
 
+    /**
+     * Update base on the type of arrow clicked the current page the ProfilePageView purchase list is on to display the correct purchase records following
+     * a descending order based on the purchase timestamp
+     * @param arrowClicked ArrowTypeClicked enum nested in the ProfilePageViewController which informs the change the page number
+     *                     is going to undergo
+     * @return int the new updated page number based on the arrow clicked
+     */
     public int changePageNumber(ProfilePageViewController.ArrowTypeClicked arrowClicked){
 
         switch(arrowClicked){
@@ -109,14 +145,9 @@ public class ProfilePageController {
 
     }
 
-    public UserPurchaseRecord[] getUserPurchaseRecordInfo () {
+
+
+    private UserPurchaseRecord[] getUserPurchaseRecordInfo () {
         return databaseManager.getUserPurchaseRecordInfo(profileUUID);
     }
-
-    public UserPurchaseRecord getSingleUserPurchaseRecord(int position){
-        return userPurchaseInfo[position];
-    }
-
-
-
 }

@@ -7,21 +7,42 @@ import application.web.ImageCollectorClient;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+/**
+ * Provides an object that acts as an intermediary between the ShoppingWindowView, the persistence and the web client. It performs the
+ * actions necessary to fulfill the events of view interactions
+ */
 public class ShoppingWindowController {
 
     private ImageCollectorClient imageCollectorClient;
     private DatabaseManager databaseManager;
 
+    /**
+     * This is the constructor. Here  an instance of the DatabaseManager class is assigned to
+     * the databaseManager. As well as the instantiation of an object of the ImageCollectorClient class.
+     */
     public ShoppingWindowController() {
 
         imageCollectorClient = new ImageCollectorClient();
         databaseManager = DatabaseManager.getInstance();
     }
 
+    /**
+     * Retrieve the image found at the provided URL
+     * @param imageURL String the URL where the image can be found
+     * @return byte Array corresponding to the image at the URL
+     */
     public byte[] getOnlineImageToSetProductImageView(String imageURL){
         return imageCollectorClient.requestImageData(imageURL);
     }
 
+
+    /**
+     * Insert in the database the purchase information that took place
+     * @param productId int The id of the product purchased
+     * @param userId UUID The id of the user that purchased the product
+     * @param quantity int the number of units of the product purchased
+     * @return boolean indicating if the info was inserted correctly
+     */
     public boolean insertNewPurchaseInfo(int productId, UUID userId,int quantity){
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
@@ -30,12 +51,24 @@ public class ShoppingWindowController {
         return databaseManager.insertNewPurchaseInfo(newPurchaseInfo);
     }
 
+
+    /**
+     * Nested Class to encapsulate the purchase information that is sent through the persistence to be stored in the database
+     * once a purchase takes place.
+     */
     public class NewPurchaseInfo {
         private int productId;
         private UUID userId;
         private Timestamp currentTime;
         private int quantity;
 
+        /**
+         * This is the constructor with all the attributes.
+         * @param productId int corresponding to the id of the product purchased
+         * @param userId UUID corresponding to the user that performed the purchase
+         * @param currentTime Timestamp of the date and time the purchase was performed
+         * @param quantity int the number of units of the product purchased
+         */
         public NewPurchaseInfo(int productId, UUID userId, Timestamp currentTime, int quantity) {
             this.productId = productId;
             this.userId = userId;
@@ -43,6 +76,7 @@ public class ShoppingWindowController {
             this.quantity = quantity;
         }
 
+        //GETTERS
         public int getProductId() {
             return productId;
         }

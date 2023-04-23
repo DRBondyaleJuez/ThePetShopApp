@@ -225,7 +225,7 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
                 String currentSubtype = resultSet.getString("subtype");
                 int currentQuantity = resultSet.getInt("quantity");
                 String currentPrice = resultSet.getString("price");
-                String currentSaleDate = resultSet.getString("sale_date");
+                Timestamp currentSaleDate = resultSet.getTimestamp("sale_date");
 
                 UserPurchaseRecord currentPurchaseRecord = new UserPurchaseRecord(currentPurchaseType,currentName,currentSubtype,currentQuantity,currentPrice,currentSaleDate);
                 purchaseInfoList.add(currentPurchaseRecord);
