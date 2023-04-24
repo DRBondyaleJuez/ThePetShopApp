@@ -3,10 +3,13 @@ package application.viewController;
 import application.controller.ProfilePageController;
 import application.core.ObservableView;
 import application.core.ViewObserver;
+import application.model.UserPurchaseRecord;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import application.persistence.assets.LogoType;
+import javafx.scene.text.Font;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
@@ -28,9 +32,9 @@ import java.util.UUID;
  */
 public class ProfilePageViewController implements Initializable, ObservableView {
 
-    private ProfilePageController controller;
+    private final ProfilePageController controller;
     private ArrayList<ViewObserver> observerList;
-    private ListViewFiller listViewfiller;
+    //private ListViewFiller listViewfiller;
 
     //TextLabels:
     @FXML
@@ -85,7 +89,7 @@ public class ProfilePageViewController implements Initializable, ObservableView 
 
         controller = new ProfilePageController(userUUUID);
         observerList = new ArrayList<>();
-        listViewfiller = new ListViewFiller(controller);
+        //listViewfiller = new ListViewFiller(controller);
 
     }
 
@@ -150,22 +154,17 @@ public class ProfilePageViewController implements Initializable, ObservableView 
     private void setPurchasesListView(){
 
         if(purchasesListView.getItems() != null) {
-            purchasesListView.getItems().removeAll();
+            purchasesListView.getItems().clear();
         }
-
-
 
         for (int i = 0; i < controller.getNumberOfEntriesPerPage(); i++) {
 
-            HBox currentHBoxEntry = listViewfiller.getPurchasedProductEntry(i);
+            HBox currentHBoxEntry = getPurchasedProductEntry(i);
             if(currentHBoxEntry == null) {
                break;
             }
             purchasesListView.getItems().add(currentHBoxEntry);
         }
-
-
-
     }
 
     //The recent purchase pseudo button setter section
@@ -242,6 +241,70 @@ public class ProfilePageViewController implements Initializable, ObservableView 
         };
     }
 
+    /**
+     * This method builds the corresponding HBox that will represent an entry in the list showing the details of a particular purchase.
+     * <p>
+     *     To do this it calls the controller to retrieve the purchase info that corresponds to the positionNumber provided
+     * </p>
+     * @param positionNumber int the row in the listView this entry will occupy
+     * @return HBox object a scene layout object containing the detail of the purchase in the format you want them to be displayed
+     */
+    private HBox getPurchasedProductEntry(int positionNumber){
+
+        //Calculate the position in the database of the information
+        int sourceInformationPosition = (controller.getCurrentRecentPurchasePageNumber()-1) * controller.getNumberOfEntriesPerPage() + positionNumber;
+
+        //If the position is larger than the number of items purchased by the user there is no more information and null is returned
+        if(sourceInformationPosition > controller.getNumberOfPurchasesByUser()-1) return null;
+
+        //If the position is adequate the Entry is constructed from the information retrieved from the database
+
+        //First retrieve and store info temporarily
+        UserPurchaseRecord currentUserSinglePurchaseRecord = controller.getSingleUserPurchaseRecord(positionNumber);
+
+        System.out.println("This should display the purchase item information: " + currentUserSinglePurchaseRecord); // DELETE WHEN FINISHED ---------------------------------------------------------------------------------------------------------
+
+        //Then build the HBox that will display the info inna certain distribution
+        HBox purchaseProductEntry = new HBox();
+        purchaseProductEntry.setSpacing(25); //This spacing is matching the header of the list view
+        int[] widthsOfListContent = {175,10,30,100};
+
+
+        Label filler = new Label(currentUserSinglePurchaseRecord.getProductCompleteName() + " ");
+        filler.setFont(new Font(filler.getFont().getName(),10));
+        filler.setMaxWidth(widthsOfListContent[0]);
+        filler.setPrefWidth(widthsOfListContent[0]);
+        purchaseProductEntry.getChildren().add(filler);
+        filler = new Label(currentUserSinglePurchaseRecord.getPurchasedQuantity() + " ");
+        filler.setFont(new Font(filler.getFont().getName(),10));
+        filler.setMaxWidth(widthsOfListContent[1]);
+        filler.setPrefWidth(widthsOfListContent[1]);
+        purchaseProductEntry.getChildren().add(filler);
+        filler = new Label(currentUserSinglePurchaseRecord.getPurchasePrice()+ " € ");
+        filler.setFont(new Font(filler.getFont().getName(),10));
+        filler.setMaxWidth(widthsOfListContent[2]);
+        filler.setPrefWidth(widthsOfListContent[2]);
+        purchaseProductEntry.getChildren().add(filler);
+        filler = new Label(currentUserSinglePurchaseRecord.getPurchaseDate() + " ");
+        filler.setFont(new Font(filler.getFont().getName(),10));
+        filler.setMaxWidth(widthsOfListContent[3]);
+        filler.setPrefWidth(widthsOfListContent[3]);
+        purchaseProductEntry.getChildren().add(filler);
+
+        //Format correcting
+        ObservableList<Node> nodeInTheHBox = purchaseProductEntry.getChildren();
+        ArrayList<Label> labelsInTheEntry = new ArrayList<>();
+        for (Node currentNode : nodeInTheHBox) {
+            labelsInTheEntry.add((Label) currentNode);
+        }
+        for (Label currentLabel : labelsInTheEntry) {
+            currentLabel.setFont(new Font(currentLabel.getFont().getName(),10));
+        }
+
+        purchaseProductEntry.setSpacing(25);
+
+        return purchaseProductEntry;
+    }
 
     @Override
     public void addObserver(ViewObserver currentViewObserver) {

@@ -66,6 +66,11 @@ public class ProductsPageController {
         return assetManager.getLogoImageData(logoType);
     }
 
+    /**
+     * Selective getter that returns from all the allProductsInfo attribute the productDisplayInfo which corresponds to
+     * the current page the user is at
+     * @return Array of ProductDisplayInfo containing the ProductDisplayinfor objects of the products needed for the current page
+     */
     public ProductDisplayInfo[] getCurrentProductsDisplayInfo(){
 
         int startingProductInfoIndex = (currentProductsPageNumber-1)*numberProductsPerPage;

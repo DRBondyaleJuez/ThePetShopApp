@@ -132,24 +132,24 @@
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" height="28.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="394.0" />
-                              <HBox alignment="CENTER" prefHeight="21.0" prefWidth="393.0" spacing="25.0">
+                              <HBox alignment="CENTER" prefHeight="21.0" prefWidth="393.0" spacing="15.0">
                                  <children>
-                                    <Label prefHeight="20.0" prefWidth="138.0" text="Purchased Item" textFill="WHITE">
+                                    <Label prefHeight="20.0" prefWidth="166.0" text="Purchased Item" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="10.0" text="Nº Item" textFill="WHITE">
+                                    <Label layoutX="10.0" text="Nº" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="10.0" text="Cost" textFill="WHITE">
+                                    <Label layoutX="10.0" text="Total Cost" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="38.0" text="Purchase date" textFill="WHITE">
+                                    <Label layoutX="38.0" prefHeight="20.0" prefWidth="87.0" text="Purchase date" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>

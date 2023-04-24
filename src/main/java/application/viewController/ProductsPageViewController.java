@@ -3,6 +3,7 @@ package application.viewController;
 import application.controller.ProductsPageController;
 import application.core.ObservableView;
 import application.core.ViewObserver;
+import application.model.ProductDisplayInfo;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +14,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import application.persistence.assets.LogoType;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
@@ -27,9 +31,8 @@ import java.util.UUID;
  */
 public class ProductsPageViewController implements Initializable, ObservableView {
 
-    private ProductsPageController controller;
+    private final ProductsPageController controller;
     private ArrayList<ViewObserver> observerList;
-    private GridViewFiller gridViewfiller;
 
     //ImageViews:
     @FXML
@@ -69,7 +72,6 @@ public class ProductsPageViewController implements Initializable, ObservableView
 
         controller = new ProductsPageController(userUUID);
         observerList = new ArrayList<>();
-        gridViewfiller = new GridViewFiller(controller,observerList);
 
     }
 
@@ -147,7 +149,7 @@ public class ProductsPageViewController implements Initializable, ObservableView
 
         System.out.println("Starting to set gridView"); //---------------------------------------------------------------DELETE
 
-        HBox[] productCardsToDisplay = gridViewfiller.getGridViewProductDisplay();
+        HBox[] productCardsToDisplay = getGridViewProductDisplay();
         int rowIndex = 0;
         int columnIndex = 0;
 
@@ -165,10 +167,96 @@ public class ProductsPageViewController implements Initializable, ObservableView
         }
     }
 
+    /**
+     * Builds an array of HBoxes which correspond to the product info display for each product and that will be assigned to the
+     * Grid sections
+     * <p>
+     *     To do this it collects from the controller all the objects of the class ProductDisplayInfo which encapsulate the information necessary
+     *     represent the product and uses this information to build each product's display info.
+     *     During the display info of each product a buy button is added to them with an event where pressing the buy button
+     *     triggers the display of another window to confirm the number of units to buy and showing an image.
+     * </p>
+     * @return Array of HBox
+     */
+    public HBox[] getGridViewProductDisplay(){
+
+        ProductDisplayInfo[] currentProductsDisplayInfo = controller.getCurrentProductsDisplayInfo();
+
+        HBox[] productDisplayCards = new HBox[currentProductsDisplayInfo.length];
+
+        for (int i = 0; i < productDisplayCards.length; i++) {
+            productDisplayCards[i] = buildProductCard(currentProductsDisplayInfo[i]);
+        }
+
+        return productDisplayCards;
+    }
+
+    private HBox buildProductCard(ProductDisplayInfo currentProductDisplayInfo){
+
+        HBox currentHBox = new HBox();
+
+        //Building the children of the HBox
+        ImageView productImageView = new ImageView();
+        productImageView.setFitWidth(currentHBox.getWidth()/2.5);
+
+        VBox productInfoVBox = new VBox();
+        productInfoVBox.setSpacing(5);
+        Label productNameLabel = new Label(currentProductDisplayInfo.getProductName());
+        Label productSubtypeLabel = new Label(currentProductDisplayInfo.getSubtype());
+        Label productPriceLabel = new Label(currentProductDisplayInfo.getPrice());
+        Label inStockLabel = new Label();
+        inStockLabel.setFont(new Font(10));
+        if(currentProductDisplayInfo.getStockInfo()) {
+            inStockLabel.setText("IN STOCK");
+            Color color = Color.GREEN;
+            inStockLabel.setTextFill(color);
+        } else {
+            inStockLabel.setText("OUT OF STOCK");
+            Color color = Color.DARKRED;
+            inStockLabel.setTextFill(color);
+        }
+
+        Button buyButton = new Button("BUY");
+        buyButton.setOnMouseClicked(setShoppingProcedureAction(currentProductDisplayInfo));
+
+        productInfoVBox.getChildren().add(productNameLabel);
+        productInfoVBox.getChildren().add(productSubtypeLabel);
+        productInfoVBox.getChildren().add(productPriceLabel);
+        productInfoVBox.getChildren().add(inStockLabel);
+        if(currentProductDisplayInfo.getStockInfo()) {
+            productInfoVBox.getChildren().add(buyButton);
+        }
+
+        //Adding children to the HBox
+        currentHBox.getChildren().add(productImageView);
+        currentHBox.getChildren().add(productInfoVBox);
+
+        return currentHBox;
+    }
+
+    private EventHandler<? super MouseEvent> setShoppingProcedureAction(ProductDisplayInfo currentProductInfo) {
+
+        return new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+                if(controller.getCurrentUserUUID() == null){
+                    for (ViewObserver stalker : observerList) {
+                        stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
+                    }
+                    return;
+                }
+
+                System.out.println("Shopping Procedure Triggered");
+                for (ViewObserver stalker : observerList) {
+                    stalker.loadShoppingWindow(currentProductInfo,controller.getCurrentUserUUID());
+                }
+            }
+        };
+    }
+
     @Override
     public void addObserver(ViewObserver currentViewObserver) {
         observerList.add(currentViewObserver);
-        gridViewfiller.updateObserverList(observerList);
-
     }
 }
