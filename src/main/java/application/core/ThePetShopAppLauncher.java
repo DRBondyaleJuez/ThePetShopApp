@@ -1,7 +1,6 @@
 package application.core;
 
 import application.model.ProductDisplayInfo;
-import application.utils.ShoppingWindowLauncher;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

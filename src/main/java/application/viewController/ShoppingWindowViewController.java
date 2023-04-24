@@ -1,7 +1,6 @@
 package application.viewController;
 
 import application.controller.ShoppingWindowController;
-import application.persistence.assets.LogoType;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,7 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import application.model.ProductDisplayInfo;
-import application.utils.ShoppingWindowLauncher;
+import application.core.ShoppingWindowLauncher;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
@@ -125,7 +124,6 @@ public class ShoppingWindowViewController implements Initializable {
 
                     launcher.closeShoppingWindow();
                 }
-
             }
         };
     }
@@ -144,6 +142,7 @@ public class ShoppingWindowViewController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
 
+                //Check if the content of the unitsTextField is a number
                 try{
                     int num = Integer.parseInt(unitsTextField.getText());
                     // is an integer!

@@ -1,6 +1,7 @@
 package application.persistence.database;
 
 import application.controller.ShoppingWindowController;
+import application.model.NewPurchaseInfo;
 import application.model.ProductDisplayInfo;
 import application.model.UserPurchaseRecord;
 import application.persistence.database.dbTablesEnums.TableNameEnums;
@@ -77,5 +78,5 @@ public interface DatabaseTalker {
      *                        This class is nested in the ShoppingWindowController class
      * @return boolean true to confirm the creation of the entry or false if the entry was not achieved
      */
-    boolean insertNewPurchaseInfo(ShoppingWindowController.NewPurchaseInfo newPurchaseInfo);
+    boolean insertNewPurchaseInfo(NewPurchaseInfo newPurchaseInfo);
 }

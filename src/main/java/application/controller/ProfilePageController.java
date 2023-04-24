@@ -20,7 +20,6 @@ public class ProfilePageController {
 
     private final AssetManager assetManager;
     private final DatabaseManager databaseManager;
-    private final EncryptionHandler encryptionHandler;
     private final UUID profileUUID;
     private String profileUsername;
     private String profileEmail;
@@ -41,7 +40,6 @@ public class ProfilePageController {
 
         assetManager = AssetManager.getInstance();
         databaseManager = DatabaseManager.getInstance();
-        encryptionHandler = new EncryptionHandler();
 
         profileUUID = userUUID;
         profileUsername = databaseManager.getRecordFromTable(TableNameEnums.USERS, UsersTableColumnNameEnums.USER_UUID,userUUID.toString(),UsersTableColumnNameEnums.USERNAME);
@@ -85,7 +83,6 @@ public class ProfilePageController {
         return databaseManager.getRecordFromTable(TableNameEnums.USERS,UsersTableColumnNameEnums.USER_UUID,profileUUID.toString(),UsersTableColumnNameEnums.USER_LAST_LOGIN);
     }
 
-
     /**
      * Update the last login information of the user of the profile. Change it to the current last login
      */
@@ -115,7 +112,6 @@ public class ProfilePageController {
     public byte[] getDecorationImageData() {
         return assetManager.getDecorationImageData();
     }
-
 
     /**
      * Update base on the type of arrow clicked the current page the ProfilePageView purchase list is on to display the correct purchase records following

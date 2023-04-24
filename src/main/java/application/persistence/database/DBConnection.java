@@ -1,6 +1,7 @@
 package application.persistence.database;
 
 import application.controller.ShoppingWindowController;
+import application.model.NewPurchaseInfo;
 import application.model.ProductDisplayInfo;
 import application.model.UserPurchaseRecord;
 import application.persistence.database.dbTablesEnums.TableNameEnums;
@@ -275,7 +276,7 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
         return productDisplayInfoArray;
     }
 
-    public boolean insertNewPurchaseInfo(ShoppingWindowController.NewPurchaseInfo newPurchaseInfo) {
+    public boolean insertNewPurchaseInfo(NewPurchaseInfo newPurchaseInfo) {
 
         String sql = "INSERT INTO product_sales (buyer_id,product_id,quantity,sale_date) " +
                 "VALUES (?::uuid , ? , ? , ?) " +
