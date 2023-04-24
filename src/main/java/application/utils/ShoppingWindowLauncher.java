@@ -3,6 +3,7 @@ package application.utils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import application.model.ProductDisplayInfo;
 import application.viewController.ShoppingWindowViewController;
@@ -12,16 +13,17 @@ import java.util.UUID;
 
 public class ShoppingWindowLauncher {
 
-    private Stage mainStage;
+    private Stage productShoppingStage;
 
-    public ShoppingWindowLauncher() { mainStage = new Stage();}
+    public ShoppingWindowLauncher() { productShoppingStage = new Stage();}
 
     public void start(ProductDisplayInfo productDisplayInfo, UUID userId)  throws Exception {
         loadingShoppingWindow(productDisplayInfo, userId);
 
-        mainStage.setTitle("The Pet Shop App - Shopping Procedure");
-        mainStage.centerOnScreen();
-        mainStage.show();
+        productShoppingStage.setTitle("The Pet Shop App - Shopping Procedure");
+        productShoppingStage.centerOnScreen();
+        productShoppingStage.initModality(Modality.APPLICATION_MODAL);
+        productShoppingStage.show();
     }
 
     private void loadingShoppingWindow(ProductDisplayInfo productDisplayInfo, UUID userId) {
@@ -34,7 +36,7 @@ public class ShoppingWindowLauncher {
         paneLoader.setController(shoppingWindowViewController);
         Parent root = loadPaneLoader(paneLoader);
         Scene newScene = new Scene(root);
-        mainStage.setScene(newScene);
+        productShoppingStage.setScene(newScene);
     }
 
     private Parent loadPaneLoader(FXMLLoader paneLoader) {
@@ -50,7 +52,7 @@ public class ShoppingWindowLauncher {
     }
 
     public void closeShoppingWindow(){
-        mainStage.close();
+        productShoppingStage.close();
     }
 
     //Make a nested class implements runnable with the downloading of the image and the sitting of the image in its overidden method maybe called run I don't remember

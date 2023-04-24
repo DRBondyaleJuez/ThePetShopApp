@@ -1,5 +1,7 @@
 package application.core;
 
+import application.model.ProductDisplayInfo;
+import application.utils.ShoppingWindowLauncher;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +19,8 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
 
     public ThePetShopAppLauncher() { mainStage = new Stage();}
 
-    @Override public void start(Stage stage)  throws Exception {
+    @Override
+    public void start(Stage stage)  throws Exception {
         mainStage = stage;
         loadSignInView();
 
@@ -72,6 +75,17 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
         mainStage.centerOnScreen();
         mainStage.show();
 
+    }
+
+    @Override
+    public void loadShoppingWindow(ProductDisplayInfo productDisplayInfo, UUID userId){
+        ShoppingWindowLauncher shoppingWindowLauncher = new ShoppingWindowLauncher();
+        try {
+            shoppingWindowLauncher.start(productDisplayInfo,userId);
+        } catch (Exception e) {
+            System.out.println("Exception: " + e + ". When shopping window was going to be launched.");
+            throw new RuntimeException(e);
+        }
     }
 
     private void loadSignInView() {
