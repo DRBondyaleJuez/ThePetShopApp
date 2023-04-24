@@ -64,8 +64,7 @@ public class ProductsPageViewController implements Initializable, ObservableView
     /**
      * This is the constructor. It initializes a controller of the Class ProductPageController and assigns it to
      * the controller attribute. It initializes the observerList which will contain ViewObserver implementations that are
-     * triggered by particular actions or events following the observer and observable design pattern. It also initializes and assigns
-     * the GridViewFiller which will fill the view with a grid of product info sections.
+     * triggered by particular actions or events following the observer and observable design pattern.
      * @param userUUID UUID the id of the user so in the case of a buying process this user is identified
      */
     public ProductsPageViewController(UUID userUUID) {

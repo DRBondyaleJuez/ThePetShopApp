@@ -21,6 +21,7 @@ import javafx.scene.text.Font;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.UUID;
@@ -34,7 +35,6 @@ public class ProfilePageViewController implements Initializable, ObservableView 
 
     private final ProfilePageController controller;
     private ArrayList<ViewObserver> observerList;
-    //private ListViewFiller listViewfiller;
 
     //TextLabels:
     @FXML
@@ -81,15 +81,13 @@ public class ProfilePageViewController implements Initializable, ObservableView 
     /**
      * This is the constructor. It initializes a controller of the Class ProfilePageController and assigns it to
      * the controller attribute. It initializes the observerList which will contain ViewObserver implementations that are
-     * triggered by particular actions or events following the observer and observable design pattern. It also initializes and assigns
-     * the ListViewFiller which will fill the view with a list of purchases by the user.
+     * triggered by particular actions or events following the observer and observable design pattern.
      * @param userUUUID UUID the id of the user so this particular user's purchase info is retrieved from the database
      */
     public ProfilePageViewController(UUID userUUUID) {
 
         controller = new ProfilePageController(userUUUID);
         observerList = new ArrayList<>();
-        //listViewfiller = new ListViewFiller(controller);
 
     }
 
@@ -267,24 +265,29 @@ public class ProfilePageViewController implements Initializable, ObservableView 
         //Then build the HBox that will display the info inna certain distribution
         HBox purchaseProductEntry = new HBox();
         purchaseProductEntry.setSpacing(25); //This spacing is matching the header of the list view
-        int[] widthsOfListContent = {175,10,30,100};
+        int[] widthsOfListContent = {170,10,35,100};
 
-
+        //Filling productName in listView row
         Label filler = new Label(currentUserSinglePurchaseRecord.getProductCompleteName() + " ");
         filler.setFont(new Font(filler.getFont().getName(),10));
         filler.setMaxWidth(widthsOfListContent[0]);
         filler.setPrefWidth(widthsOfListContent[0]);
         purchaseProductEntry.getChildren().add(filler);
+        //Filling number of items purchased in listView row
         filler = new Label(currentUserSinglePurchaseRecord.getPurchasedQuantity() + " ");
         filler.setFont(new Font(filler.getFont().getName(),10));
         filler.setMaxWidth(widthsOfListContent[1]);
         filler.setPrefWidth(widthsOfListContent[1]);
         purchaseProductEntry.getChildren().add(filler);
-        filler = new Label(currentUserSinglePurchaseRecord.getPurchasePrice()+ " € ");
+        //Filling total cost of the purchase in listView row
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        String priceWithCorrectDecimalFormat = decimalFormat.format(currentUserSinglePurchaseRecord.getPurchasePrice());
+        filler = new Label(priceWithCorrectDecimalFormat+ " €");
         filler.setFont(new Font(filler.getFont().getName(),10));
         filler.setMaxWidth(widthsOfListContent[2]);
         filler.setPrefWidth(widthsOfListContent[2]);
         purchaseProductEntry.getChildren().add(filler);
+        //Filling timestamp of the purchase in listView row
         filler = new Label(currentUserSinglePurchaseRecord.getPurchaseDate() + " ");
         filler.setFont(new Font(filler.getFont().getName(),10));
         filler.setMaxWidth(widthsOfListContent[3]);
