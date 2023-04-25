@@ -1,0 +1,71 @@
+-----------------------------------------------------------------------------------------------------------------------
+-- RELATIONAL DATABASE SCHEME FOR THE PET SHOP APPLICATION
+------------------------------------------------------------------------------------------------------------------------
+
+-- This file contains the code necessary in PostgreSQL to build the relational tables which this code's persistence employs
+-- as database to store and retrieve the data.
+
+
+--------------------------------------------------------------
+--------------------- DATABASE ---------------------
+--------------------------------------------------------------
+-- It is important to name the database 'the_pet_shop' or change the name of the DatabaseManager class in charge of providing the
+-- name for the DBConnection
+
+CREATE DATABASE the_pet_shop;
+
+
+-- Once the database is created select it and add the following tables:
+
+
+--------------------------------------------------------------
+--------------------- USERS TABLE ---------------------
+--------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS users(
+	user_id uuid PRIMARY KEY,
+	username VARCHAR ( 50 ) UNIQUE NOT NULL,
+	password BYTEA NOT NULL,
+	email VARCHAR ( 255 ) UNIQUE NOT NULL,
+	date_created TIMESTAMP NOT NULL,
+    last_login TIMESTAMP
+);
+
+
+--------------------------------------------------------------
+--------------------- PRODUCTS TABLE -----------------------------
+--------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS products(
+	product_id SERIAL PRIMARY KEY,
+	product_type VARCHAR ( 50 ) NOT NULL,
+	product_name VARCHAR ( 100 ) NOT NULL,
+	subtype VARCHAR ( 50 ) NOT NULL,
+	price MONEY NOT NULL,
+	review SMALLINT,
+    units_sold INT,
+	UNIQUE (product_name,subtype)
+);
+
+
+----------------------------------------------------------------
+-------------------- PRODUCT SALES TABLE------------------------
+----------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS product_sales(
+	psale_id SERIAL PRIMARY KEY,
+	buyer_id UUID NOT NULL,
+	product_id INT NOT NULL,
+	quantity INT NOT NULL,
+	sale_date TIMESTAMP NOT NULL,
+	CONSTRAINT fk_buyer
+		FOREIGN KEY (buyer_id)
+			REFERENCES users(user_id),
+	CONSTRAINT fk_product
+		FOREIGN KEY (product_id)
+			REFERENCES products(product_id)
+);
+
+
+
+
