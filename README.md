@@ -14,13 +14,13 @@ The application is structured following a MVC design pattern precisely a Model-V
 package to mediate between the program and the relational database and the storage. Also, a web package for a small client process.
 
 The application is designed to allow the user the creation of a unique user account stored with the necessary encryption in the database.
-Then the user can sign in to a profile page displaying the purchase history of the user. They can also go to the page of products.
-the user can browse the product page and when an item is selected to buy a window pops up to specify the number of units and confirm the action.
+Then the user can log in to a profile page displaying the purchase history of the user. They can also go to the page of products.
+The user can browse the product page and when an item is selected to buy a window pops up to specify the number of units and confirm the action.
 When an item is bought the purchase information is added to the user profiles purchase history.
 
 The user account data, the product details and the purchase information are stored in the relational database and accessed when required by the application.
 
-The images of the products are obtained from online based on the stored urls in the products records.
+The images of the products are obtained from online sites based on the stored URLs in the products' records.
 
 <div style="text-align: center;">
 
