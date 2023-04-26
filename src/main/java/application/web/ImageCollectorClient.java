@@ -4,6 +4,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,17 +29,22 @@ public class ImageCollectorClient {
      */
     public byte[] requestImageData(String imageURL){
 
-        return processResponse(requester.getMethod(imageURL));
+        return processResponse(imageURL);
     }
 
-    private byte[] processResponse(HttpResponse response) {
+    private byte[] processResponse(String imageURL) {
 
         byte[] jsonBody;
         try {
+            HttpResponse response = requester.getMethod(imageURL);
+            if(response.getStatusLine().getStatusCode() != 200) return null;
             jsonBody = EntityUtils.toByteArray(response.getEntity());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | URISyntaxException e) {
+            System.out.println(e);
+            return null;
+            //throw new RuntimeException(e);
             // TODO: As always handle this better
+
         }
 
         return jsonBody;

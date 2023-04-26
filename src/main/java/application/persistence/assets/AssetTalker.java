@@ -26,4 +26,9 @@ public interface AssetTalker {
      */
     byte[] getDecorationImageData();
 
+    /**
+     * Get the image from resources used when the system is unable to retrieve an online image
+     * @return byte array corresponding to the requested unavailable image place holder
+     */
+    byte[] getUnavailableImage();
 }

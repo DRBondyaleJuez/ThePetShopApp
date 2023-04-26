@@ -2,6 +2,7 @@ package application.controller;
 
 import application.model.NewPurchaseInfo;
 import application.model.ProductDisplayInfo;
+import application.persistence.assets.AssetManager;
 import application.persistence.database.DatabaseManager;
 import application.web.ImageCollectorClient;
 
@@ -17,6 +18,8 @@ public class ShoppingWindowController {
     private ImageCollectorClient imageCollectorClient;
     private DatabaseManager databaseManager;
 
+    private AssetManager assetManager;
+
     /**
      * This is the constructor. Here  an instance of the DatabaseManager class is assigned to
      * the databaseManager. As well as the instantiation of an object of the ImageCollectorClient class.
@@ -25,15 +28,21 @@ public class ShoppingWindowController {
 
         imageCollectorClient = new ImageCollectorClient();
         databaseManager = DatabaseManager.getInstance();
+        assetManager = AssetManager.getInstance();
+
     }
 
     /**
      * Retrieve the image found at the provided URL
      * @param imageURL String the URL where the image can be found
-     * @return byte Array corresponding to the image at the URL
+     * @return byte Array corresponding to the image at the URL or if unable it displays an asset placeholder
      */
     public byte[] getOnlineImageToSetProductImageView(String imageURL){
-        return imageCollectorClient.requestImageData(imageURL);
+        byte[] productImage = imageCollectorClient.requestImageData(imageURL);
+
+        if(productImage == null) productImage = assetManager.getUnavailableImage();
+
+        return productImage;
     }
 
 

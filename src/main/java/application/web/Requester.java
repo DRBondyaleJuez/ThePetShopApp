@@ -20,38 +20,26 @@ public class Requester {
      * @param imageURL the path  of the image online "https://exampleHost.com"
      * @return HttpResponse with the corresponding content base on the request
      */
-    public HttpResponse getMethod (String imageURL) {
+    public HttpResponse getMethod (String imageURL) throws IOException, URISyntaxException {
         URI finalEndpoint = createUri(imageURL);
 
         String finalEndpointString = finalEndpoint.toString().replaceAll("%2C", ",");
         System.out.println(finalEndpointString);
 
-        try {
-            Response response = Request.Get(finalEndpointString).execute();
+        Response response = Request.Get(finalEndpointString).execute();
 
-            /*
-            // IF this need body
-            Request request = Request.Post("");
-            request.body
-             */
+        /*
+        // IF this need body
+        Request request = Request.Post("");
+        request.body
+         */
 
-            return response.returnResponse();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-            // TODO: Log this and/or do this better
-        }
-
+        return response.returnResponse();
     }
 
-    private URI createUri(String imageURL) {
-        try {
-            URIBuilder uriBuilder = new URIBuilder(imageURL);
-
-            return uriBuilder.build();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-            // TODO: Do this better
-        }
+    private URI createUri(String imageURL) throws URISyntaxException {
+        URIBuilder uriBuilder = new URIBuilder(imageURL);
+        return uriBuilder.build();
     }
 
 }

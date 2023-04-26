@@ -33,6 +33,13 @@ public class FileSystemAssetTalker implements  AssetTalker {
         return loadFileData(path);
     }
 
+    @Override
+    public byte[] getUnavailableImage() {
+        String path = "/assets/images/imageNotAvailable.png";
+
+        return loadFileData(path);
+    }
+
     // Process to collect assets from resource folder
     private byte[] loadFileData(String path) {
         try {
