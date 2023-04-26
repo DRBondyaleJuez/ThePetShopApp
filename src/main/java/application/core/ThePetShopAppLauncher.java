@@ -12,12 +12,26 @@ import application.viewController.ProfilePageViewController;
 import java.io.IOException;
 import java.util.UUID;
 
+/**
+ * This the entry point of the application launch called by the main. It displays the initial view of the application
+ * <p>
+ *     Inheriting from application requiring an implementation of abstract class start that allows the display of the view.
+ *     It also implements ViewObserver to follow a observer-observable design pattern with several of the viewControllers
+ *     facilitating interactions between classes and changes between the views displayed
+ * </p>
+ */
 public class ThePetShopAppLauncher extends Application implements ViewObserver {
 
     private Stage mainStage;
 
-    public ThePetShopAppLauncher() { mainStage = new Stage();}
-
+    /**
+     * This is the implementation of the start abstract method of the extended class Application.
+     *  * <p>
+     *     This method is called during the execution of the Application class static method launch. It loads the FXMl view files,
+     *     therefore, it builds its controllers too. MainStage is also built and displayed with the method show of the Stage class.
+     *  * </p>
+     * @param stage Stage object provided during the static launch method execution.
+     */
     @Override
     public void start(Stage stage)  throws Exception {
         mainStage = stage;
@@ -28,15 +42,6 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
         mainStage.show();
     }
 
-    private void loadingMainScene() {
-        // TO access to the Resource folder, you have to do the following:
-        // getClass().getResource("/path/of/the/resource")
-        System.out.println(getClass().getResource("/view/SignInView.fxml"));
-        FXMLLoader paneLoader = new FXMLLoader(getClass().getResource("/view/SignInView.fxml"));
-        Parent root = loadPaneLoader(paneLoader);
-        Scene newScene = new Scene(root);
-        mainStage.setScene(newScene);
-    }
 
     @Override
     public void changeView(PossibleViews newView) {
@@ -149,6 +154,4 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
             return null;
         }
     }
-
-
 }

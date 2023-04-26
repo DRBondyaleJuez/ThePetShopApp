@@ -11,18 +11,36 @@ import application.viewController.ShoppingWindowViewController;
 import java.io.IOException;
 import java.util.UUID;
 
+/**
+ * Provides the object in charged of displaying in a new window the shoppingWindowView
+ */
 public class ShoppingWindowLauncher {
 
     private Stage productShoppingStage;
 
+    /**
+     * This is the constructor.
+     * <p>
+     *     A new stage object is instantiated to display the view in a new window.
+     * </p>
+     */
     public ShoppingWindowLauncher() { productShoppingStage = new Stage();}
 
-    public void start(ProductDisplayInfo productDisplayInfo, UUID userId)  throws Exception {
+    /**
+     * Emulating Application inheritance this method starts this new window display.
+     * <p>
+     *     It loads the appropriate view, sets its viewControllers and assures the window has to be close to allow interaction
+     *     with the window behind using the initModality(Modality.APPLICATION_MODAL) setting
+     * </p>
+     * @param productDisplayInfo ProductDisplayInfo object encapsulating all the info required about the selected product for the window
+     * @param userId UUID corresponding to the user who selected the product
+     */
+    public void start(ProductDisplayInfo productDisplayInfo, UUID userId) {
         loadingShoppingWindow(productDisplayInfo, userId);
 
         productShoppingStage.setTitle("The Pet Shop App - Shopping Procedure");
         productShoppingStage.centerOnScreen();
-        productShoppingStage.initModality(Modality.APPLICATION_MODAL);
+        productShoppingStage.initModality(Modality.APPLICATION_MODAL); //To prevent interaction with the window behind until window interaction completes or closes
         productShoppingStage.show();
     }
 
