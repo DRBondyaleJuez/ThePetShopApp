@@ -1,6 +1,5 @@
 package application.persistence.database;
 
-import application.controller.ShoppingWindowController;
 import application.model.NewPurchaseInfo;
 import application.model.ProductDisplayInfo;
 import application.model.UserPurchaseRecord;
@@ -21,7 +20,7 @@ public class DatabaseManager {
 
     //This is the private constructor where the databaseTalker implementation is initialized for a particular table
     private DatabaseManager(){
-        databaseTalker = new DBConnection("the_pet_shop");;
+        databaseTalker = new DBConnection("the_pet_shop");
         instance = null;
     }
 

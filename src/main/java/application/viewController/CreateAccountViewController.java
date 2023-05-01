@@ -33,8 +33,8 @@ import java.util.regex.Pattern;
  */
 public class CreateAccountViewController implements Initializable, ObservableView {
 
-    private CreateAccountController controller;
-    private ArrayList<ViewObserver> observerList;
+    private final CreateAccountController controller;
+    private final ArrayList<ViewObserver> observerList;
     private boolean passwordHiddenState;
 
     //TextFields and PasswordFields
@@ -123,19 +123,16 @@ public class CreateAccountViewController implements Initializable, ObservableVie
 
     //View Password Button event handler
     private EventHandler<ActionEvent> changeViewPasswordState() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                //Replicating content of password field and password text field
-                replicateContentInTexFieldAndPasswordField();
-                //Change passwordHiddenState
-                passwordHiddenState = !passwordHiddenState;
-                //Make the overlapping passwordField not visible
-                passwordField1.setVisible(passwordHiddenState);
-                //Change Icon
-                //TODO: handle this icon change using the controller's persistence
-                setEyeIconOnViewPasswordButton();
-            }
+        return actionEvent -> {
+            //Replicating content of password field and password text field
+            replicateContentInTexFieldAndPasswordField();
+            //Change passwordHiddenState
+            passwordHiddenState = !passwordHiddenState;
+            //Make the overlapping passwordField not visible
+            passwordField1.setVisible(passwordHiddenState);
+            //Change Icon
+            //TODO: handle this icon change using the controller's persistence
+            setEyeIconOnViewPasswordButton();
         };
     }
     //Method to assure that the content in both password field and text field are the same
@@ -194,14 +191,6 @@ public class CreateAccountViewController implements Initializable, ObservableVie
                     if(newUserHasBeenAddedSQLMessage != SQLErrorMessageEnums.NO_ERROR){
                         entryNotUniqueDisplayErrorMessage(newUserHasBeenAddedSQLMessage);
                     }
-                                       /*
-                    for (ViewObserver stalker : observerList) {
-                        stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
-                    }
-
-                    //--------------------------------------------------ERROR AL USAR CONTRASEÑAS NUMERICAS: "Error: los datos restantes del mensaje son insuficientes" ------- https://www.postgresql.org/message-id/BAY139-W17522EA1404D646B6A38B3D0DE0@phx.gbl
-
-                     */
                 }
             }
         };

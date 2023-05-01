@@ -6,7 +6,6 @@ import application.persistence.assets.LogoType;
 import application.persistence.database.DatabaseManager;
 import application.persistence.database.dbTablesEnums.TableNameEnums;
 import application.persistence.database.dbTablesEnums.UsersTableColumnNameEnums;
-import application.utils.EncryptionHandler;
 import application.viewController.ProfilePageViewController;
 
 import java.sql.Timestamp;
@@ -21,14 +20,14 @@ public class ProfilePageController {
     private final AssetManager assetManager;
     private final DatabaseManager databaseManager;
     private final UUID profileUUID;
-    private String profileUsername;
-    private String profileEmail;
-    private UserPurchaseRecord[] userPurchaseInfo;
+    private final String profileUsername;
+    private final String profileEmail;
+    private final UserPurchaseRecord[] userPurchaseInfo;
 
-    private int numberOfEntriesPerPage;
+    private final int numberOfEntriesPerPage;
     private int currentRecentPurchasePageNumber;
 
-    private int numberOfPurchasesByUser;
+    private final int numberOfPurchasesByUser;
 
     /**
      * This is the constructor. Here  an instance of the DatabaseManager class and of the AssetManager are assigned to

@@ -7,12 +7,12 @@ import java.sql.Timestamp;
  */
 public class UserPurchaseRecord {
 
-    private String productType;
-    private String productCompleteName;
+    private final String productType;
+    private final String productCompleteName;
 
-    private int purchasedQuantity;
-    private double purchasePrice;
-    private Timestamp purchaseDate;
+    private final int purchasedQuantity;
+    private final double purchasePrice;
+    private final Timestamp purchaseDate;
 
     /**
      * This is the constructor. Its attributes value are based on the parameters retrieved from the database

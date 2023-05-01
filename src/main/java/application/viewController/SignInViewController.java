@@ -31,8 +31,8 @@ import java.util.UUID;
  */
 public class SignInViewController implements Initializable, ObservableView {
 
-    private SignInController controller;
-    private ArrayList<ViewObserver> observerList;
+    private final SignInController controller;
+    private final ArrayList<ViewObserver> observerList;
     private boolean passwordHiddenState;
 
     //TextFields and PasswordFields
@@ -136,31 +136,28 @@ public class SignInViewController implements Initializable, ObservableView {
     //Enter button event handler
     private EventHandler<ActionEvent> enterWithUsernameAndPassword() {
 
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                replicateContentInTexFieldAndPasswordField();
-                //TODO: compare the username with the database and compare the password with the database through the controller's persistence
-                // (REMEMBER TO ENCRYPT THE PASSWORD SAME AS DURING THE CREATION OF THE ACCOUNT)
-                String enteredUsername = usernameTextField.getText();
-                String enteredPassword = passwordTextField.getText();
-                boolean validCredentials = checkCredentials(enteredUsername,enteredPassword);
-                if(validCredentials){
+        return actionEvent -> {
+            replicateContentInTexFieldAndPasswordField();
+            //TODO: compare the username with the database and compare the password with the database through the controller's persistence
+            // (REMEMBER TO ENCRYPT THE PASSWORD SAME AS DURING THE CREATION OF THE ACCOUNT)
+            String enteredUsername = usernameTextField.getText();
+            String enteredPassword = passwordTextField.getText();
+            boolean validCredentials = checkCredentials(enteredUsername,enteredPassword);
+            if(validCredentials){
 
-                    System.out.println("Username: " + enteredUsername);
-                    System.out.println("Password: " + enteredPassword);
+                System.out.println("Username: " + enteredUsername);
+                System.out.println("Password: " + enteredPassword);
 
-                    //Start the steps to open profile page
-                    UUID userUUID = controller.fetchCorrespondingUUID(enteredUsername);
-                    System.out.println(userUUID);
+                //Start the steps to open profile page
+                UUID userUUID = controller.fetchCorrespondingUUID(enteredUsername);
+                System.out.println(userUUID);
 
-                    for (ViewObserver stalker : observerList) {
-                        stalker.changeView(ViewObserver.PossibleViews.PROFILE,userUUID);
-                    }
-
-                }else{
-                    System.out.println("Invalid credentials check page for details in the help sections");
+                for (ViewObserver stalker : observerList) {
+                    stalker.changeView(ViewObserver.PossibleViews.PROFILE,userUUID);
                 }
+
+            }else{
+                System.out.println("Invalid credentials check page for details in the help sections");
             }
         };
 
@@ -200,19 +197,16 @@ public class SignInViewController implements Initializable, ObservableView {
 
     //View Password Button event handler
     private EventHandler<ActionEvent> changeViewPasswordState() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                //Replicating content of password field and password text field
-                replicateContentInTexFieldAndPasswordField();
-                //Change passwordHiddenState
-                passwordHiddenState = !passwordHiddenState;
-                //Make the overlapping passwordField not visible
-                hiddenPasswordField.setVisible(passwordHiddenState);
-                //Change Icon
-                //TODO: handle this icon change using the controller's persistence
-                setEyeIconOnViewPasswordButton();
-            }
+        return actionEvent -> {
+            //Replicating content of password field and password text field
+            replicateContentInTexFieldAndPasswordField();
+            //Change passwordHiddenState
+            passwordHiddenState = !passwordHiddenState;
+            //Make the overlapping passwordField not visible
+            hiddenPasswordField.setVisible(passwordHiddenState);
+            //Change Icon
+            //TODO: handle this icon change using the controller's persistence
+            setEyeIconOnViewPasswordButton();
         };
     }
 
@@ -239,42 +233,27 @@ public class SignInViewController implements Initializable, ObservableView {
     //Label events handled when clicked
 
     private EventHandler<? super MouseEvent> browseWithoutAccountEvent() {
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                for (ViewObserver stalker : observerList) {
-                    stalker.changeView(ViewObserver.PossibleViews.PRODUCTS,null);
-                }
-                System.out.println("Browse without Account CLicked.");
+        return (EventHandler<MouseEvent>) mouseEvent -> {
+            for (ViewObserver stalker : observerList) {
+                stalker.changeView(ViewObserver.PossibleViews.PRODUCTS,null);
             }
+            System.out.println("Browse without Account CLicked.");
         };
     }
 
     private EventHandler<? super MouseEvent> createNewAccountEvent() {
 
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        return (EventHandler<MouseEvent>) mouseEvent -> {
 
-                for (ViewObserver stalker : observerList) {
-                    stalker.changeView(ViewObserver.PossibleViews.CREATEACCOUNT);
-                }
-
+            for (ViewObserver stalker : observerList) {
+                stalker.changeView(ViewObserver.PossibleViews.CREATEACCOUNT);
             }
         };
-
     }
 
     private EventHandler<? super MouseEvent> forgotPasswordEvent() {
 
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-
-                System.out.println("Forgot password CLicked.");
-
-            }
-        };
+        return (EventHandler<MouseEvent>) mouseEvent -> System.out.println("Forgot password CLicked.");
     }
 
 

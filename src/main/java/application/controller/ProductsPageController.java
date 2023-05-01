@@ -15,17 +15,17 @@ import java.util.UUID;
  */
 public class ProductsPageController {
 
-    private UUID currentUserUUID;
+    private final UUID currentUserUUID;
     private int currentProductsPageNumber;
-    private int numberProductsPerPage;
+    private final int numberProductsPerPage;
 
-    private int numberProductsPerRow;
+    private final int numberProductsPerRow;
 
-    private AssetManager assetManager;
+    private final AssetManager assetManager;
 
-    private DatabaseManager databaseManager;
+    private final DatabaseManager databaseManager;
 
-    private ProductDisplayInfo[] allProductsInfo;
+    private final ProductDisplayInfo[] allProductsInfo;
 
     /**
      * This is the constructor. Here  an instance of the DatabaseManager class and of the AssetManager are assigned to

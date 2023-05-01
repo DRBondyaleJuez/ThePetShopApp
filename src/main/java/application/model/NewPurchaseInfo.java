@@ -8,10 +8,10 @@ import java.util.UUID;
  * once a purchase takes place.
  */
 public class NewPurchaseInfo {
-    private int productId;
-    private UUID userId;
-    private Timestamp currentTime;
-    private int quantity;
+    private final int productId;
+    private final UUID userId;
+    private final Timestamp currentTime;
+    private final int quantity;
 
     /**
      * This is the constructor with all the attributes.

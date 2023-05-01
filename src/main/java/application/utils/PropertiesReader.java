@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class PropertiesReader {
 
     private static final String  urlSource = "/secrets.properties2";
-    private static HashMap<String,String> propertiesMap = new HashMap<>();
+    private static final HashMap<String,String> propertiesMap = new HashMap<>();
 
     /**
      * Static method to collect and store in the map attribute all the relevant parameter from the  secrets.properties file
@@ -57,8 +57,6 @@ public class PropertiesReader {
                     propertiesMap.put("dbPassword",secretDBPassword);
                 }
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -80,8 +78,6 @@ public class PropertiesReader {
                     propertiesMap.put("dbUser",secretDBUser);
                 }
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -103,8 +99,6 @@ public class PropertiesReader {
                     propertiesMap.put("encryptionKey",secretEncryptionKey);
                 }
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -127,8 +121,6 @@ public class PropertiesReader {
                     propertiesMap.put("saltSize",secretSaltSize);
                 }
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -150,8 +142,6 @@ public class PropertiesReader {
                     propertiesMap.put("initialSubstringPositionForTransposition",secretInitialSubstringPositionForTransposition);
                 }
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

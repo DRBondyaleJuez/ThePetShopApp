@@ -16,7 +16,7 @@ import java.util.UUID;
  */
 public class ShoppingWindowLauncher {
 
-    private Stage productShoppingStage;
+    private final Stage productShoppingStage;
 
     /**
      * This is the constructor.
@@ -53,20 +53,29 @@ public class ShoppingWindowLauncher {
         shoppingWindowViewController.addLauncherObserver(this);
         paneLoader.setController(shoppingWindowViewController);
         Parent root = loadPaneLoader(paneLoader);
-        Scene newScene = new Scene(root);
-        productShoppingStage.setScene(newScene);
+        if(root == null) {
+            // This is the extreme case if loaded fxml file is null
+            gracefulShutdown();
+        } else {
+            Scene newScene = new Scene(root);
+            productShoppingStage.setScene(newScene);
+        }
     }
-
     private Parent loadPaneLoader(FXMLLoader paneLoader) {
         try {
             return paneLoader.load();
         } catch (IOException e) {
             //Todo: log!!
-            //Todo do something if the try fails
-            System.out.println("FAIL!!! EXPLOTION!!!! BOOOOOOM");
-            System.out.println(e);
+            System.out.println("The FXML file could not be loaded.");
             return null;
         }
+    }
+
+    private void gracefulShutdown(){
+        // Show something to the user if apply
+        // save a new log if a apply
+        System.out.println("HERE");
+        System.exit(-1);
     }
 
     public void closeShoppingWindow(){

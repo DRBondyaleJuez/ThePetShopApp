@@ -88,7 +88,7 @@ public class SignInController {
         }
 
         //Retrieving password using the first input (userReference) either email or username
-        byte[] returnedPasswordEncrypted = null;
+        byte[] returnedPasswordEncrypted;
         if(enteredUserRef.contains("@")){
             returnedPasswordEncrypted = databaseManager.getPasswordFromTable(UsersTableColumnNameEnums.USER_EMAIL, enteredUserRef);
         } else {

@@ -32,7 +32,7 @@ import java.util.UUID;
 public class ProductsPageViewController implements Initializable, ObservableView {
 
     private final ProductsPageController controller;
-    private ArrayList<ViewObserver> observerList;
+    private final ArrayList<ViewObserver> observerList;
 
     //ImageViews:
     @FXML
@@ -113,32 +113,26 @@ public class ProductsPageViewController implements Initializable, ObservableView
     //The recent purchase pseudo button setter section
     private EventHandler<? super MouseEvent> changePurchasesPageNumber(ProfilePageViewController.ArrowTypeClicked arrowClicked) {
 
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        return (EventHandler<MouseEvent>) mouseEvent -> {
 
-                int currentPageNumber = controller.changePageNumber(arrowClicked);
-                currentPageNumberTextField.setText(currentPageNumber+"");
-                setProductGridView();
+            int currentPageNumber = controller.changePageNumber(arrowClicked);
+            currentPageNumberTextField.setText(currentPageNumber+"");
+            setProductGridView();
 
-            }
         };
 
     }
 
     //The buttons back
     private EventHandler<? super MouseEvent> goBackToPreviousPage() {
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(controller.getCurrentUserUUID() == null) {
-                    for (ViewObserver stalker : observerList) {
-                        stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
-                    }
-                } else {
-                    for (ViewObserver stalker : observerList) {
-                        stalker.changeView(ViewObserver.PossibleViews.PROFILE,controller.getCurrentUserUUID());
-                    }
+        return (EventHandler<MouseEvent>) mouseEvent -> {
+            if(controller.getCurrentUserUUID() == null) {
+                for (ViewObserver stalker : observerList) {
+                    stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
+                }
+            } else {
+                for (ViewObserver stalker : observerList) {
+                    stalker.changeView(ViewObserver.PossibleViews.PROFILE,controller.getCurrentUserUUID());
                 }
             }
         };
@@ -235,21 +229,18 @@ public class ProductsPageViewController implements Initializable, ObservableView
 
     private EventHandler<? super MouseEvent> setShoppingProcedureAction(ProductDisplayInfo currentProductInfo) {
 
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        return (EventHandler<MouseEvent>) mouseEvent -> {
 
-                if(controller.getCurrentUserUUID() == null){
-                    for (ViewObserver stalker : observerList) {
-                        stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
-                    }
-                    return;
-                }
-
-                System.out.println("Shopping Procedure Triggered");
+            if(controller.getCurrentUserUUID() == null){
                 for (ViewObserver stalker : observerList) {
-                    stalker.loadShoppingWindow(currentProductInfo,controller.getCurrentUserUUID());
+                    stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
                 }
+                return;
+            }
+
+            System.out.println("Shopping Procedure Triggered");
+            for (ViewObserver stalker : observerList) {
+                stalker.loadShoppingWindow(currentProductInfo,controller.getCurrentUserUUID());
             }
         };
     }

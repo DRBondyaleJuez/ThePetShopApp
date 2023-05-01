@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /**
  * Provides an interface representing one of the components of an observer-observable design pattern. This component
- * represents an object that can observes this facilitates triggers and interactions caused by objects which implement
+ * represents an object that can observe this facilitates triggers and interactions caused by objects which implement
  * the observable equivalent interface.
  */
 public interface ViewObserver {

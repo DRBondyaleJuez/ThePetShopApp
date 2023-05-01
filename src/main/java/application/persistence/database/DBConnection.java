@@ -1,6 +1,5 @@
 package application.persistence.database;
 
-import application.controller.ShoppingWindowController;
 import application.model.NewPurchaseInfo;
 import application.model.ProductDisplayInfo;
 import application.model.UserPurchaseRecord;
@@ -20,7 +19,7 @@ import java.util.UUID;
  */
 public class DBConnection implements DatabaseTalker {
 
-    private String database;
+    private final String database;
     private final String url;
     private final String user;
     private final String password;
@@ -141,7 +140,7 @@ public class DBConnection implements DatabaseTalker {
     public byte[] getPasswordFromTable(UsersTableColumnNameEnums refColumn,String reference){
 
         String sql = "SELECT * " +
-                "FROM " + TableNameEnums.USERS.toString() + " " +
+                "FROM " + TableNameEnums.USERS + " " +
                 "WHERE " + refColumn.toString() + " = ? ";
 
         ArrayList<Byte> returnedEncryptedByteList = new ArrayList<>();
@@ -155,8 +154,8 @@ public class DBConnection implements DatabaseTalker {
             while(resultSet.next()) {
                 byte[] returnedPasswordByteArray = resultSet.getBytes(UsersTableColumnNameEnums.USER_PASSWORD.toString());
 
-                for (int i = 0; i < returnedPasswordByteArray.length; i++) {
-                    returnedEncryptedByteList.add(returnedPasswordByteArray[i]);
+                for (byte b : returnedPasswordByteArray) {
+                    returnedEncryptedByteList.add(b);
                 }
             }
 

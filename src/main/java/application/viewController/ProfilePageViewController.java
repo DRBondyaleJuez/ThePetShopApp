@@ -34,7 +34,7 @@ import java.util.UUID;
 public class ProfilePageViewController implements Initializable, ObservableView {
 
     private final ProfilePageController controller;
-    private ArrayList<ViewObserver> observerList;
+    private final ArrayList<ViewObserver> observerList;
 
     //TextLabels:
     @FXML
@@ -168,35 +168,24 @@ public class ProfilePageViewController implements Initializable, ObservableView 
     //The recent purchase pseudo button setter section
     private EventHandler<? super MouseEvent> changePurchasesPageNumber(ArrowTypeClicked arrowClicked) {
 
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        return (EventHandler<MouseEvent>) mouseEvent -> {
 
-                int currentPageNumber = controller.changePageNumber(arrowClicked);
-                currentPageNumberTextField.setText(currentPageNumber+"");
-                setPurchasesListView();
+            int currentPageNumber = controller.changePageNumber(arrowClicked);
+            currentPageNumberTextField.setText(currentPageNumber+"");
+            setPurchasesListView();
 
-            }
         };
 
     }
 
     private EventHandler<ActionEvent> settingsClicked() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println("Settings clicked");
-            }
-        };
+        return actionEvent -> System.out.println("Settings clicked");
     }
 
     private EventHandler<ActionEvent> signOutClicked() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                for (ViewObserver stalker : observerList) {
-                    stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
-                }
+        return actionEvent -> {
+            for (ViewObserver stalker : observerList) {
+                stalker.changeView(ViewObserver.PossibleViews.SIGNIN);
             }
         };
     }
@@ -205,37 +194,31 @@ public class ProfilePageViewController implements Initializable, ObservableView 
 
     private EventHandler<? super MouseEvent> goToBrowseProducts() {
 
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        return (EventHandler<MouseEvent>) mouseEvent -> {
 
-                System.out.println("Go to products page" + controller.getProfileUUID());
+            System.out.println("Go to products page" + controller.getProfileUUID());
 
-                for (ViewObserver stalker : observerList) {
-                    stalker.changeView(ViewObserver.PossibleViews.PRODUCTS,controller.getProfileUUID());
-                }
-
+            for (ViewObserver stalker : observerList) {
+                stalker.changeView(ViewObserver.PossibleViews.PRODUCTS,controller.getProfileUUID());
             }
+
         };
     }
 
     private EventHandler<? super MouseEvent> usernameClicked() {
 
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        return (EventHandler<MouseEvent>) mouseEvent -> {
 
-                usernameContextMenu.show(usernameLabel, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-                System.out.println("Username Clicked");
+            usernameContextMenu.show(usernameLabel, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+            System.out.println("Username Clicked");
 
 
-                /*
-                for (ViewObserver stalker : observerList) {
-                    stalker.changeView(ViewObserver.PossibleViews.PRODUCTS,controller.getProfileUUID());
-                }
-                 */
-
+            /*
+            for (ViewObserver stalker : observerList) {
+                stalker.changeView(ViewObserver.PossibleViews.PRODUCTS,controller.getProfileUUID());
             }
+             */
+
         };
     }
 

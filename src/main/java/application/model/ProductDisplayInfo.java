@@ -5,12 +5,12 @@ package application.model;
  */
 public class ProductDisplayInfo {
 
-    private String productName;
-    private String subtype;
-    private String price;
-    private String imageURL;
-    private boolean inStock;
-    private int productId;
+    private final String productName;
+    private final String subtype;
+    private final String price;
+    private final String imageURL;
+    private final boolean inStock;
+    private final int productId;
 
 
     /**

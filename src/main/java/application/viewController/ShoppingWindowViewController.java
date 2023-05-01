@@ -101,29 +101,19 @@ public class ShoppingWindowViewController implements Initializable {
     }
 
     private EventHandler<? super MouseEvent> setRejectButton() {
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-
-                launcher.closeShoppingWindow();
-
-            }
-        };
+        return (EventHandler<MouseEvent>) mouseEvent -> launcher.closeShoppingWindow();
     }
 
     private EventHandler<? super MouseEvent> setConfirmButton() {
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        return (EventHandler<MouseEvent>) mouseEvent -> {
 
-                //TODO: create methods to update database information in purchase table
-                System.out.println("Confirm purchase");
-                String quantityString = unitsTextField.getText();
-                if(checkIfItIsANumber(quantityString)) {
-                    boolean confirmShopping = controller.insertNewPurchaseInfo(currentProductInfo.getProductId(),userId,Integer.parseInt(quantityString));
+            //TODO: create methods to update database information in purchase table
+            System.out.println("Confirm purchase");
+            String quantityString = unitsTextField.getText();
+            if(checkIfItIsANumber(quantityString)) {
+                boolean confirmShopping = controller.insertNewPurchaseInfo(currentProductInfo.getProductId(),userId,Integer.parseInt(quantityString));
 
-                    launcher.closeShoppingWindow();
-                }
+                launcher.closeShoppingWindow();
             }
         };
     }
@@ -138,25 +128,22 @@ public class ShoppingWindowViewController implements Initializable {
     }
 
     private EventHandler<? super MouseEvent> setUnitButton() {
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        return (EventHandler<MouseEvent>) mouseEvent -> {
 
-                //Check if the content of the unitsTextField is a number
-                try{
-                    int num = Integer.parseInt(unitsTextField.getText());
-                    // is an integer!
-                } catch (NumberFormatException e) {
-                    // not an integer!
-                    unitsTextField.setText(1+"");
-                }
-
-                double unitPrice = Double.parseDouble(currentProductInfo.getPrice().replace(" €","").replace(",","."));
-                double totalPrice = unitPrice * Integer.parseInt(unitsTextField.getText());
-                DecimalFormat df = new DecimalFormat("#.00");
-                String displayPrice = df.format(totalPrice) + "";
-                priceLabel.setText(displayPrice.replace(".",",") + " €");
+            //Check if the content of the unitsTextField is a number
+            try{
+                int num = Integer.parseInt(unitsTextField.getText());
+                // is an integer!
+            } catch (NumberFormatException e) {
+                // not an integer!
+                unitsTextField.setText(1+"");
             }
+
+            double unitPrice = Double.parseDouble(currentProductInfo.getPrice().replace(" €","").replace(",","."));
+            double totalPrice = unitPrice * Integer.parseInt(unitsTextField.getText());
+            DecimalFormat df = new DecimalFormat("#.00");
+            String displayPrice = df.format(totalPrice) + "";
+            priceLabel.setText(displayPrice.replace(".",",") + " €");
         };
     }
 

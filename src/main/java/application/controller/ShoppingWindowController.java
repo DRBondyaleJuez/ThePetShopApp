@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.model.NewPurchaseInfo;
-import application.model.ProductDisplayInfo;
 import application.persistence.assets.AssetManager;
 import application.persistence.database.DatabaseManager;
 import application.web.ImageCollectorClient;
@@ -15,10 +14,10 @@ import java.util.UUID;
  */
 public class ShoppingWindowController {
 
-    private ImageCollectorClient imageCollectorClient;
-    private DatabaseManager databaseManager;
+    private final ImageCollectorClient imageCollectorClient;
+    private final DatabaseManager databaseManager;
 
-    private AssetManager assetManager;
+    private final AssetManager assetManager;
 
     /**
      * This is the constructor. Here  an instance of the DatabaseManager class is assigned to

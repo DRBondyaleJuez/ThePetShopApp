@@ -44,15 +44,12 @@ public class FileSystemAssetTalker implements  AssetTalker {
     private byte[] loadFileData(String path) {
         try {
             InputStream currentInputStream = FileSystemAssetTalker.class.getResourceAsStream(path);
-            byte[] fileContent = IOUtils.toByteArray(currentInputStream);
+            if(currentInputStream == null ){
+                throw new IOException();
+            }
 
-            return fileContent;
+            return IOUtils.toByteArray(currentInputStream);
         } catch (IOException e) {
-            // TODO: log
-            System.out.println("Could not find " + path);
-            e.printStackTrace();
-            return new byte[0];
-        }catch (NullPointerException e) {
             // TODO: log
             System.out.println("Could not find " + path);
             e.printStackTrace();

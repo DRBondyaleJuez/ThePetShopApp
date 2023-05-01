@@ -120,10 +120,8 @@ public class EncryptionHandler {
 
         String decryptedSaltedString = new String(detransposedByteArray);
 
-        String decryptedUnsaltedString = decryptedSaltedString.substring(0, decryptedSaltedString.length() - saltSize);
-
         //Turn decrypted byte array to corresponding string
-        return new String(decryptedUnsaltedString);
+        return decryptedSaltedString.substring(0, decryptedSaltedString.length() - saltSize);
     }
 
     private byte[] detransposition(byte[] byteArrayToDetranspose){
@@ -159,8 +157,7 @@ public class EncryptionHandler {
             int index = (int) (rnd.nextFloat() * saltChars.length());
             salt.append(saltChars.charAt(index));
         }
-        String saltStr = salt.toString();
-        return saltStr;
+        return salt.toString();
     }
 
 }

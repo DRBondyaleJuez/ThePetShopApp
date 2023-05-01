@@ -8,7 +8,6 @@ import org.apache.http.client.utils.URIBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Map;
 
 /**
  * Provides an object that build properly a request for the API
@@ -17,7 +16,7 @@ public class Requester {
 
     /**
      * This method build the URI and request for a GET method in the provided API
-     * @param imageURL the path  of the image online "https://exampleHost.com"
+     * @param imageURL the path  of the image online "<a href="https://exampleHost.com">...</a>"
      * @return HttpResponse with the corresponding content base on the request
      */
     public HttpResponse getMethod (String imageURL) throws IOException, URISyntaxException {
