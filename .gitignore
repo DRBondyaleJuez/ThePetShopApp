@@ -24,3 +24,4 @@ buildNumber.properties
 .classpath
 
 src/main/resources/secrets.properties2
+logs
