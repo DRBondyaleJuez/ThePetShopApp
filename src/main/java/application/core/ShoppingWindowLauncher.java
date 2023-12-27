@@ -7,6 +7,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import application.model.ProductDisplayInfo;
 import application.viewController.ShoppingWindowViewController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -15,7 +17,7 @@ import java.util.UUID;
  * Provides the object in charged of displaying in a new window the shoppingWindowView
  */
 public class ShoppingWindowLauncher {
-
+    private static Logger logger = LogManager.getLogger(ShoppingWindowLauncher.class);
     private final Stage productShoppingStage;
 
     /**
@@ -65,16 +67,19 @@ public class ShoppingWindowLauncher {
         try {
             return paneLoader.load();
         } catch (IOException e) {
-            //Todo: log!!
-            System.out.println("The FXML file could not be loaded.");
+            // ---- LOG ----
+            StringBuilder errorStackTrace = new StringBuilder();
+            for (StackTraceElement ste:e.getStackTrace()) {
+                errorStackTrace.append("        ").append(ste).append("\n");
+            }
+            logger.error("The FXML file (" + paneLoader.toString() + ") could not be loaded. ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
             return null;
+
         }
     }
 
     private void gracefulShutdown(){
-        // Show something to the user if apply
-        // save a new log if a apply
-        System.out.println("HERE");
+        logger.info("There has been a fatal error. I am shutting down.");
         System.exit(-1);
     }
 

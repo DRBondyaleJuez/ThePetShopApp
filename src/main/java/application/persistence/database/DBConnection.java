@@ -6,6 +6,9 @@ import application.model.UserPurchaseRecord;
 import application.persistence.database.dbTablesEnums.TableNameEnums;
 import application.persistence.database.dbTablesEnums.UsersTableColumnNameEnums;
 import application.utils.PropertiesReader;
+import application.web.ImageCollectorClient;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.sql.*;
@@ -19,6 +22,7 @@ import java.util.UUID;
  */
 public class DBConnection implements DatabaseTalker {
 
+    private static Logger logger = LogManager.getLogger(DBConnection.class);
     private final String database;
     private final String url;
     private final String user;
@@ -46,9 +50,17 @@ public class DBConnection implements DatabaseTalker {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connected to the PostgreSQL server successfully.");
+            logger.info("Connected to the PostgreSQL server successfully.");
         } catch (SQLException e) {
-            System.out.println("SQL ERROR MESSAGE: " + e.getMessage());
+            // ---- LOG ----
+            StringBuilder errorStackTrace = new StringBuilder();
+            for (StackTraceElement ste:e.getStackTrace()) {
+                errorStackTrace.append("        ").append(ste).append("\n");
+            }
+            logger.error("Unable to establish connection with SQL database. Review the parameter in secrets.properties resource file. Verify the correct file is used by the PropertiesReader.\n" +
+                    "ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
+
+            gracefulShutdown();
         }
 
         return conn;
@@ -308,4 +320,10 @@ public boolean updateRecord(TableNameEnums tableName, UsersTableColumnNameEnums 
         }
         return false;
     }
+
+    private void gracefulShutdown(){
+        logger.info("There has been a fatal error. I am shutting down.");
+        System.exit(-1);
+    }
+
 }

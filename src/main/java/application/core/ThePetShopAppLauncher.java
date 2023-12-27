@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import application.viewController.ProductsPageViewController;
 import application.viewController.ProfilePageViewController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -22,6 +24,7 @@ import java.util.UUID;
  */
 public class ThePetShopAppLauncher extends Application implements ViewObserver {
 
+    private static Logger logger = LogManager.getLogger(ThePetShopAppLauncher.class);
     private Stage mainStage;
 
     /**
@@ -87,7 +90,12 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
         try {
             shoppingWindowLauncher.start(productDisplayInfo,userId);
         } catch (Exception e) {
-            System.out.println("Exception: " + e + ". When shopping window was going to be launched.");
+            // ---- LOG ----
+            StringBuilder errorStackTrace = new StringBuilder();
+            for (StackTraceElement ste:e.getStackTrace()) {
+                errorStackTrace.append("        ").append(ste).append("\n");
+            }
+            logger.error("Unable to launch shopping window for product (" + productDisplayInfo.getProductName() + "). ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
             throw new RuntimeException(e);
         }
     }
@@ -106,11 +114,17 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
 
     private void loadView(String sceneResource){
         FXMLLoader paneLoader = new FXMLLoader(getClass().getResource(sceneResource));
+
         Parent root = loadPaneLoader(paneLoader);
-        ObservableView observableViewController = (ObservableView) paneLoader.getController();
-        observableViewController.addObserver(this);
-        Scene newScene = new Scene(root);
-        mainStage.setScene(newScene);
+        if(root == null) {
+            // This is the extreme case if loaded fxml file is null
+            gracefulShutdown();
+        } else {
+            ObservableView observableViewController = (ObservableView) paneLoader.getController();
+            observableViewController.addObserver(this);
+            Scene newScene = new Scene(root);
+            mainStage.setScene(newScene);
+        }
     }
 
     private void profilePageLoadView(String sceneResource, UUID userUUID){
@@ -124,8 +138,13 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
 
         //The loadPaneloader method is called after the view controller has finished setting
         Parent root = loadPaneLoader(paneLoader);
-        Scene newScene = new Scene(root);
-        mainStage.setScene(newScene);
+        if(root == null) {
+            // This is the extreme case if loaded fxml file is null
+            gracefulShutdown();
+        } else {
+            Scene newScene = new Scene(root);
+            mainStage.setScene(newScene);
+        }
     }
 
     private void productPageLoadView(String sceneResource, UUID userUUID){
@@ -151,16 +170,26 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
         try {
             return paneLoader.load();
         } catch (IOException e) {
-            //Todo: log!!
-            System.out.println("The FXML file could not be loaded.");
+            // ---- LOG ----
+            String errorStackTrace = "";
+            for (StackTraceElement ste:e.getStackTrace()) {
+                errorStackTrace += "        " + ste + "\n";
+            }
+            logger.error("The FXML file (" + paneLoader.toString() + ") could not be loaded. ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
+            return null;
+        }catch (RuntimeException e) {
+            // ---- LOG ----
+            StringBuilder errorStackTrace = new StringBuilder();
+            for (StackTraceElement ste:e.getStackTrace()) {
+                errorStackTrace.append("        ").append(ste).append("\n");
+            }
+            logger.error("The FXML file (" + paneLoader.toString() + ") could not be loaded. ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
             return null;
         }
     }
 
     private void gracefulShutdown(){
-        // Show something to the user if apply
-        // save a new log if a apply
-        System.out.println("HERE");
+        logger.info("There has been a fatal error. I am shutting down.");
         System.exit(-1);
     }
 }

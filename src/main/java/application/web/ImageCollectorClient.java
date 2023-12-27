@@ -1,7 +1,10 @@
 package application.web;
 
+import application.persistence.assets.FileSystemAssetTalker;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -9,6 +12,7 @@ import java.net.URISyntaxException;
 public class ImageCollectorClient {
 
     private final Requester requester;
+    private static Logger logger = LogManager.getLogger(ImageCollectorClient.class);
 
     /**
      * This is the constructor where the protocol and host are defined and requester is instantiated.
@@ -37,11 +41,13 @@ public class ImageCollectorClient {
             if(response.getStatusLine().getStatusCode() != 200) return null;
             jsonBody = EntityUtils.toByteArray(response.getEntity());
         } catch (IOException | URISyntaxException e) {
-            System.out.println(e);
+            // ---- LOG ----
+            StringBuilder errorStackTrace = new StringBuilder();
+            for (StackTraceElement ste:e.getStackTrace()) {
+                errorStackTrace.append("        ").append(ste).append("\n");
+            }
+            logger.warn("The online image in url (" + imageURL + ") could not be loaded. ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
             return null;
-            //throw new RuntimeException(e);
-            // TODO: As always handle this better
-
         }
 
         return jsonBody;

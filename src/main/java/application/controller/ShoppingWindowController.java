@@ -2,8 +2,11 @@ package application.controller;
 
 import application.model.NewPurchaseInfo;
 import application.persistence.assets.AssetManager;
+import application.persistence.assets.FileSystemAssetTalker;
 import application.persistence.database.DatabaseManager;
 import application.web.ImageCollectorClient;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -14,6 +17,7 @@ import java.util.UUID;
  */
 public class ShoppingWindowController {
 
+    private static Logger logger = LogManager.getLogger(ShoppingWindowController.class);
     private final ImageCollectorClient imageCollectorClient;
     private final DatabaseManager databaseManager;
 
@@ -39,7 +43,14 @@ public class ShoppingWindowController {
     public byte[] getOnlineImageToSetProductImageView(String imageURL){
         byte[] productImage = imageCollectorClient.requestImageData(imageURL);
 
-        if(productImage == null) productImage = assetManager.getUnavailableImage();
+        if(productImage == null){
+
+            // ---- LOG ----
+            StringBuilder errorStackTrace = new StringBuilder();
+            logger.warn("During the shopping window creation. The online image in url (" + imageURL + ") could not be retrieved properly from the url."  );
+
+            productImage = assetManager.getUnavailableImage();
+        }
 
         return productImage;
     }

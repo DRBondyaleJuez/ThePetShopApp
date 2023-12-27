@@ -131,7 +131,6 @@ public class CreateAccountViewController implements Initializable, ObservableVie
             //Make the overlapping passwordField not visible
             passwordField1.setVisible(passwordHiddenState);
             //Change Icon
-            //TODO: handle this icon change using the controller's persistence
             setEyeIconOnViewPasswordButton();
         };
     }

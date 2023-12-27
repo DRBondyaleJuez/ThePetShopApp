@@ -1,10 +1,14 @@
 package application.persistence.assets;
 
+import application.core.ThePetShopAppLauncher;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * Provides object of the class in charged of the interaction with the resource folder. In particular interactions with the assets folder. This
@@ -13,24 +17,25 @@ import java.io.InputStream;
  */
 public class FileSystemAssetTalker implements  AssetTalker {
 
+    private static Logger logger = LogManager.getLogger(FileSystemAssetTalker.class);
 
     @Override
     public byte[] getLogoImageData(LogoType logoType) {
         String path = "/assets/images/" + logoType.toString();
-        return loadFileData(path);
+        return loadFileDataWithAlternative(path);
     }
 
     @Override
     public byte[] getEyeIconImageData(EyeIconType eyeIconType) {
         String path = "/assets/icons/eye/" + eyeIconType.toString();
-        return loadFileData(path);
+        return loadFileDataWithAlternative(path);
     }
 
     @Override
     public byte[] getDecorationImageData() {
         String path = "/assets/images/aiDecoration.png";
 
-        return loadFileData(path);
+        return loadFileDataWithAlternative(path);
     }
 
     @Override
@@ -38,6 +43,14 @@ public class FileSystemAssetTalker implements  AssetTalker {
         String path = "/assets/images/imageNotAvailable.png";
 
         return loadFileData(path);
+    }
+
+    private byte[] loadFileDataWithAlternative(String path){
+        byte[] pathImageByteArray = loadFileData(path);
+        if(Arrays.equals(pathImageByteArray, new byte[0])){
+            return getUnavailableImage();
+        }
+        return pathImageByteArray;
     }
 
     // Process to collect assets from resource folder
@@ -50,9 +63,12 @@ public class FileSystemAssetTalker implements  AssetTalker {
 
             return IOUtils.toByteArray(currentInputStream);
         } catch (IOException e) {
-            // TODO: log
-            System.out.println("Could not find " + path);
-            e.printStackTrace();
+            // ---- LOG ----
+            StringBuilder errorStackTrace = new StringBuilder();
+            for (StackTraceElement ste:e.getStackTrace()) {
+                errorStackTrace.append("        ").append(ste).append("\n");
+            }
+            logger.warn("The asset in file path (" + path + ") could not be loaded. ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
             return new byte[0];
         }
     }

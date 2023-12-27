@@ -138,8 +138,6 @@ public class SignInViewController implements Initializable, ObservableView {
 
         return actionEvent -> {
             replicateContentInTexFieldAndPasswordField();
-            //TODO: compare the username with the database and compare the password with the database through the controller's persistence
-            // (REMEMBER TO ENCRYPT THE PASSWORD SAME AS DURING THE CREATION OF THE ACCOUNT)
             String enteredUsername = usernameTextField.getText();
             String enteredPassword = passwordTextField.getText();
             boolean validCredentials = checkCredentials(enteredUsername,enteredPassword);
