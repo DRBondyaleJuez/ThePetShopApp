@@ -62,13 +62,9 @@ public class FileSystemAssetTalker implements  AssetTalker {
             }
 
             return IOUtils.toByteArray(currentInputStream);
-        } catch (IOException e) {
+        } catch (Exception exception) {
             // ---- LOG ----
-            StringBuilder errorStackTrace = new StringBuilder();
-            for (StackTraceElement ste:e.getStackTrace()) {
-                errorStackTrace.append("        ").append(ste).append("\n");
-            }
-            logger.warn("The asset in file path (" + path + ") could not be loaded. ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
+            logger.warn("The asset in file path (" + path + ") could not be loaded. ERROR:\n ", exception );
             return new byte[0];
         }
     }

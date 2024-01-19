@@ -89,14 +89,10 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
         ShoppingWindowLauncher shoppingWindowLauncher = new ShoppingWindowLauncher();
         try {
             shoppingWindowLauncher.start(productDisplayInfo,userId);
-        } catch (Exception e) {
+        } catch (Exception exception) {
             // ---- LOG ----
-            StringBuilder errorStackTrace = new StringBuilder();
-            for (StackTraceElement ste:e.getStackTrace()) {
-                errorStackTrace.append("        ").append(ste).append("\n");
-            }
-            logger.error("Unable to launch shopping window for product (" + productDisplayInfo.getProductName() + "). ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
-            throw new RuntimeException(e);
+            logger.error("Unable to launch shopping window for product (" + productDisplayInfo.getProductName() + "). ERROR:\n ", exception);
+            throw new RuntimeException(exception);
         }
     }
 
@@ -169,21 +165,9 @@ public class ThePetShopAppLauncher extends Application implements ViewObserver {
     private Parent loadPaneLoader(FXMLLoader paneLoader) {
         try {
             return paneLoader.load();
-        } catch (IOException e) {
+        } catch (Exception exception) {
             // ---- LOG ----
-            String errorStackTrace = "";
-            for (StackTraceElement ste:e.getStackTrace()) {
-                errorStackTrace += "        " + ste + "\n";
-            }
-            logger.error("The FXML file (" + paneLoader.toString() + ") could not be loaded. ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
-            return null;
-        }catch (RuntimeException e) {
-            // ---- LOG ----
-            StringBuilder errorStackTrace = new StringBuilder();
-            for (StackTraceElement ste:e.getStackTrace()) {
-                errorStackTrace.append("        ").append(ste).append("\n");
-            }
-            logger.error("The FXML file (" + paneLoader.toString() + ") could not be loaded. ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
+            logger.error("The FXML file (" + paneLoader.toString() + ") could not be loaded. ERROR:\n ", exception );
             return null;
         }
     }

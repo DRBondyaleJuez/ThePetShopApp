@@ -51,15 +51,10 @@ public class DBConnection implements DatabaseTalker {
         try {
             conn = DriverManager.getConnection(url, user, password);
             logger.info("Connected to the PostgreSQL server successfully.");
-        } catch (SQLException e) {
+        } catch (SQLException exception) {
             // ---- LOG ----
-            StringBuilder errorStackTrace = new StringBuilder();
-            for (StackTraceElement ste:e.getStackTrace()) {
-                errorStackTrace.append("        ").append(ste).append("\n");
-            }
             logger.error("Unable to establish connection with SQL database. Review the parameter in secrets.properties resource file. Verify the correct file is used by the PropertiesReader.\n" +
-                    "ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
-
+                    "ERROR:\n ", exception);
             gracefulShutdown();
         }
 

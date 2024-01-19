@@ -66,13 +66,13 @@ public class ShoppingWindowLauncher {
     private Parent loadPaneLoader(FXMLLoader paneLoader) {
         try {
             return paneLoader.load();
-        } catch (IOException e) {
+        } catch (Exception exception) {
             // ---- LOG ----
             StringBuilder errorStackTrace = new StringBuilder();
-            for (StackTraceElement ste:e.getStackTrace()) {
+            for (StackTraceElement ste:exception.getStackTrace()) {
                 errorStackTrace.append("        ").append(ste).append("\n");
             }
-            logger.error("The FXML file (" + paneLoader.toString() + ") could not be loaded. ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
+            logger.error("The FXML file (" + paneLoader.toString() + ") could not be loaded. ERROR:\n ", exception);
             return null;
 
         }

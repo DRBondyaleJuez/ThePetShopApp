@@ -42,11 +42,7 @@ public class ImageCollectorClient {
             jsonBody = EntityUtils.toByteArray(response.getEntity());
         } catch (IOException | URISyntaxException e) {
             // ---- LOG ----
-            StringBuilder errorStackTrace = new StringBuilder();
-            for (StackTraceElement ste:e.getStackTrace()) {
-                errorStackTrace.append("        ").append(ste).append("\n");
-            }
-            logger.warn("The online image in url (" + imageURL + ") could not be loaded. ERROR:\n " + e + "\n" + "STACK TRACE:\n" + errorStackTrace );
+            logger.warn("The online image in url (" + imageURL + ") could not be loaded. ERROR:\n ", e);
             return null;
         }
 
